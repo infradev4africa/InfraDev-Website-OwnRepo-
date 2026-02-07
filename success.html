@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Message Sent | InfraDev.Africa</title>
+    <meta name="description" content="Thank you for contacting InfraDev.Africa">
+
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Montserrat:wght@400;500;600;700;800&amp;family=Poppins:wght@600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            base: 'var(--color-base)',
+                            surface: 'var(--color-surface)',
+                            accent: 'var(--color-accent)',
+                            muted: 'var(--color-muted)',
+                        }
+                    },
+                    fontFamily: {
+                        "display": ["Montserrat", "sans-serif"],
+                        "heading": ["Poppins", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "pill": "9999px",
+                    },
+                    maxWidth: {
+                        "site": "1120px",
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        :root {
+            --color-base: #0A1F44;
+            --color-surface: #1A2538;
+            --color-accent: #F9C70C;
+            --color-muted: #9CA3AF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-base);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
+    </style>
+</head>
+<body class="bg-brand-base text-white antialiased selection:bg-brand-accent selection:text-brand-base overflow-x-hidden relative">
+
+    <div class="min-h-screen flex flex-col items-center justify-center px-4">
+        <div class="max-w-lg mx-auto text-center">
+            <div class="w-20 h-20 rounded-full bg-brand-accent flex items-center justify-center mx-auto mb-8 shadow-[0_0_30px_rgba(249,199,12,0.4)]">
+                <span class="material-symbols-outlined text-brand-base text-4xl">check</span>
+            </div>
+
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-4 font-display">
+                <span class="lang-en">Message Sent</span>
+                <span class="lang-fr hidden">Message envoye</span>
+            </h1>
+
+            <p class="text-gray-400 text-lg font-light mb-8">
+                <span class="lang-en">Thank you for reaching out. Our team will review your inquiry and respond shortly.</span>
+                <span class="lang-fr hidden">Merci de nous avoir contactes. Notre equipe examinera votre demande et vous repondra dans les meilleurs delais.</span>
+            </p>
+
+            <a href="/" class="inline-flex items-center gap-3 bg-brand-accent text-brand-base font-bold text-sm font-display rounded-pill py-4 px-8 hover:bg-white transition-all shadow-lg shadow-brand-accent/20 uppercase tracking-widest">
+                <span class="material-symbols-outlined text-base">arrow_back</span>
+                <span class="lang-en">Return Home</span>
+                <span class="lang-fr hidden">Retour a l'accueil</span>
+            </a>
+        </div>
+
+        <footer class="absolute bottom-8 text-center text-xs text-gray-500 font-light">
+            <p>&copy; 2026 InfraDev.Africa. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Check stored language preference
+        const currentLang = localStorage.getItem('site_lang') || 'en';
+        const enElements = document.querySelectorAll('.lang-en');
+        const frElements = document.querySelectorAll('.lang-fr');
+
+        if (currentLang === 'en') {
+            enElements.forEach(el => el.classList.remove('hidden'));
+            frElements.forEach(el => el.classList.add('hidden'));
+        } else {
+            enElements.forEach(el => el.classList.add('hidden'));
+            frElements.forEach(el => el.classList.remove('hidden'));
+        }
+    </script>
+</body>
+</html>
