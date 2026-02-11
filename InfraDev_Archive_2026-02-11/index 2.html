@@ -653,7 +653,7 @@
                             <label class="text-[10px] font-bold text-primary uppercase tracking-[0.15em] ml-1">
                                 <span class="lang-en">Organisation</span><span class="lang-fr hidden">Organisation</span>
                             </label>
-                            <input name="organisation" data-placeholder-en="Company Ltd." data-placeholder-fr="Company Ltd." class="w-full bg-navy border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-light" placeholder="Company Ltd." type="text" required/>
+                            <input name="organisation" data-placeholder-en="Company SARL" data-placeholder-fr="Company SARL" class="w-full bg-navy border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-light" placeholder="Company SARL" type="text" required/>
                         </div>
                     </div>
                     
@@ -661,11 +661,11 @@
                         <label class="text-[10px] font-bold text-primary uppercase tracking-[0.15em] ml-1">
                             <span class="lang-en">Email</span><span class="lang-fr hidden">Email</span>
                         </label>
-                        <input name="email" data-placeholder-en="jane@example.com" data-placeholder-fr="jane@example.com" class="w-full bg-navy border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-light" placeholder="jane@example.com" type="email" required/>
+                        <input name="email" data-placeholder-en="cedrick@example.com" data-placeholder-fr="cedrick@example.com" class="w-full bg-navy border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-light" placeholder="cedrick@example.com" type="email" required/>
                     </div>
                     
                     <div class="space-y-2">
-                        <label class="text-[10px] font-bold text-primary uppercase tracking-[0.15em] ml-1">
+                        <label for="region-select" class="text-[10px] font-bold text-primary uppercase tracking-[0.15em] ml-1">
                             <span class="lang-en">Country Context</span><span class="lang-fr hidden">Région</span>
                         </label>
                         <select id="region-select" name="region" class="w-full bg-navy border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all appearance-none cursor-pointer text-sm font-light">
@@ -673,7 +673,9 @@
                             <option value="East Africa">East Africa</option>
                             <option value="West Africa">West Africa</option>
                             <option value="Southern Africa">Southern Africa</option>
+                            <option value="Central Africa">Central Africa</option>
                             <option value="North Africa">North Africa</option>
+                            <option value="DRC">DRC</option>
                             <option value="International">International</option>
                         </select>
                     </div>
@@ -743,8 +745,8 @@
                             <h4 class="font-bold text-white uppercase tracking-widest text-xs font-display">
                                 <span class="lang-en">Ecosystem</span><span class="lang-fr hidden">Écosystème</span>
                             </h4>
-                            <a href="https://kumea.africa" target="_blank" class="flex items-center gap-3 group">
-                                <span class="material-symbols-outlined text-primary group-hover:text-white transition-colors">hub</span>
+                            <a href="https://kumea.africa" target="_blank" rel="noopener" class="flex items-center gap-3 group">
+                                <img src="public/kumea-logo-gold-transparent.svg" alt="Kumea.Africa" class="w-8 h-8 object-contain" loading="lazy">
                                 <span class="text-gray-300 group-hover:text-primary transition-colors font-semibold">Kumea.Africa</span>
                             </a>
                         </div>
@@ -1016,10 +1018,10 @@
 
         // Select Options Mapping
         const regionOptions = {
-            en: ["Select a region...", "East Africa", "West Africa", "Southern Africa", "North Africa", "International"],
-            fr: ["Choisir une région...", "Afrique de l’Est", "Afrique de l’Ouest", "Afrique australe", "Afrique du Nord", "International"]
+            en: ["Select a region...", "East Africa", "West Africa", "Southern Africa", "Central Africa", "North Africa", "DRC", "International"],
+            fr: ["Choisir une région...", "Afrique de l’Est", "Afrique de l’Ouest", "Afrique australe", "Afrique centrale", "Afrique du Nord", "RDC", "International"]
         };
-        const regionValues = ["", "East Africa", "West Africa", "Southern Africa", "North Africa", "International"];
+        const regionValues = ["", "East Africa", "West Africa", "Southern Africa", "Central Africa", "North Africa", "DRC", "International"];
 
         function updateDOM() {
             // 1. Toggle Classes

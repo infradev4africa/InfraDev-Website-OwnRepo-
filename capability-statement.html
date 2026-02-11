@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Capability Statement | InfraDev.Africa</title>
+    <meta name="description" content="Capability statement for InfraDev.Africa — institutional infrastructure advisory."/>
+
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300..700&display=swap" rel="stylesheet"/>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            base: 'var(--color-base)',
+                            surface: 'var(--color-surface)',
+                            accent: 'var(--color-accent)',
+                            muted: 'var(--color-muted)',
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Montserrat", "sans-serif"],
+                        heading: ["Poppins", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        pill: "9999px",
+                    },
+                    maxWidth: {
+                        site: "1120px",
+                    }
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="assets/styles/site.css"/>
+</head>
+<body class="bg-brand-base text-white antialiased relative overflow-x-hidden">
+
+    <div class="fixed inset-0 bg-grid pointer-events-none z-[-1]"></div>
+    <div class="absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-brand-accent/10 via-transparent to-transparent pointer-events-none"></div>
+
+    <header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-site">
+        <div class="bg-brand-surface/80 backdrop-blur-xl border border-white/10 rounded-pill px-6 py-3 shadow-2xl flex items-center justify-between">
+            <a class="flex items-center gap-3 group" href="index.html" aria-label="Access InfraDev site">
+                <div class="relative w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center shrink-0 overflow-hidden shadow-[0_0_15px_rgba(249,199,12,0.3)]">
+                    <span class="material-symbols-outlined absolute text-brand-base opacity-20 text-4xl translate-x-1 translate-y-1">public</span>
+                    <span class="font-display font-extrabold text-brand-base text-xs tracking-tighter relative z-10">ID.</span>
+                </div>
+                <div class="flex flex-col hidden sm:flex">
+                    <h2 class="text-sm font-bold tracking-tight font-display leading-none">
+                        <span class="text-white">Infra</span><span class="text-brand-accent">Dev</span>
+                    </h2>
+                    <p class="text-brand-accent/90 text-[9px] font-medium uppercase tracking-[0.2em] leading-none font-display">Advisory</p>
+                </div>
+            </a>
+
+            <a class="inline-flex items-center gap-2 text-[10px] font-bold bg-brand-accent text-brand-base px-5 py-2.5 rounded-pill hover:bg-white transition-all hover:shadow-[0_0_20px_rgba(249,199,12,0.4)] font-display uppercase tracking-widest" href="index.html">
+                <span class="material-symbols-outlined text-sm">arrow_back</span>
+                Access InfraDev site
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-32 pb-20">
+        <section class="px-4">
+            <div class="max-w-site mx-auto">
+                <div class="flex flex-col gap-8">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                        <div class="flex items-center gap-4">
+                            <img src="public/kumea-logo-gold-transparent.svg" alt="Kumea.Africa" class="w-14 h-14 object-contain" loading="lazy"/>
+                            <div>
+                                <p class="text-[11px] font-bold tracking-[0.2em] text-gray-300 uppercase font-display">Capability Statement</p>
+                                <h1 class="text-3xl md:text-5xl font-bold text-white font-display">InfraDev.Africa | Solutionists</h1>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-400 font-light">
+                            Institutional Infrastructure Advisory
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
+                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Who we are</h2>
+                            <p class="text-gray-300 text-sm leading-relaxed">
+                                InfraDev.Africa is a strategic infrastructure advisory and delivery-support firm focused on
+                                making projects feasible, bankable, and executable in African contexts.
+                            </p>
+                        </div>
+                        <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
+                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Sectors</h2>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
+                                <li>Power systems: transmission and distribution planning, renewables integration</li>
+                                <li>Decentralised energy: mini-grids, hybrid systems, storage deployment</li>
+                                <li>Urban infrastructure: mobility, housing enabling works, city services</li>
+                                <li>Water and sanitation: access systems, program design, delivery monitoring</li>
+                            </ul>
+                        </div>
+                        <div class="bg-brand-base/60 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
+                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Core services</h2>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
+                                <li>Master planning and investment roadmaps (cities, corridors, SEZs, utilities)</li>
+                                <li>Pre-feasibility and feasibility studies (technical, financial, ESG)</li>
+                                <li>PPP and transaction support (structuring, risk allocation, procurement packs)</li>
+                                <li>Lender and investor due diligence support (data rooms, technical review)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-brand-base/60 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
+                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Why InfraDev</h2>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
+                                <li>Systems thinking: energy, water, health, logistics, and governance as one connected machine.</li>
+                                <li>Context fluency: African delivery realities, stakeholder dynamics, and procurement constraints.</li>
+                                <li>Boardroom plus field: rigorous documents that survive real sites and messy data.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-surface/70 border border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-2xl">
+                        <h2 class="text-xl font-bold text-white font-display mb-4">How we work</h2>
+                        <p class="text-gray-300 text-sm mb-4">Typical engagement formats:</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
+                            <li>Rapid diagnostic (2-4 weeks)</li>
+                            <li>Feasibility / structuring (6-16 weeks)</li>
+                            <li>Delivery support / PMO (3-18 months)</li>
+                        </ul>
+                        <p class="text-gray-300 text-sm mt-4">Primary geography: DRC with pan-African execution through partnerships.</p>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="text-[11px] font-bold uppercase tracking-[0.25em] text-gray-400 font-display">Track Record &amp; Deliverables</p>
+                        <p class="text-gray-500 text-sm italic mt-2">Representative experience of leadership and typical outputs</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
+                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Experience</h2>
+                            <p class="text-gray-300 text-sm mb-3">Selected leadership experience (prior roles):</p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
+                                <li>Power networks planning and advisory across Africa (transmission/distribution, renewables integration).</li>
+                                <li>Senegal grid stability support (USAID/USEA programme with Mott MacDonald, 2017-2019): technical facilitation, bilingual delivery, data collection and dynamic model support (CYME), and capacity-building recommendations.</li>
+                                <li>Luanda integrated planning assignments (master planning / infrastructure coordination).</li>
+                                <li>Ghana gas-to-power strategy support (Genser Energy): commercial and delivery-oriented advisory.</li>
+                                <li>Company-managed healthcare system transformation (Watu Wetu Health System): multi-phase programme design, governance and performance tracking.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
+                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Deliverables</h2>
+                            <p class="text-gray-300 text-sm mb-3">Outputs we produce (examples):</p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
+                                <li>Feasibility reports (technical, economic, financial model interface, ESG)</li>
+                                <li>Investment notes and decision memos for boards and DFIs</li>
+                                <li>PPP / procurement packs: TORs, RFPs, evaluation frameworks, draft risk matrices</li>
+                                <li>Implementation plans: phased roadmaps, CAPEX/OPEX logic, governance and reporting systems</li>
+                                <li>Dashboards: progress tracking, KPI trees, action logs, stakeholder maps</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-base/70 border border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-2xl">
+                        <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Delivery principles</h2>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
+                            <li>Evidence-first: assumptions labelled, data gaps logged, decisions traceable.</li>
+                            <li>Bankability: we write for lenders, not for theatre.</li>
+                            <li>Localisation: designs adapted to procurement, operations, and skills realities.</li>
+                            <li>Partner-ready: clear interfaces for OEMs, EPCs, DFIs and public agencies.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
+                        <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Contact</h2>
+                        <p class="text-gray-300 text-sm">Managing Director: Ted Kivoto Isengingo</p>
+                        <p class="text-gray-300 text-sm">Website: <a href="https://www.infradev.africa" target="_blank" rel="noopener" class="text-brand-accent hover:text-white transition-colors">www.infradev.africa</a></p>
+                        <p class="text-gray-300 text-sm">Address: 16 Av Lokele, Gombe, Kinshasa, DRC</p>
+                    </div>
+
+                    <div class="text-gray-400 text-xs font-light leading-relaxed border-t border-white/10 pt-6">
+                        Relationship and disclaimer: InfraDev.Africa is an independent venture within the Kumea.Africa ecosystem (House of Brands). This document is for information only and does not constitute a binding offer; any engagement is subject to contract.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

@@ -44,117 +44,7 @@
             },
         }
     </script>
-
-    <style>
-        /* --- 1. THE DYNAMIC THEME ENGINE --- */
-        :root {
-            /* Change these 3 hex codes to rebrand for ECIM or Uzima */
-            --color-base: #0A1F44;     /* Deep Navy */
-            --color-surface: #1A2538;  /* Lighter Navy/Card Background */
-            --color-accent: #F9C70C;   /* Warm Gold */
-            --color-muted: #9CA3AF;    /* Muted Text */
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--color-base);
-            color: #ffffff;
-            min-height: 100vh;
-        }
-
-        /* --- 2. THE ENGINEERING GRID BACKGROUND --- */
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            mask-image: radial-gradient(circle at center top, black 40%, transparent 100%);
-            -webkit-mask-image: radial-gradient(circle at center top, black 40%, transparent 100%);
-        }
-
-        /* Typography Override */
-        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--color-base); }
-        ::-webkit-scrollbar-thumb {
-            background: var(--color-surface);
-            border-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        ::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
-
-        /* Mobile Menu Transitions */
-        .mobile-menu-enter { transform: translateX(100%); opacity: 0; }
-        .mobile-menu-active { transform: translateX(0); opacity: 1; }
-
-        /* Animation Classes */
-        .draw-path {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-        }
-
-        /* --- 3. MOBILE STICKY SCROLL FOR "WHY PROJECTS STALL" --- */
-        @media (max-width: 1023px) {
-            .stall-section-wrapper {
-                position: relative;
-            }
-            .stall-intro-pinned {
-                position: sticky;
-                top: 100px; /* Below the fixed navbar */
-                z-index: 1;
-                background: var(--color-base);
-                padding-bottom: 2rem;
-                transition: opacity 0.3s ease-out;
-            }
-            .stall-intro-pinned.is-faded {
-                opacity: 0.15;
-            }
-            .stall-cards-container {
-                position: relative;
-                z-index: 2;
-            }
-        }
-
-        /* --- 4. ENHANCED HOVER TRANSITIONS --- */
-        .hover-card {
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                        background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .hover-card:hover {
-            box-shadow: 0 25px 50px -12px rgba(249, 199, 12, 0.15),
-                        0 10px 20px -5px rgba(0, 0, 0, 0.3);
-        }
-
-        .service-card {
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        border-color 0.3s ease-out,
-                        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .service-card:hover {
-            box-shadow: 0 30px 60px -15px rgba(249, 199, 12, 0.2),
-                        0 15px 30px -10px rgba(0, 0, 0, 0.4);
-        }
-
-        .sector-card {
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        border-color 0.3s ease-out,
-                        box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                        background-color 0.3s ease-out;
-        }
-        .sector-card:hover {
-            box-shadow: 0 20px 40px -10px rgba(249, 199, 12, 0.15),
-                        0 8px 16px -4px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Ensure background icons remain visible on hover */
-        .service-card .absolute {
-            transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-    </style>
+    <link rel="stylesheet" href="assets/styles/site.css"/>
 </head>
 <body class="bg-brand-base text-white antialiased selection:bg-brand-accent selection:text-brand-base overflow-x-hidden relative">
 
@@ -284,8 +174,8 @@
                     <span class="lang-fr hidden">Demander un appel</span>
                     <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </a>
-                <a href="#" id="capability-btn" class="group flex items-center justify-center gap-3 h-14 px-10 rounded-pill bg-brand-surface/50 border border-brand-accent/30 text-brand-accent font-bold hover:bg-brand-surface hover:border-brand-accent hover:-translate-y-0.5 transition-all duration-300 font-display text-xs uppercase tracking-widest backdrop-blur-md" download>
-                    <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">download</span>
+                <a href="#" id="capability-btn" class="group flex items-center justify-center gap-3 h-14 px-10 rounded-pill bg-brand-surface/50 border border-brand-accent/30 text-brand-accent font-bold hover:bg-brand-surface hover:border-brand-accent hover:-translate-y-0.5 transition-all duration-300 font-display text-xs uppercase tracking-widest backdrop-blur-md">
+                    <span class="material-symbols-outlined text-xl group-hover:scale-110 transition-transform">description</span>
                     <span class="lang-en">Capability Statement</span>
                     <span class="lang-fr hidden">Présentation de capacités</span>
                 </a>
@@ -659,6 +549,7 @@
                 <span class="lang-fr hidden">Voir nos dernières analyses</span>
                 <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform duration-300">arrow_forward</span>
             </a>
+
         </div>
     </section>
 
@@ -693,7 +584,7 @@
                         <label class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
                             <span class="lang-en">Organisation</span><span class="lang-fr hidden">Organisation</span>
                         </label>
-                        <input name="organisation" data-placeholder-en="Company Ltd." data-placeholder-fr="Company Ltd." class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light" placeholder="Company Ltd." type="text" required/>
+                        <input name="organisation" data-placeholder-en="Company SARL" data-placeholder-fr="Company SARL" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light" placeholder="Company SARL" type="text" required/>
                     </div>
                 </div>
 
@@ -701,20 +592,22 @@
                     <label class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
                         <span class="lang-en">Email</span><span class="lang-fr hidden">Email</span>
                     </label>
-                    <input name="email" data-placeholder-en="jane@example.com" data-placeholder-fr="jane@example.com" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light" placeholder="jane@example.com" type="email" required/>
+                    <input name="email" data-placeholder-en="cedrick@example.com" data-placeholder-fr="cedrick@example.com" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light" placeholder="cedrick@example.com" type="email" required/>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
+                    <label for="region-select" class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
                         <span class="lang-en">Country Context</span><span class="lang-fr hidden">Région</span>
                     </label>
                     <select id="region-select" name="region" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all appearance-none cursor-pointer text-sm font-light">
-                        <option value="" disabled selected>Select a region...</option>
-                        <option value="East Africa">East Africa</option>
-                        <option value="West Africa">West Africa</option>
-                        <option value="Southern Africa">Southern Africa</option>
-                        <option value="North Africa">North Africa</option>
-                        <option value="International">International</option>
+                        <option value="" disabled selected data-label-en="Select a region..." data-label-fr="Sélectionnez une région...">Select a region...</option>
+                        <option value="East Africa" data-label-en="East Africa" data-label-fr="Afrique de l'Est">East Africa</option>
+                        <option value="West Africa" data-label-en="West Africa" data-label-fr="Afrique de l'Ouest">West Africa</option>
+                        <option value="Southern Africa" data-label-en="Southern Africa" data-label-fr="Afrique australe">Southern Africa</option>
+                        <option value="Central Africa" data-label-en="Central Africa" data-label-fr="Afrique centrale">Central Africa</option>
+                        <option value="North Africa" data-label-en="North Africa" data-label-fr="Afrique du Nord">North Africa</option>
+                        <option value="DRC" data-label-en="DRC" data-label-fr="RDC">DRC</option>
+                        <option value="International" data-label-en="International" data-label-fr="International">International</option>
                     </select>
                 </div>
 
@@ -783,8 +676,8 @@
                         <h4 class="font-bold text-white uppercase tracking-widest text-xs font-display">
                             <span class="lang-en">Ecosystem</span><span class="lang-fr hidden">Écosystème</span>
                         </h4>
-                        <a href="https://kumea.africa" target="_blank" class="flex items-center gap-3 group">
-                            <span class="material-symbols-outlined text-brand-accent group-hover:text-white transition-colors">hub</span>
+                        <a href="https://kumea.africa" target="_blank" rel="noopener" class="flex items-center gap-3 group">
+                            <img src="public/kumea-logo-gold-transparent.svg" alt="Kumea.Africa" class="w-8 h-8 object-contain" loading="lazy">
                             <span class="text-gray-300 group-hover:text-brand-accent transition-colors font-semibold">Kumea.Africa</span>
                         </a>
                     </div>
@@ -1085,7 +978,7 @@
         // PLACEHOLDER URLs - Easy to swap for production
         // =============================================================================
         const SITE_URLS = {
-            CAPABILITY_STATEMENT_PDF: '/assets/InfraDev-Capability-Statement.pdf', // Replace with actual PDF URL
+            CAPABILITY_STATEMENT_PDF: '/capability-statement.html', // Replace with actual capability page URL
             INSIGHTS_PAGE: '/insights' // Replace with actual insights page URL
         };
 
@@ -1233,6 +1126,11 @@
             inputs.forEach(input => {
                 input.placeholder = input.getAttribute(`data-placeholder-${currentLang}`);
             });
+
+            const localizedOptions = document.querySelectorAll('option[data-label-en]');
+            localizedOptions.forEach(option => {
+                option.textContent = option.getAttribute(`data-label-${currentLang}`);
+            });
         }
 
         function toggleLanguage() {
@@ -1269,7 +1167,15 @@
             const stallIntro = document.querySelector('.stall-intro-pinned');
             const stallCards = document.querySelector('.stall-cards-container');
 
-            if (!stallIntro || !stallCards || window.innerWidth >= 1024) return;
+            if (!stallIntro || !stallCards) return;
+
+            if (window.innerWidth >= 1024) {
+                stallCards.style.paddingTop = '';
+                return;
+            }
+
+            const introHeight = stallIntro.offsetHeight;
+            stallCards.style.paddingTop = `${introHeight + 24}px`;
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
