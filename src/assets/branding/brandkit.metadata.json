@@ -1,0 +1,15 @@
+{
+  "brandkit": {
+    "name": "InfraDev BrandKit",
+    "current_version": "2.0.0",
+    "previous_version": "1.1.0",
+    "rotation_law_deg": 3,
+    "tokens": {
+      "primary_navy": "#0A1F44",
+      "accent_gold": "#F9C70C",
+      "surface_offwhite": "#F7F7F5",
+      "slate": "#334155"
+    },
+    "updated_on": "2026-02-12"
+  }
+}

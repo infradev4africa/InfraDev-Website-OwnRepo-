@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 44" role="img" aria-label="Kumea anchor seal">
+  <defs>
+    <style>
+      :root { --id-color-navy: #0A1F44; --id-color-gold: #F9C70C; --id-color-offwhite: #F7F7F5; }
+    </style>
+  </defs>
+  <rect x="1.5" y="1.5" width="157" height="41" rx="20.5" fill="var(--id-color-offwhite)" stroke="var(--id-color-navy)" stroke-width="3"/>
+  <circle cx="22" cy="22" r="7" fill="var(--id-color-gold)" stroke="var(--id-color-navy)" stroke-width="2"/>
+  <text x="84" y="27" text-anchor="middle" fill="var(--id-color-navy)" font-family="Inter, sans-serif" font-size="13" font-weight="700" letter-spacing="0.08em">KUMEA ANCHOR</text>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Certification stamp">
+  <defs>
+    <style>
+      :root { --id-color-navy: #0A1F44; --id-color-gold: #F9C70C; --id-color-offwhite: #F7F7F5; }
+    </style>
+  </defs>
+  <circle cx="100" cy="100" r="92" fill="none" stroke="var(--id-color-navy)" stroke-width="6"/>
+  <circle cx="100" cy="100" r="76" fill="none" stroke="var(--id-color-gold)" stroke-width="4"/>
+  <path d="M56 108 L85 136 L145 72" fill="none" stroke="var(--id-color-navy)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="100" y="58" text-anchor="middle" fill="var(--id-color-navy)" font-family="Montserrat, sans-serif" font-size="15" font-weight="700" letter-spacing="0.08em">CERTIFIE</text>
+  <text x="100" y="162" text-anchor="middle" fill="var(--id-color-navy)" font-family="Inter, sans-serif" font-size="12" font-weight="700" letter-spacing="0.1em">SERVICE FAIT</text>
+</svg>

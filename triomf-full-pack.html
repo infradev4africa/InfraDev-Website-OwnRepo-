@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfraDev | PACK CONSOLIDÉ — PROJET TRIOMF (BOMA)</title>
+    <link rel="icon" type="image/svg+xml" href="public/favicon.svg"/>
+    <link rel="shortcut icon" href="public/favicon.svg"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --id-navy: #0A1F44;
+            --id-gold: #F9C70C;
+            --id-gold-deep: #B8860B;
+            --id-off-white: #F7F7F5;
+            --id-slate: #334155;
+            --id-grey: #9CA3AF;
+            --id-border: #E2E8F0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #525659; font-family: 'Inter', sans-serif; color: var(--id-navy); padding: 50px 0; }
+
+        /* A4 Page Formatting */
+        .page {
+            background: white;
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto 40px auto;
+            padding: 25mm;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            page-break-after: always;
+        }
+
+        /* Identity Mark (3° Governance) */
+        .id-tile {
+            width: 85px; height: 85px; background: var(--id-gold); border-radius: 12px;
+            transform: rotate(3deg); display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 15px rgba(10, 31, 68, 0.15); margin-bottom: 40px;
+        }
+        .id-tile span { 
+            color: var(--id-navy); font-family: 'Montserrat', sans-serif; font-weight: 800; 
+            font-size: 32px; transform: rotate(-3deg); 
+        }
+
+        /* Typography */
+        h1 { font-family: 'Montserrat', sans-serif; font-size: 26pt; text-transform: uppercase; margin-bottom: 10px; line-height: 1.1; letter-spacing: -1px; }
+        h2 { font-family: 'Montserrat', sans-serif; font-size: 14pt; color: var(--id-gold-deep); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-weight: 600; }
+        h3 { font-family: 'Montserrat', sans-serif; font-size: 12pt; text-transform: uppercase; color: var(--id-navy); border-bottom: 2px solid var(--id-gold); padding-bottom: 5px; margin: 30px 0 15px 0; }
+        h4 { font-family: 'Montserrat', sans-serif; font-size: 10pt; text-transform: uppercase; color: var(--id-slate); margin: 20px 0 10px 0; }
+        
+        p, li { font-size: 10pt; color: var(--id-slate); line-height: 1.55; margin-bottom: 12px; text-align: justify; }
+        ul { margin-left: 20px; margin-bottom: 15px; }
+        strong { color: var(--id-navy); font-weight: 600; }
+
+        /* Layout Elements */
+        .sidebar-layout { display: grid; grid-template-columns: 50mm 1fr; gap: 12mm; flex-grow: 1; }
+        .sidebar { border-right: 1px solid var(--id-border); padding-right: 15px; }
+        .sidebar-item { margin-bottom: 25px; }
+        .sidebar-item label { font-size: 7.5pt; text-transform: uppercase; color: var(--id-gold-deep); font-weight: 700; display: block; margin-bottom: 5px; letter-spacing: 1px; }
+        .sidebar-item p { font-size: 8pt; color: var(--id-grey); line-height: 1.4; margin: 0; }
+
+        .insight-box { background: var(--id-off-white); border-left: 5px solid var(--id-gold); padding: 20px; margin: 25px 0; font-style: italic; font-weight: 500; color: var(--id-navy); }
+
+        /* Tables (Institutional Standard) */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 8.5pt; }
+        th { background: var(--id-navy); color: white; padding: 12px; text-align: left; text-transform: uppercase; font-size: 7pt; letter-spacing: 0.5px; }
+        td { padding: 12px; border-bottom: 1px solid var(--id-border); vertical-align: top; }
+        .cell-bold { font-weight: 700; color: var(--id-navy); }
+        .cell-right { text-align: right; }
+
+        /* Cover Specifics */
+        .cover { background-color: var(--id-navy); color: white; justify-content: center; align-items: center; text-align: center; }
+        .cover h1 { font-size: 34pt; color: white; }
+        .cover h2 { font-size: 18pt; color: var(--id-gold); }
+        .cover-meta { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 30px; margin-top: 40px; width: 60%; font-size: 10pt; opacity: 0.9; text-align: left; line-height: 2; }
+
+        /* Signature Blocks */
+        .signature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 50px; }
+        .signature-box { border: 1px solid var(--id-border); height: 140px; background: var(--id-off-white); padding: 15px; position: relative; }
+        .signature-box label { font-size: 7pt; text-transform: uppercase; color: var(--id-grey); font-weight: bold; }
+        .signature-box::after { content: "CACHET ET SCEAU"; position: absolute; bottom: 10px; right: 10px; font-size: 6pt; color: var(--id-grey); opacity: 0.4; }
+
+        .footer { position: absolute; bottom: 10mm; width: calc(100% - 50mm); display: flex; justify-content: space-between; font-size: 7.5pt; color: var(--id-grey); border-top: 1px solid var(--id-border); padding-top: 10px; }
+        .kumea-seal { font-weight: 700; letter-spacing: 1px; color: var(--id-slate); }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .page { margin: 0; box-shadow: none; page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1: COVER -->
+    <div class="page cover">
+        <div class="id-tile"><span>ID.</span></div>
+        <h1>PACK CONSOLIDÉ — AMO/LTA</h1>
+        <h2>PROJET TRIOMF (BOMA)</h2>
+        <div class="cover-meta">
+            <strong>DESTINATAIRE :</strong> Direction Générale (FPI)<br>
+            <strong>MISSION :</strong> Assistance à Maîtrise d'Ouvrage / Lender's Technical Advisor<br>
+            <strong>VERSION :</strong> v1.1 (Consolidé - 12 Février 2026)<br>
+            <strong>STATUT :</strong> Brouillon Confidentiel — Document de Gouvernance
+        </div>
+        <div style="position: absolute; bottom: 25mm; font-size: 10pt; opacity: 0.6; font-weight: 700; letter-spacing: 2px;">
+            A KUMEA.AFRICA INITIATIVE
+        </div>
+    </div>
+
+    <!-- PAGE 2: SOMMAIRE -->
+    <div class="page">
+        <h3>Table des matières</h3>
+        <table style="font-size: 11pt;">
+            <tr><td><strong>1. Note de cadrage stratégique</strong> — Mission AMO / Verrou de contrôle</td><td class="cell-right">04</td></tr>
+            <tr><td><strong>2. Heads of Terms</strong> — LTA/AMO Tripartite (FPI–TRIOMF–InfraDev)</td><td class="cell-right">05</td></tr>
+            <tr><td><strong>3. Ordre de Service / Lettre de mission</strong> — AMO/LTA</td><td class="cell-right">06</td></tr>
+            <tr><td><strong>4. Annexes — Templates & Outils de contrôle</strong></td><td class="cell-right">07</td></tr>
+            <tr><td style="padding-left: 20px;">Annexe 1 — Registre des actifs (Asset Register)</td><td class="cell-right">20</td></tr>
+            <tr><td style="padding-left: 20px;">Annexe 2 — Certificat de service fait / Avis de conformité</td><td class="cell-right">21</td></tr>
+            <tr><td style="padding-left: 20px;">Annexe 3 — Grille de contrôle des décaissements</td><td class="cell-right">22</td></tr>
+            <tr><td style="padding-left: 20px;">Annexe 4 — Rapport mensuel (Outline)</td><td class="cell-right">23</td></tr>
+            <tr><td style="padding-left: 20px;">Annexe 5 — Registre ESG / E&S / HSE (Option)</td><td class="cell-right">24</td></tr>
+            <tr><td style="padding-left: 20px;">Annexe 6 — Checklist J0–J15 (Mise en route)</td><td class="cell-right">25</td></tr>
+        </table>
+        <div class="footer">
+            <div>InfraDev.Africa | Projet Triomf Boma</div>
+            <div class="kumea-seal">A KUMEA.AFRICA INITIATIVE</div>
+            <div>Page 2</div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: NOTE DE CADRAGE 1 -->
+    <div class="page">
+        <div class="sidebar-layout">
+            <div class="sidebar">
+                <div class="sidebar-item">
+                    <label>Positionnement</label>
+                    <p>InfraDev.Africa : Tiers de confiance indépendant du DG du FPI.</p>
+                </div>
+                <div class="sidebar-item">
+                    <label>Expert Clé</label>
+                    <p>Ted Kivoto Isengingo<br>Managing Director</p>
+                </div>
+                <div class="sidebar-item">
+                    <label>Référence</label>
+                    <p>BCC / IGF Integrity Standards</p>
+                </div>
+            </div>
+            <div class="main-content">
+                <h1>1. Note de cadrage stratégique</h1>
+                <h2>Relance de l’Unité de Production d’Engrais (Boma / Triomf RDC)</h2>
+                
+                <div class="insight-box">
+                    "L'impératif stratégique est la sécurisation totale du capital. Le FPI ne paie que ce qui est vérifié techniquement et physiquement."
+                </div>
+
+                <h3>1. L’impératif de sécurité</h3>
+                <p>Dans un contexte post-Bukanga Lonzo et compte tenu de la surveillance institutionnelle accrue (BCC / IGF), la relance de Boma requiert un dispositif de contrôle qui protège le FPI et sa Direction Générale. L’objectif central est de certifier la réalité des actifs et la conformité des travaux avant toute décision de décaissement financier.</p>
+                
+                <h3>2. Dispositif proposé: « Tiers de confiance »</h3>
+                <ul>
+                    <li><strong>Statut :</strong> AMO / Lender’s Technical Advisor (LTA) — Fondé de pouvoir technique indépendant.</li>
+                    <li><strong>Rôle :</strong> Agir comme « les yeux du DG » via un canal de reporting direct, exclusif et inaliénable.</li>
+                    <li><strong>Mécanisme :</strong> Pré-contrôle rigoureux des demandes de paiement. Sans visa de conformité émis par InfraDev, le flux de paiement est contractuellement bloqué.</li>
+                    <li><strong>Contrôle à la source :</strong> Inspection physique des fournisseurs et audits pré-shipment en RSA.</li>
+                </ul>
+
+                <h3>3. Pourquoi InfraDev.Africa</h3>
+                <p>InfraDev n'est pas un simple consultant, mais une structure d’ingénierie & advisory orientée vers la <strong>gouvernance d’exécution</strong>. Notre approche repose sur la traçabilité absolue (registres, grilles), la preuve physique et une discipline documentaire stricte. Nous garantissons une neutralité totale vis-à-vis du management opérationnel du projet.</p>
+            </div>
+        </div>
+        <div class="footer">
+            <div>Note de Cadrage Stratégique | v1.1</div>
+            <div class="kumea-seal">A KUMEA.AFRICA INITIATIVE</div>
+            <div>Page 3</div>
+        </div>
+    </div>
+
+    <!-- PAGE 4: NOTE DE CADRAGE 2 -->
+    <div class="page">
+        <div class="sidebar-layout">
+            <div class="sidebar">
+                <div class="sidebar-item">
+                    <label>Modèle</label>
+                    <p>Neutralité budgétaire pour le FPI.</p>
+                </div>
+                <div class="sidebar-item">
+                    <label>Sécurité</label>
+                    <p>Compte Escrow pour prévenir la capture du contrôleur.</p>
+                </div>
+            </div>
+            <div class="main-content">
+                <h3>4. Modèle économique (Indépendance Garantie)</h3>
+                <p>La rémunération de la mission ne provient pas du budget de fonctionnement du FPI. Le schéma proposé repose sur une imputation projet (CAPEX), protégée par un mécanisme de compte séquestre (escrow). Ce compte est alimenté par l'opérateur avant démarrage. Les honoraires sont déclenchés automatiquement sur base des livrables transmis au DG du FPI, empêchant toute tentative de "capture" du contrôleur par l'opérateur audité.</p>
+
+                <h3>5. Périmètre — Base + Extensions</h3>
+                <h4>Base (LTA/AMO)</h4>
+                <ul>
+                    <li>Audit initial (Boma + RSA) et déploiement des outils de gouvernance.</li>
+                    <li>Certifications de service fait et gestion de la grille de décaissement.</li>
+                    <li>Rapports mensuels de conformité intégrant la traçabilité CAPEX/Assets et alertes directes au DG.</li>
+                </ul>
+
+                <h4>Extensions Critiques</h4>
+                <p>Inclusion du PMO (Data-room, registres), Procurement Watch (cohérence BOQ), Registre ESG/HSE, et support à la conformité pour les échanges institutionnels (BCC/IGF). Audit de la Logistics Readiness et Vendor Integrity Screening (Anti-sociétés écrans).</p>
+
+                <h3>6. Plan d’action immédiat (J0–J15)</h3>
+                <ul>
+                    <li><strong>J0 :</strong> Mandat signé — Accès immédiat au site de Boma et fournisseurs RSA.</li>
+                    <li><strong>J1–J5 :</strong> Collecte documentaire exhaustive et mise en place de la data-room de contrôle.</li>
+                    <li><strong>J5–J10 :</strong> Inventaire contradictoire à Boma et publication du Registre des Actifs v1.</li>
+                    <li><strong>J10–J15 :</strong> Émission d'une Note « Flash » pour appuyer la levée des mesures conservatoires.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer">
+            <div>Gouvernance & Plan d'Action | v1.1</div>
+            <div class="kumea-seal">A KUMEA.AFRICA INITIATIVE</div>
+            <div>Page 4</div>
+        </div>
+    </div>
+
+    <!-- PAGE 5: HEADS OF TERMS 1 -->
+    <div class="page">
+        <div class="sidebar-layout">
+            <div class="sidebar">
+                <div class="sidebar-item">
+                    <label>Statut HoT</label>
+                    <p>Confidentiel. Base de négociation tripartite.</p>
+                </div>
+            </div>
+            <div class="main-content">
+                <h1>2. Heads of Terms (HoT)</h1>
+                <h2>Contrôle technique & financier — « Verrou de contrôle »</h2>
+                
+                <h3>1. Objet du document</h3>
+                <p>Ce HoT fixe les principes de la mission de contrôle indépendant réalisée par InfraDev.Africa. La rémunération est budgétée au CAPEX du projet et sécurisée via un compte escrow irrévocable, avec un reporting exclusif au Directeur Général du FPI.</p>
+
+                <h3>2. Parties Prenantes</h3>
+                <table style="font-size: 8pt;">
+                    <tr><td width="30%"><strong>Bailleur / Autorité</strong></td><td>Fonds de Promotion de l’Industrie (FPI) — Direction Générale</td></tr>
+                    <tr><td><strong>Entreprise / Payeur</strong></td><td>AFRICOM (RDC)</td></tr>
+                    <tr><td><strong>Partenaire Technique</strong></td><td>Triomf RDC / Triomf SA</td></tr>
+                    <tr><td><strong>Conseil / LTA</strong></td><td>InfraDev.Africa (Kumea Africa Holding SARL)</td></tr>
+                </table>
+
+                <h3>3. Gouvernance & Indépendance</h3>
+                <ul>
+                    <li><strong>No Cert = No Pay :</strong> Les certifications d'InfraDev conditionnent strictement tout décaissement.</li>
+                    <li><strong>Canal Direct :</strong> InfraDev rapporte exclusivement au DG du FPI.</li>
+                    <li><strong>Financement :</strong> Compte Escrow préfinancé. L'opérateur n'a aucun droit d'instruction sur les honoraires ou conclusions du LTA.</li>
+                </ul>
+
+                <h3>4. Durée & Équipe</h3>
+                <p>Engagement minimum de <strong>36 mois</strong>. Ted Kivoto Isengingo est désigné Key Expert. Tout remplacement est soumis à l'approbation souveraine du DG du FPI.</p>
+            </div>
+        </div>
+        <div class="footer">
+            <div>Heads of Terms | Tripartite | Page 5</div>
+            <div class="kumea-seal">A KUMEA.AFRICA INITIATIVE</div>
+        </div>
+    </div>
+
+    <!-- PAGE 6: HEADS OF TERMS 2 (FEES) -->
+    <div class="page">
+        <div class="main-content">
+            <h3>7. Modalités de rémunération</h3>
+            <p>La mission est budgétée au titre des « Frais de contrôle & surveillance ». Honoraires préfinancés en Escrow (12 à 36 mois glissants).</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Composant</th>
+                        <th>Base</th>
+                        <th class="cell-right">Montant (USD)</th>
+                        <th>Observations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Retainer Mensuel LTA</strong></td><td>Mensuel (36 mois)</td><td class="cell-right">[À Proposer]</td><td>Reporting, Certifications, Coordination DG</td></tr>
+                    <tr><td><strong>Audit Initial J0-J30</strong></td><td>Forfait</td><td class="cell-right">[À Proposer]</td><td>État des lieux Boma + RSA + Outils</td></tr>
+                    <tr><td><strong>Missions Terrain</strong></td><td>Par mission</td><td class="cell-right">[À Proposer]</td><td>Per diem + Logistique sur ordre de mission</td></tr>
+                    <tr><td><strong>Frais de déplacement</strong></td><td>Au réel</td><td class="cell-right">[À Proposer]</td><td>Vols, Hôtels, Transferts (Plafonné)</td></tr>
+                </ul>
+            </table>
+
+            <div class="insight-box">
+                Plafond indicatif (CAP) : [0,8% – 1,2%] de la valeur totale du contrat projet, protégeant l'équilibre financier tout en assurant la rigueur exigée par la BCC.
+            </div>
+
+            <h3>9. Clauses de Compliance</h3>
+            <p><strong>Limitation de responsabilité :</strong> InfraDev certifie l'existence, l'intégrité et la fonctionnalité technique des actifs. Nous n'émettons aucune opinion sur la viabilité commerciale, l'OPEX, ou la rentabilité future.</p>
+            
+            <div class="signature-row">
+                <div class="signature-box"><label>FPI (Direction Générale)</label></div>
+                <div class="signature-box"><label>AFRICOM (Direction Générale)</label></div>
+            </div>
+            <div class="signature-row" style="margin-top: 20px; grid-template-columns: 1fr;">
+                <div class="signature-box" style="width: 50%;"><label>InfraDev.Africa (Managing Director)</label></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div>Frais & Engagements Financiers | Page 6</div>
+            <div class="kumea-seal">A KUMEA.AFRICA INITIATIVE</div>
+        </div>
+    </div>
+
+    <!-- PAGE 7: ORDRE DE SERVICE -->
+    <div class="page">
+        <h1>3. Ordre de Service (OS)</h1>
+        <h2>Lettre de Mission — AMO / LTA « Verrou de Contrôle »</h2>
+        
+        <table style="margin-bottom: 30px;">
+            <tr><td width="25%"><strong>Émetteur</strong></td><td>Fonds de Promotion de l’Industrie (FPI) — Direction Générale</td></tr>
+            <tr><td><strong>Destinataire</strong></td><td>InfraDev.Africa (Kumea Africa Holding SARL)</td></tr>
+            <tr><td><strong>Objet</strong></td><td><strong>Démarrage immédiat des activités de certification et contrôle technique</strong></td></tr>
+        </table>
+
+        <h3>2. Contexte & Nature</h3>
+        <p>Ce projet exige un dispositif robuste pour sécuriser la responsabilité managériale de la DG. InfraDev est investi d'un mandat de <strong>Fondé de pouvoir technique</strong>. Principe directeur : « Pas de certification = pas de paiement ».</p>
+
+        <h3>4. Périmètre de Mission</h3>
+        <p><strong>Phase A — Audit initial (J0–J30) :</strong> Inventaire contradictoire à Boma, étiquetage des actifs, séparation du passif historique et des nouveaux investissements, audit pré-shipment à Johannesburg.</p>
+        <p><strong>Phase B — Contrôle d’exécution (Continu) :</strong> Contre-expertise technique des factures, vérification de la cohérence Budget vs Terrain, Visa « Bon à Payer » motivé, contrôle logistique RSA-Boma.</p>
+        
+        <h3>Workstreams Optionnels</h3>
+        <ul>
+            <li><strong>ESG/HSE :</strong> Registre des risques, checklist conformité terrain, audit "Chemical Management".</li>
+            <li><strong>Conformité Financière :</strong> Vendor screening, surveillance documentation Change/Import (Model IB/IS).</li>
+        </ul>
+
+        <h3>7. Modalités & Pouvoirs</h3>
+        <p>InfraDev dispose d'un droit d'accès illimité aux sites (Boma) et ateliers (RSA), accès total aux documents (Contrats, BOQ, Factures) et le pouvoir de recommander la suspension de tout flux financier non conforme.</p>
+
+        <div class="signature-row">
+            <div class="signature-box"><label>Pour le FPI (Directeur Général)</label></div>
+            <div class="signature-box"><label>Pour InfraDev.Africa (Managing Director)</label></div>
+        </div>
+        <div class="footer">
+            <div>Ordre de Service Mandataire | Page 7</div>
+            <div class="kumea-seal">A KUMEA.AFRICA INITIATIVE</div>
+        </div>
+    </div>
+
+    <!-- PAGE 8: ANNEXES INTRO -->
+    <div class="page">
+        <h1>4. Annexes — Templates & Outils</h1>
+        <h2>Système Opérationnel de Certification</h2>
+        
+        <div class="insight-box">
+            Ces outils constituent la "Preuve de Gouvernance". Ils sont standardisés pour répondre aux attentes de l'IGF et de la BCC.
+        </div>
+
+        <h3>Annexe 1 — Registre des actifs (Asset Register)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Équipement / Description</th>
+                    <th>Marque/Série</th>
+                    <th>Localisation</th>
+                    <th>État</th>
+                    <th>Preuves</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>[___]</td><td>[__________________________]</td><td>[__________]</td><td>[________]</td><td>[____]</td><td>[Photo/Doc]</td></tr>
+                <tr><td>[___]</td><td>[__________________________]</td><td>[__________]</td><td>[________]</td><td>[____]</td><td>[Photo/Doc]</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Annexe 2 — Certificat de service fait</h3>
+        <div style="border: 2px solid var(--id-navy); padding: 20px; margin-top: 10px;">
+            <p><strong>RÉFÉRENCE FACTURE :</strong> [________________] | <strong>MONTANT :</strong> [________________]</p>
+            <p><strong>VÉRIFICATIONS :</strong> ☐ Preuves Docs ☐ Preuves Terrain ☐ Cohérence CAPEX</p>
+            <div style="background: var(--id-navy); color: white; padding: 10px; margin-top: 10px;">
+                <strong>DÉCISION LTA : ☐ CONFORME (BON À PAYER) | ☐ NON CONFORME (BLOQUÉ)</strong>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div>Templates Opérationnels | Page 8</div>
+            <div class="kumea-seal">A KUMEA.AFRICA INITIATIVE</div>
+        </div>
+    </div>
+
+    <!-- PAGE 9: ANNEXES CONTINUED -->
+    <div class="page">
+        <h3>Annexe 3 — Grille de contrôle des décaissements</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Fournisseur</th>
+                    <th>Ligne CAPEX</th>
+                    <th>Montant</th>
+                    <th>Preuve Physique</th>
+                    <th>Décision LTA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>[__________]</td><td>[__________]</td><td>[_____]</td><td>[Serial/Photo]</td><td>[Visa]</td></tr>
+                <tr><td>2</td><td>[__________]</td><td>[__________]</td><td>[_____]</td><td>[Serial/Photo]</td><td>[Visa]</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Annexe 4 — Rapport Mensuel (Outline)</h3>
+        <ul>
+            <li><strong>1. Résumé Exécutif :</strong> Décisions critiques, Risques Rouges, Flux certifiés.</li>
+            <li><strong>2. Avancement Physique :</strong> Équipements posés, numéros de série, reportage photo.</li>
+            <li><strong>3. Traçabilité CAPEX :</strong> Écarts vs Budget, pièces justificatives.</li>
+            <li><strong>4. Conformité :</strong> Route procédurale, non-conformités détectées.</li>
+            <li><strong>5. Logistique :</strong> Status pré-shipment RSA.</li>
+        </ul>
+
+        <h3>Annexe 5 — Registre ESG / E&S / HSE</h3>
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Risque / Catégorie</th><th>Impact</th><th>Niveau</th><th>Mitigation</th><th>Propriétaire</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>E01</td><td>Stockage produits chimiques</td><td>Élevé</td><td>[___]</td><td>[__________]</td><td>[EPC]</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Annexe 6 — Checklist J0–J15 (Mise en route)</h3>
+        <p>☐ OS signé + mandat d'accès. ☐ Point focal DG FPI désigné. ☐ Data-room initialisée. ☐ Plan de visite Boma validé. ☐ Templates de certification déployés. ☐ Note « Flash » soumise pour la BCC.</p>
+
+        <div class="footer">
+            <div>Finalisation Pack Consolidé | Page 9</div>
+            <div class="kumea-seal">A KUMEA.AFRICA INITIATIVE</div>
+        </div>
+    </div>
+
+</body>
+</html>

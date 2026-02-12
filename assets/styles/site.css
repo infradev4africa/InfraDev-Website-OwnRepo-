@@ -1,3 +1,5 @@
+@import url("../../src/assets/branding/variables.css");
+
 /* SOURCE: index.html */
 /* --- 1. THE DYNAMIC THEME ENGINE --- */
         :root {
@@ -381,3 +383,232 @@ h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
         }
 
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
+
+/* GOV V2.0 - TRIOMF COMMAND CENTER */
+.triomf-command-center {
+    align-items: start;
+    margin-top: 0.25rem;
+}
+
+.triomf-sidebar {
+    position: sticky;
+    top: 7.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.triomf-meta-card {
+    background: var(--id-color-offwhite);
+    border: 1px solid var(--id-color-navy-15);
+    border-radius: 1rem;
+    padding: 1rem;
+    color: var(--id-color-slate);
+    box-shadow: 0 8px 16px var(--id-color-navy-10);
+}
+
+.triomf-meta-title {
+    font-family: var(--id-font-display);
+    font-size: var(--id-step--1);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--id-color-navy);
+    font-weight: 700;
+}
+
+.triomf-meta-list {
+    margin-top: 0.65rem;
+    display: grid;
+    gap: 0.45rem;
+    font-size: 0.84rem;
+    line-height: 1.5;
+}
+
+.triomf-meta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid rgba(51, 65, 85, 0.35);
+    border-radius: 9999px;
+    padding: 0.28rem 0.6rem;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--id-color-slate);
+}
+
+.triomf-main {
+    min-width: 0;
+}
+
+.id-insight-box {
+    border: 2px solid var(--id-color-gold);
+    border-radius: 0.95rem;
+    background: var(--id-color-offwhite);
+    color: var(--id-color-slate);
+    padding: 1rem 1rem 0.95rem;
+    box-shadow: 0 10px 20px var(--id-color-navy-10);
+}
+
+.id-insight-box h3 {
+    color: var(--id-color-navy);
+    font-family: var(--id-font-display);
+    font-size: var(--id-step-1);
+    line-height: 1.15;
+    margin: 0 0 0.5rem;
+}
+
+.id-insight-box p,
+.id-insight-box li {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--id-color-slate);
+}
+
+.id-insight-box ul {
+    margin: 0;
+    padding-left: 1.1rem;
+}
+
+.id-cert-stamp {
+    width: 92px;
+    height: 92px;
+}
+
+.id-table-scroll {
+    overflow-x: auto;
+    border: 1px solid rgba(51, 65, 85, 0.25);
+    border-radius: 0.85rem;
+    background: #ffffff;
+}
+
+.id-table-governed {
+    min-width: 760px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.id-table-governed thead th {
+    background: var(--id-color-navy);
+    color: #ffffff;
+    border: 1px solid rgba(51, 65, 85, 0.45);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.id-table-governed th,
+.id-table-governed td {
+    border: 1px solid rgba(51, 65, 85, 0.45);
+    color: var(--id-color-slate);
+    padding: 0.65rem 0.7rem;
+    font-size: 0.86rem;
+    line-height: 1.45;
+}
+
+.id-table-governed tbody tr:nth-child(even) {
+    background: rgba(247, 247, 245, 0.7);
+}
+
+.id-table-governed tbody tr:hover {
+    background: rgba(249, 199, 12, 0.1);
+}
+
+/* Keep table governance for legacy triomf markup */
+.doc-content table {
+    min-width: 760px;
+}
+
+.doc-content thead th {
+    background: var(--id-color-navy);
+    color: #ffffff;
+    border-color: rgba(51, 65, 85, 0.45);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.doc-content th,
+.doc-content td {
+    border-color: rgba(51, 65, 85, 0.45);
+}
+
+/* WCAG and readability guardrails */
+.doc-panel,
+.dg-card,
+.dg-meta-box,
+.id-insight-box,
+.triomf-meta-card {
+    color: var(--id-color-slate);
+    background-color: var(--id-color-offwhite);
+}
+
+/* Print governance for A4 institutional reports */
+@page {
+    size: A4;
+    margin: 12mm;
+}
+
+@media print {
+    html,
+    body {
+        background: #ffffff !important;
+        color: #111827 !important;
+    }
+
+    body.locked {
+        overflow: visible !important;
+    }
+
+    #passcode-gate,
+    .fixed,
+    #dg-comment-submit {
+        display: none !important;
+    }
+
+    .page-content {
+        display: block !important;
+    }
+
+    .triomf-sidebar {
+        position: static;
+    }
+
+    .triomf-command-center {
+        display: block;
+    }
+
+    .doc-panel,
+    .dg-card,
+    .triomf-meta-card,
+    .id-insight-box,
+    .bg-brand-surface {
+        break-inside: avoid;
+        box-shadow: none !important;
+        border-color: #94A3B8 !important;
+    }
+
+    .doc-content table,
+    .id-table-governed {
+        min-width: 100% !important;
+        display: table !important;
+    }
+
+    .doc-content thead,
+    .id-table-governed thead {
+        display: table-header-group;
+    }
+
+    .doc-content tr,
+    .id-table-governed tr {
+        break-inside: avoid;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        break-after: avoid;
+    }
+}

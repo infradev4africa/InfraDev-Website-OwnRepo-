@@ -1,0 +1,80 @@
+:root {
+  --id-color-navy: #0A1F44;
+  --id-color-gold: #F9C70C;
+  --id-color-offwhite: #F7F7F5;
+  --id-color-slate: #334155;
+  --id-color-navy-10: rgba(10, 31, 68, 0.10);
+  --id-color-navy-15: rgba(10, 31, 68, 0.15);
+  --id-color-gold-20: rgba(249, 199, 12, 0.20);
+
+  --id-font-display: "Montserrat", sans-serif;
+  --id-font-body: "Inter", sans-serif;
+
+  /* Major Third scale (1.25) */
+  --id-step--1: 0.80rem;
+  --id-step-0: 1rem;
+  --id-step-1: 1.25rem;
+  --id-step-2: 1.563rem;
+  --id-step-3: 1.953rem;
+  --id-step-4: 2.441rem;
+  --id-step-5: 3.052rem;
+
+  --id-space-1: 0.5rem;
+  --id-space-2: 0.75rem;
+  --id-space-3: 1rem;
+  --id-space-4: 1.5rem;
+  --id-space-5: 2rem;
+}
+
+.id-grid-institutional {
+  display: grid;
+  grid-template-columns: minmax(260px, 30fr) minmax(0, 70fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .id-grid-institutional {
+    grid-template-columns: 1fr;
+  }
+}
+
+.id-tile-governed {
+  transform: rotate(3deg);
+  border-radius: 12px;
+  box-shadow: 0 12px 24px var(--id-color-navy-10);
+}
+
+.id-counter-rotation {
+  transform: rotate(-3deg);
+}
+
+.id-heading-xl {
+  font-family: var(--id-font-display);
+  font-size: var(--id-step-5);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.id-heading-lg {
+  font-family: var(--id-font-display);
+  font-size: var(--id-step-3);
+  line-height: 1.15;
+}
+
+.id-heading-md {
+  font-family: var(--id-font-display);
+  font-size: var(--id-step-2);
+  line-height: 1.2;
+}
+
+.id-body-md {
+  font-family: var(--id-font-body);
+  font-size: var(--id-step-0);
+  line-height: 1.65;
+}
+
+.id-body-sm {
+  font-family: var(--id-font-body);
+  font-size: var(--id-step--1);
+  line-height: 1.6;
+}
