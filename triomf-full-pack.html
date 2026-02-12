@@ -104,7 +104,7 @@
         h4 { font-family: 'Montserrat', sans-serif; font-size: 10pt; text-transform: uppercase; color: var(--id-slate); margin: 20px 0 10px 0; }
         
         p, li { font-size: 10pt; color: var(--id-slate); line-height: 1.55; margin-bottom: 12px; text-align: justify; }
-        ul { margin-left: 20px; margin-bottom: 15px; }
+        ul, ol { margin-left: 20px; margin-bottom: 15px; }
         strong { color: var(--id-navy); font-weight: 600; }
 
         /* Layout Elements */
@@ -207,6 +207,7 @@
 
         /* Signature Blocks */
         .signature-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 50px; }
+        .signature-row-triple { grid-template-columns: 1fr 1fr 1fr; }
         .signature-box { border: 1px solid var(--id-border); height: 140px; background: var(--id-off-white); padding: 15px; position: relative; }
         .signature-box label { font-size: 7pt; text-transform: uppercase; color: var(--id-grey); font-weight: bold; }
         .signature-box::after { content: "CACHET ET SCEAU"; position: absolute; bottom: 10px; right: 10px; font-size: 6pt; color: var(--id-grey); opacity: 0.4; }
@@ -295,7 +296,7 @@
                 <p>Dans un contexte post-Bukanga Lonzo et compte tenu de la surveillance institutionnelle accrue (BCC / IGF), la relance de Boma requiert un dispositif de contrôle qui protège le FPI et sa Direction Générale. L’objectif central est de certifier la réalité des actifs et la conformité des travaux avant toute décision de décaissement financier.</p>
                 
                 <h3>2. Dispositif proposé: « Tiers de confiance »</h3>
-                <ul class="list-two-columns">
+                <ul>
                     <li><strong>Statut :</strong> AMO / Lender’s Technical Advisor (LTA) — Fondé de pouvoir technique indépendant.</li>
                     <li><strong>Rôle :</strong> Agir comme « les yeux du DG » via un canal de reporting direct, exclusif et inaliénable.</li>
                     <li><strong>Mécanisme :</strong> Pré-contrôle rigoureux des demandes de paiement. Sans visa de conformité émis par InfraDev, le flux de paiement est contractuellement bloqué.</li>
@@ -332,14 +333,14 @@
 
                 <h3>5. Périmètre — Base + Extensions</h3>
                 <h4>Base (LTA/AMO)</h4>
-                <ul class="list-two-columns">
+                <ul>
                     <li>Audit initial (Boma + RSA) et déploiement des outils de gouvernance.</li>
                     <li>Certifications de service fait et gestion de la grille de décaissement.</li>
                     <li>Rapports mensuels de conformité intégrant la traçabilité CAPEX/Assets et alertes directes au DG.</li>
                 </ul>
 
                 <h4>Extensions Critiques</h4>
-                <ul class="list-two-columns">
+                <ul>
                     <li>Inclusion du PMO (Data-room, registres).</li>
                     <li>Procurement Watch (cohérence BOQ).</li>
                     <li>Registre ESG/HSE.</li>
@@ -349,7 +350,7 @@
                 </ul>
 
                 <h3>6. Plan d’action immédiat (J0–J15)</h3>
-                <ul class="list-two-columns">
+                <ul>
                     <li><strong>J0 :</strong> Mandat signé — Accès immédiat au site de Boma et fournisseurs RSA.</li>
                     <li><strong>J1–J5 :</strong> Collecte documentaire exhaustive et mise en place de la data-room de contrôle.</li>
                     <li><strong>J5–J10 :</strong> Inventaire contradictoire à Boma et publication du Registre des Actifs v1.</li>
@@ -389,7 +390,7 @@
                 </table>
 
                 <h3>3. Gouvernance & Indépendance</h3>
-                <ul class="list-two-columns">
+                <ul>
                     <li><strong>No Cert = No Pay :</strong> Les certifications d'InfraDev conditionnent strictement tout décaissement.</li>
                     <li><strong>Canal Direct :</strong> InfraDev rapporte exclusivement au DG du FPI.</li>
                     <li><strong>Financement :</strong> Compte Escrow préfinancé. L'opérateur n'a aucun droit d'instruction sur les honoraires ou conclusions du LTA.</li>
@@ -435,12 +436,10 @@
             <h3>9. Clauses de Compliance</h3>
             <p><strong>Limitation de responsabilité :</strong> InfraDev certifie l'existence, l'intégrité et la fonctionnalité technique des actifs. Nous n'émettons aucune opinion sur la viabilité commerciale, l'OPEX, ou la rentabilité future.</p>
             
-            <div class="signature-row">
+            <div class="signature-row signature-row-triple">
                 <div class="signature-box"><label>FPI (Direction Générale)</label></div>
                 <div class="signature-box"><label>AFRICOM (Direction Générale)</label></div>
-            </div>
-            <div class="signature-row" style="margin-top: 20px; grid-template-columns: 1fr;">
-                <div class="signature-box" style="width: 50%;"><label>InfraDev.Africa (Managing Director)</label></div>
+                <div class="signature-box"><label>InfraDev.Africa (Managing Director)</label></div>
             </div>
         </div>
         <div class="footer">
@@ -468,7 +467,7 @@
         <p><strong>Phase B — Contrôle d’exécution (Continu) :</strong> Contre-expertise technique des factures, vérification de la cohérence Budget vs Terrain, Visa « Bon à Payer » motivé, contrôle logistique RSA-Boma.</p>
         
         <h3>Workstreams Optionnels</h3>
-        <ul class="list-two-columns">
+        <ul>
             <li><strong>ESG/HSE :</strong> Registre des risques, checklist conformité terrain, audit "Chemical Management".</li>
             <li><strong>Conformité Financière :</strong> Vendor screening, surveillance documentation Change/Import (Model IB/IS).</li>
         </ul>
@@ -549,13 +548,13 @@
         </table>
 
         <h3>Annexe 4 — Rapport Mensuel (Outline)</h3>
-        <ul class="list-two-columns">
-            <li><strong>1. Résumé Exécutif :</strong> Décisions critiques, Risques Rouges, Flux certifiés.</li>
-            <li><strong>2. Avancement Physique :</strong> Équipements posés, numéros de série, reportage photo.</li>
-            <li><strong>3. Traçabilité CAPEX :</strong> Écarts vs Budget, pièces justificatives.</li>
-            <li><strong>4. Conformité :</strong> Route procédurale, non-conformités détectées.</li>
-            <li><strong>5. Logistique :</strong> Status pré-shipment RSA.</li>
-        </ul>
+        <ol class="list-two-columns">
+            <li><strong>Résumé Exécutif :</strong> Décisions critiques, Risques Rouges, Flux certifiés.</li>
+            <li><strong>Avancement Physique :</strong> Équipements posés, numéros de série, reportage photo.</li>
+            <li><strong>Traçabilité CAPEX :</strong> Écarts vs Budget, pièces justificatives.</li>
+            <li><strong>Conformité :</strong> Route procédurale, non-conformités détectées.</li>
+            <li><strong>Logistique :</strong> Status pré-shipment RSA.</li>
+        </ol>
 
         <h3>Annexe 5 — Registre ESG / E&S / HSE</h3>
         <table>

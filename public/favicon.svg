@@ -1,13 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="InfraDev logo mark">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="InfraDev tab icon">
   <defs>
     <style>
-      :root { --id-color-navy: #0A1F44; --id-color-gold: #F9C70C; }
+      :root {
+        --id-color-navy: #0A1F44;
+        --id-color-gold: #F9C70C;
+        --id-color-off-white: #F7F7F5;
+      }
     </style>
   </defs>
-  <g transform="rotate(3 64 64)">
-    <rect x="16" y="16" width="96" height="96" rx="12" fill="var(--id-color-navy)" stroke="var(--id-color-gold)" stroke-width="4"/>
-    <g transform="rotate(-3 64 64)">
-      <text x="64" y="73" fill="var(--id-color-gold)" font-family="Montserrat, sans-serif" font-size="36" font-weight="800" text-anchor="middle">ID.</text>
-    </g>
-  </g>
+  <rect width="128" height="128" rx="20" fill="var(--id-color-navy)" />
+  <text
+    x="10"
+    y="66"
+    fill="var(--id-color-gold)"
+    font-family="Montserrat, Inter, Arial, sans-serif"
+    font-size="72"
+    font-weight="800"
+    dominant-baseline="middle"
+  >ID</text>
+  <text
+    x="79"
+    y="66"
+    fill="var(--id-color-off-white)"
+    font-family="Montserrat, Inter, Arial, sans-serif"
+    font-size="72"
+    font-weight="800"
+    dominant-baseline="middle"
+  >.A</text>
 </svg>
