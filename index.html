@@ -625,91 +625,31 @@
         </div>
     </section>
 
-    <footer class="bg-brand-surface pt-16 pb-8 border-t border-white/5 text-sm">
-        <div class="max-w-site mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16 border-b border-white/5 pb-16">
-
-                <div class="flex flex-col gap-6">
-                    <div class="flex items-center gap-3">
-                        <div class="relative w-8 h-8 bg-brand-accent rounded-md flex items-center justify-center shrink-0 overflow-hidden">
-                            <span class="material-symbols-outlined absolute text-brand-base opacity-20 text-2xl translate-x-1 translate-y-1">public</span>
-                            <span class="font-display font-extrabold text-brand-base text-xs tracking-tighter relative z-10">ID.</span>
-                        </div>
-                        <h3 class="text-xl font-bold font-display tracking-tight text-white">InfraDev.Africa</h3>
-                    </div>
-
-                    <p class="text-gray-400 font-light leading-relaxed">
-                        <span class="lang-en">Infrastructure advisory, planning, and project support services focused on African contexts.</span>
-                        <span class="lang-fr hidden">Conseil, planification et appui à la structuration de projets — adaptés aux réalités africaines.</span>
-                    </p>
-                </div>
-
-                <div class="flex flex-col gap-6">
-                    <h4 class="font-bold text-white uppercase tracking-widest text-xs font-display">
-                        <span class="lang-en">Explore</span><span class="lang-fr hidden">Explorer</span>
-                    </h4>
-                    <ul class="flex flex-col gap-3 text-gray-400 font-light">
-                        <li><a href="#services" class="hover:text-brand-accent transition-colors"><span class="lang-en">What We Do</span><span class="lang-fr hidden">Nos services</span></a></li>
-                        <li><a href="#sectors" class="hover:text-brand-accent transition-colors"><span class="lang-en">Sectors</span><span class="lang-fr hidden">Secteurs</span></a></li>
-                        <li><a href="#process" class="hover:text-brand-accent transition-colors"><span class="lang-en">Approach</span><span class="lang-fr hidden">Notre méthode</span></a></li>
-                        <li><a href="#contact" class="hover:text-brand-accent transition-colors"><span class="lang-en">Contact</span><span class="lang-fr hidden">Contact</span></a></li>
-                    </ul>
-                </div>
-
-                <div class="flex flex-col gap-6">
-                    <h4 class="font-bold text-white uppercase tracking-widest text-xs font-display">
-                        <span class="lang-en">Legal</span><span class="lang-fr hidden">Juridique</span>
-                    </h4>
-                    <ul class="flex flex-col gap-3 text-gray-400 font-light">
-                        <li><button onclick="openModal('doc-legal-notice')" class="text-left hover:text-brand-accent transition-colors"><span class="lang-en">Legal Notice</span><span class="lang-fr hidden">Mentions légales</span></button></li>
-                        <li><button onclick="openModal('doc-privacy-policy')" class="text-left hover:text-brand-accent transition-colors"><span class="lang-en">Privacy Policy</span><span class="lang-fr hidden">Politique de confidentialité</span></button></li>
-                        <li><button onclick="openModal('doc-terms-of-use')" class="text-left hover:text-brand-accent transition-colors"><span class="lang-en">Terms of Use</span><span class="lang-fr hidden">Conditions d'utilisation</span></button></li>
-                        <li><button onclick="openModal('doc-professional-disclaimer')" class="text-left hover:text-brand-accent transition-colors"><span class="lang-en">Professional Services Disclaimer</span><span class="lang-fr hidden">Avertissement — services professionnels</span></button></li>
-                        <li><button onclick="openModal('doc-cookie-notice')" class="text-left hover:text-brand-accent transition-colors"><span class="lang-en">Cookie Notice</span><span class="lang-fr hidden">Cookies</span></button></li>
-                        <li><button onclick="openModal('doc-complaints')" class="text-left hover:text-brand-accent transition-colors"><span class="lang-en">Complaints Procedure</span><span class="lang-fr hidden">Procédure de réclamation</span></button></li>
-                        <li><button onclick="openModal('doc-technical-disclaimer')" class="text-left hover:text-brand-accent transition-colors"><span class="lang-en">Technical Disclaimer</span><span class="lang-fr hidden">Avertissement — aspects techniques</span></button></li>
-                    </ul>
-                </div>
-
-                <div class="flex flex-col gap-8">
-                    <div class="flex flex-col gap-6">
-                        <h4 class="font-bold text-white uppercase tracking-widest text-xs font-display">
-                            <span class="lang-en">Ecosystem</span><span class="lang-fr hidden">Écosystème</span>
-                        </h4>
-                        <a href="https://kumea.africa" target="_blank" rel="noopener" class="flex items-center gap-3 group">
-                            <img src="public/kumea-logo-gold-transparent.svg" alt="Kumea.Africa" class="w-8 h-8 object-contain" loading="lazy">
-                            <span class="text-gray-300 group-hover:text-brand-accent transition-colors font-semibold">Kumea.Africa</span>
-                        </a>
-                    </div>
-
-                    <div class="flex flex-col gap-6">
-                        <h4 class="font-bold text-white uppercase tracking-widest text-xs font-display">Contact</h4>
-                        <a href="mailto:info@infradev.africa" class="flex items-center gap-3 text-gray-300 hover:text-brand-accent transition-colors">
-                            <span class="material-symbols-outlined text-lg">mail</span>
-                            <span>info@infradev.africa</span>
-                        </a>
-                    </div>
-                </div>
+    <footer class="bg-brand-surface/80 border-t border-white/10 py-10">
+    <div class="max-w-site mx-auto px-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-sm text-gray-400">
+        <div class="flex items-center gap-3">
+            <div class="relative w-8 h-8 bg-brand-accent rounded-md flex items-center justify-center shrink-0 overflow-hidden">
+                <span class="material-symbols-outlined absolute text-brand-base opacity-20 text-2xl translate-x-1 translate-y-1">public</span>
+                <span class="font-display font-extrabold text-brand-base text-xs tracking-tighter relative z-10">ID.</span>
             </div>
-
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-gray-500 font-light text-center md:text-left">
-                <div class="space-y-1">
-                    <p>© 2026 Kumea Africa Holding SARL.</p>
-                    <p>
-                        <span class="lang-en">InfraDev.Africa operates within the Kumea.Africa ecosystem.</span>
-                        <span class="lang-fr hidden">InfraDev.Africa opère au sein de l'écosystème Kumea.Africa.</span>
-                    </p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-sm">location_on</span>
-                    <span>
-                        <span class="lang-en">Kinshasa, Democratic Republic of the Congo</span>
-                        <span class="lang-fr hidden">Kinshasa, République Démocratique du Congo</span>
-                    </span>
-                </div>
+            <div>
+                <p class="text-white font-semibold">InfraDev.Africa</p>
+                <p>Institutional Infrastructure Advisory</p>
             </div>
         </div>
-    </footer>
+        <div class="flex flex-wrap items-center gap-4">
+            <a class="text-brand-accent hover:text-white transition-colors" href="mailto:info@infradev.africa">info@infradev.africa</a>
+            <span class="text-gray-600">|</span>
+            <a class="text-gray-400 hover:text-white transition-colors" href="index.html">Access InfraDev site</a>
+            <span class="text-gray-600">|</span>
+            <a class="text-gray-400 hover:text-white transition-colors" href="https://kumea.africa" target="_blank" rel="noopener">Kumea.Africa</a>
+        </div>
+    </div>
+    <div class="max-w-site mx-auto px-4 mt-6 pt-6 border-t border-white/5 text-xs text-gray-500">
+        <p>&copy; 2026 Kumea Africa Holding SARL.</p>
+        <p>InfraDev.Africa operates within the Kumea.Africa ecosystem.</p>
+    </div>
+</footer>
 
     <div id="legal-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
         <div class="absolute inset-0 bg-brand-base/95 backdrop-blur-md transition-opacity opacity-0" id="modal-backdrop"></div>
@@ -1231,4 +1171,5 @@
     </script>
 </body>
 </html>
+
 
