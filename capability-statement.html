@@ -3,224 +3,589 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Capability Statement | InfraDev.Africa</title>
-    <meta name="description" content="Capability statement for InfraDev.Africa — institutional infrastructure advisory."/>
+    <title>Capability Statement | InfraDev.Africa — Institutional Infrastructure Advisory</title>
     <link rel="icon" type="image/svg+xml" href="public/favicon.svg"/>
     <link rel="shortcut icon" href="public/favicon.svg"/>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300;400;700&display=swap" rel="stylesheet"/>
 
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300..700&display=swap" rel="stylesheet"/>
-
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            base: 'var(--color-base)',
-                            surface: 'var(--color-surface)',
-                            accent: 'var(--color-accent)',
-                            muted: 'var(--color-muted)',
+                        id: { 
+                            navy: '#0A1F44', 
+                            gold: '#F9C70C', 
+                            surface: '#F7F7F5', 
+                            slate: '#334155', 
+                            grey: '#9CA3AF' 
                         }
                     },
-                    fontFamily: {
-                        display: ["Montserrat", "sans-serif"],
-                        heading: ["Poppins", "sans-serif"],
-                        body: ["Inter", "sans-serif"],
-                    },
-                    borderRadius: {
-                        pill: "9999px",
-                    },
-                    maxWidth: {
-                        site: "1120px",
+                    fontFamily: { 
+                        header: ["Montserrat", "sans-serif"], 
+                        body: ["Inter", "sans-serif"] 
                     }
                 },
             },
         }
     </script>
-    <link rel="stylesheet" href="assets/styles/site.css"/>
+    
+    <style>
+        /* Governance DNA */
+        .id-tile-3deg { transform: rotate(3deg); border-radius: 8px; }
+        .id-counter-rotate { transform: rotate(-3deg); }
+        
+        /* Library Interaction Logic */
+        details summary::-webkit-details-marker { display:none; }
+        summary { list-style: none; cursor: pointer; outline: none; }
+        
+        .deliverable-item {
+            border-bottom: 1px solid rgba(10, 31, 68, 0.1);
+            transition: background 0.3s ease;
+        }
+        .deliverable-item:hover { background: #fdfdfd; }
+        
+        .sticky-nav { position: sticky; top: 120px; }
+        
+        /* Major Third Line Heights */
+        p { line-height: 1.65; margin-bottom: 1.5rem; }
+
+        /* Keep anchor targets visible under fixed header */
+        html { scroll-padding-top: 130px; }
+        section[id] { scroll-margin-top: 130px; }
+    </style>
 </head>
-<body class="bg-brand-base text-white antialiased relative overflow-x-hidden">
 
-    <div class="fixed inset-0 bg-grid pointer-events-none z-[-1]"></div>
-    <div class="absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-brand-accent/10 via-transparent to-transparent pointer-events-none"></div>
+<body class="bg-white text-id-navy font-body antialiased">
 
-    <header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-site">
-        <div class="bg-brand-surface/80 backdrop-blur-xl border border-white/10 rounded-pill px-6 py-3 shadow-2xl flex items-center justify-between">
-            <a class="flex items-center gap-3 group" href="index.html" aria-label="Access InfraDev site">
-                <div class="relative w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center shrink-0 overflow-hidden shadow-[0_0_15px_rgba(249,199,12,0.3)]">
-                    <span class="material-symbols-outlined absolute text-brand-base opacity-20 text-4xl translate-x-1 translate-y-1">public</span>
-                    <span class="font-display font-extrabold text-brand-base text-xs tracking-tighter relative z-10">ID.</span>
+    <!-- INSTITUTIONAL HEADER -->
+    <header class="fixed top-0 left-0 w-full bg-id-navy text-white z-[100] border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-4">
+                <div class="id-tile-3deg bg-id-gold w-10 h-10 flex items-center justify-center shadow-lg">
+                    <span class="id-counter-rotate font-header font-extrabold text-id-navy text-xs">ID.</span>
                 </div>
-                <div class="flex flex-col hidden sm:flex">
-                    <h2 class="text-sm font-bold tracking-tight font-display leading-none">
-                        <span class="text-white">Infra</span><span class="text-brand-accent">Dev</span>
-                    </h2>
-                    <p class="text-brand-accent/90 text-[9px] font-medium uppercase tracking-[0.2em] leading-none font-display">Advisory</p>
+                <div>
+                    <h2 class="font-header font-extrabold text-sm tracking-tight uppercase leading-none">Infra<span class="text-id-gold">Dev</span></h2>
+                    <p class="text-[8px] uppercase font-bold tracking-[0.2em] text-id-gold/70 mt-1">Advisory Portals</p>
                 </div>
             </a>
-
-            <a class="inline-flex items-center gap-2 text-[10px] font-bold bg-brand-accent text-brand-base px-5 py-2.5 rounded-pill hover:bg-white transition-all hover:shadow-[0_0_20px_rgba(249,199,12,0.4)] font-display uppercase tracking-widest" href="index.html">
-                <span class="material-symbols-outlined text-sm">arrow_back</span>
-                Access InfraDev site
-            </a>
+            <nav class="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-widest items-center">
+                <a href="index.html" class="hover:text-id-gold transition-colors">Home</a>
+                <a href="#capabilities" class="text-id-gold">Capabilities</a>
+                <a href="#sectors" class="hover:text-id-gold transition-colors">Sectors</a>
+                <a href="https://wa.me/243891187001" class="bg-id-gold text-id-navy px-4 py-2 rounded font-extrabold flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">chat</span> Secure Channel
+                </a>
+            </nav>
         </div>
     </header>
 
-    <main class="pt-32 pb-20">
-        <section class="px-4">
-            <div class="max-w-site mx-auto">
-                <div class="flex flex-col gap-8">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                        <div class="flex items-center gap-4">
-                            <div class="relative w-14 h-14 bg-brand-accent rounded-xl flex items-center justify-center shrink-0 overflow-hidden shadow-[0_0_20px_rgba(249,199,12,0.35)]">
-                                <span class="material-symbols-outlined absolute text-brand-base opacity-20 text-5xl translate-x-1 translate-y-1">public</span>
-                                <span class="font-display font-extrabold text-brand-base text-lg tracking-tighter relative z-10">ID.</span>
+    <main class="pt-32 pb-40 px-6">
+        <div class="max-w-7xl mx-auto">
+            
+            <!-- HERO SECTION -->
+            <section class="max-w-4xl mb-24">
+                <h1 class="font-header font-extrabold text-5xl md:text-7xl mb-8 leading-[1.1] tracking-tighter">
+                    Capability Statement:<br>
+                    <span class="text-id-gold">Institutional Rigor</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-id-slate font-light leading-relaxed">
+                    InfraDev.Africa turns concepts into decision-ready feasibility, bankability, and delivery structures — built for real-world African contexts.
+                </p>
+            </section>
+
+            <!-- TWO-COLUMN DATA ROOM LAYOUT -->
+            <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-16">
+                
+                <!-- STICKY SIDEBAR -->
+                <aside class="hidden lg:block">
+                    <div class="sticky-nav space-y-8">
+                        <div>
+                            <h4 class="text-[10px] font-extrabold text-id-grey uppercase tracking-widest mb-4">Jump to Section</h4>
+                            <ul class="space-y-3 text-xs font-bold uppercase tracking-widest">
+                                <li><a href="#stall" class="hover:text-id-gold">The Problem Space</a></li>
+                                <li><a href="#capabilities" class="hover:text-id-gold">Core Capabilities</a></li>
+                                <li><a href="#modules" class="hover:text-id-gold">Execution Modules</a></li>
+                                <li><a href="#sectors" class="hover:text-id-gold">Sectors & Verticals</a></li>
+                                <li><a href="#engage" class="hover:text-id-gold">Engagement Models</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- CONTENT AREA -->
+                <div class="space-y-32">
+
+                    <!-- WHY PROJECTS STALL -->
+                    <section id="stall">
+                        <h2 class="font-header font-extrabold text-3xl uppercase mb-8 border-b-2 border-id-gold pb-2 inline-block">Why Projects Stall</h2>
+                        <p class="text-lg text-id-slate mb-12">
+                            Capital can exist. The bottleneck is often structure: weak data, fragmented coordination, unclear risk allocation, and missing execution tools.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="p-8 bg-id-surface border-l-4 border-id-navy">
+                                <h4 class="font-bold text-sm uppercase mb-3">Fragmentation</h4>
+                                <p class="text-xs text-id-slate mb-0">Fragmented planning and weak coordination across multiple institutions.</p>
+                            </div>
+                            <div class="p-8 bg-id-surface border-l-4 border-id-navy">
+                                <h4 class="font-bold text-sm uppercase mb-3">Data Gaps</h4>
+                                <p class="text-xs text-id-slate mb-0">Feasibility gaps that surface too late in the development cycle.</p>
+                            </div>
+                            <div class="p-8 bg-id-surface border-l-4 border-id-navy">
+                                <h4 class="font-bold text-sm uppercase mb-3">Bankability</h4>
+                                <p class="text-xs text-id-slate mb-0">Structuring gaps that block final approvals and financial close.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- DELIVERABLES LIBRARY (CORE) -->
+                    <section id="capabilities">
+                        <div class="mb-12">
+                            <h2 class="font-header font-extrabold text-3xl uppercase mb-4">Deliverables Library</h2>
+                            <p class="text-id-slate">Institutional outputs designed for decision-makers and lenders.</p>
+                        </div>
+
+                        <!-- PILLAR 01 -->
+                        <div class="mb-16">
+                            <h3 class="font-header font-extrabold text-xs uppercase tracking-widest text-id-gold mb-6">01. Feasibility & Due Diligence</h3>
+                            <div class="space-y-0">
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Pre-feasibility / Screening Note</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Scope includes: constraints scan, data gaps, early risk triggers, and next-step ToR outline.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Options Analysis</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Evaluation of 2–4 solution pathways, including cost/schedule bands, risk comparison, and formal recommendation.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Feasibility Report (Decision-Ready)</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Comprehensive technical and commercial report, implementation plan, annexes, and assumptions log.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Risk Register (Living)</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Active management of probability/impact, mitigation strategies, ownership, and early-warning triggers.
+                                    </div>
+                                </details>
+                                
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Stakeholder & Institutional Map</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Analysis of decision-makers, approval gates, and institutional coordination protocols.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Bankability Pack</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Investment narrative, model inputs, procurement pathway, and data room starter index.
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- PILLAR 02 -->
+                        <div class="mb-16">
+                            <h3 class="font-header font-extrabold text-xs uppercase tracking-widest text-id-gold mb-6">02. PPP / Delivery Structuring</h3>
+                            <div class="space-y-0">
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">PPP/Delivery Suitability Note</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Rationale, affordability approach, and risk allocation logic for PPP mandates.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Procurement Strategy & Packaging</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Definition of lots, contract strategy, evaluation logic, and procurement timelines.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Heads of Terms (Term Sheet)</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Key commercial positions for negotiation and approval across stakeholders.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">SPV/Operating Model Outline</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Roles, governance structures, interfaces, and performance obligations.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Data Room Index (Minimum Viable)</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Document checklist categorized by workstream and assigned ownership.
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+
+                        <!-- PILLAR 03 -->
+                        <div class="mb-16">
+                            <h3 class="font-header font-extrabold text-xs uppercase tracking-widest text-id-gold mb-6">03. Master Planning</h3>
+                            <div class="space-y-0">
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">System / Sector Diagnostic</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Identification of bottlenecks, baseline audit, governance gaps, and investment needs.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Sequenced Delivery Roadmap</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        12–36 month roadmap covering work packages, dependencies, and funding gates.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Portfolio Prioritisation Model</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Scoring criteria, sensitivity analysis, and recommended starter set for infrastructure portfolios.
+                                    </div>
+                                </details>
+
+                                <details class="group deliverable-item">
+                                    <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                        <span class="font-bold text-sm uppercase">Institutional Alignment Pack</span>
+                                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                    </summary>
+                                    <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                        Mandate definitions, coordination design, and decision cadence protocols.
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- OPTIONAL MODULES -->
+                    <section id="modules">
+                        <h2 class="font-header font-extrabold text-3xl uppercase mb-4">Execution-Control Modules</h2>
+                        <p class="text-id-slate mb-12">Expanded module library for execution assurance, ESG/HSE discipline, financial compliance, and audit-ready digital PMO workflows.</p>
+
+                        <div class="space-y-14">
+                            <div>
+                                <h3 class="font-header font-extrabold text-xs uppercase tracking-widest text-id-gold mb-5">04. Delivery Assurance (Owner’s Engineer)</h3>
+                                <div class="space-y-0 border border-id-navy/10 rounded-xl overflow-hidden">
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Controls Pack (Baseline)</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Scope, schedule, and cost baseline with change-control rules and governance thresholds.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Monthly Progress Report</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Progress, issues and actions, field evidence, look-ahead milestones, and decision requests.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Certification Support Memo</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Evidence-backed review of payment and works-completion claims to support controlled disbursement.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Variations / Claims Log</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Structured tracking of variations, impact, ownership, and status for formal governance reviews.
+                                        </div>
+                                    </details>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="font-header font-extrabold text-xs uppercase tracking-widest text-id-gold mb-5">05. ESG / E&amp;S / HSE</h3>
+                                <div class="space-y-0 border border-id-navy/10 rounded-xl overflow-hidden">
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">ESG/E&amp;S/HSE Risk Register</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Probability-impact-mitigation register with assigned owners and closure evidence.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Field Compliance Checklist</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Safety, chemicals, waste and incident controls with auditable field checklist packs.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Incident &amp; Non-Conformity Log</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Traceable corrective actions, responsible parties, due dates, and formal closure criteria.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Monthly ESG/HSE Insert</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Concise KPI and risk insert for monthly reporting packs and lender-facing compliance updates.
+                                        </div>
+                                    </details>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="font-header font-extrabold text-xs uppercase tracking-widest text-id-gold mb-5">06. Financial Compliance &amp; Vendor Integrity</h3>
+                                <div class="space-y-0 border border-id-navy/10 rounded-xl overflow-hidden">
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Vendor Integrity Screen</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Proportionate screening of legal registration, address, beneficial ownership, and red-flag indicators.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Import/FX Documentation Watch</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Pre-payment control checklist for foreign payments and import-linked documentation.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Land Tenure &amp; Boundary Readiness</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Readiness checks for titles, boundary definition, and blocking-risk alerts before commitment.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Logistics Readiness Check</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Route-port interface review, handling constraints, and critical logistics risk register.
+                                        </div>
+                                    </details>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="font-header font-extrabold text-xs uppercase tracking-widest text-id-gold mb-5">07. Digital PMO &amp; AI Evidence Room</h3>
+                                <div class="space-y-0 border border-id-navy/10 rounded-xl overflow-hidden">
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">OCR + Evidence Library Setup</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Searchable evidence archive with indexing discipline for institutional and audit use.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Consistency/Anomaly Checks</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            AI-assisted detection of missing documents, mismatches, and duplicates with human validation.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Living Registers</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Timestamped registers for risks, issues, decisions, actions, and ESG/HSE incident tracking.
+                                        </div>
+                                    </details>
+                                    <details class="group deliverable-item">
+                                        <summary class="py-6 flex justify-between items-center group-open:bg-id-surface px-4 transition-all">
+                                            <span class="font-bold text-sm uppercase">Monthly Report Drafting Assist</span>
+                                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">add</span>
+                                        </summary>
+                                        <div class="px-4 py-6 bg-id-surface text-id-slate text-sm">
+                                            Structured draft support with source traceability for internal review and publication.
+                                        </div>
+                                    </details>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTORS -->
+                    <section id="sectors">
+                        <h2 class="font-header font-extrabold text-3xl uppercase mb-12">Sectors & Verticals</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                            <div class="p-6 bg-id-navy text-white rounded">
+                                <span class="font-bold text-[10px] uppercase tracking-widest">Energy</span>
+                            </div>
+                            <div class="p-6 bg-id-navy text-white rounded">
+                                <span class="font-bold text-[10px] uppercase tracking-widest">Urban</span>
+                            </div>
+                            <div class="p-6 bg-id-navy text-white rounded">
+                                <span class="font-bold text-[10px] uppercase tracking-widest">Transport</span>
+                            </div>
+                            <div class="p-6 bg-id-navy text-white rounded">
+                                <span class="font-bold text-[10px] uppercase tracking-widest">Water</span>
+                            </div>
+                        </div>
+                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-8 border border-id-navy/10 text-sm font-bold uppercase tracking-widest">Mining Enabling Infrastructure</div>
+                            <div class="p-8 border border-id-navy/10 text-sm font-bold uppercase tracking-widest">Agro-industrial platforms</div>
+                            <div class="p-8 border border-id-navy/10 text-sm font-bold uppercase tracking-widest">Industrial zones / SEZ enablement</div>
+                            <div class="p-8 border border-id-navy/10 text-sm font-bold uppercase tracking-widest">Public service platforms</div>
+                        </div>
+                    </section>
+
+                    <!-- ENGAGEMENT -->
+                    <section id="engage" class="bg-id-navy p-12 rounded-2xl text-white">
+                        <h2 class="font-header font-extrabold text-3xl uppercase mb-8">How We Engage</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="text-id-gold font-bold uppercase text-[10px] mb-2 tracking-widest">ENG-01 — Project Diagnostic</h4>
+                                <p class="text-sm opacity-80">Clarity on constraints and risks within 30–60 days.</p>
                             </div>
                             <div>
-                                <p class="text-[11px] font-bold tracking-[0.2em] text-gray-300 uppercase font-display">Capability Statement</p>
-                                <h1 class="text-3xl md:text-5xl font-bold text-white font-display">InfraDev.Africa | Solutionists</h1>
+                                <h4 class="text-id-gold font-bold uppercase text-[10px] mb-2 tracking-widest">ENG-02 — Feasibility Pack</h4>
+                                <p class="text-sm opacity-80">Investment-grade pack aligned to lender milestones.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-id-gold font-bold uppercase text-[10px] mb-2 tracking-widest">ENG-03 — Structuring Support</h4>
+                                <p class="text-sm opacity-80">PPP packaging and negotiation-ready term sheets.</p>
+                            </div>
+                            <div>
+                                <h4 class="text-id-gold font-bold uppercase text-[10px] mb-2 tracking-widest">ENG-04 — Delivery Assurance</h4>
+                                <p class="text-sm opacity-80">Owner’s Engineer controls and certification support.</p>
                             </div>
                         </div>
-                        <div class="text-xs text-gray-400 font-light">
-                            Institutional Infrastructure Advisory
-                        </div>
-                    </div>
+                    </section>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
-                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Who we are</h2>
-                            <p class="text-gray-300 text-sm leading-relaxed">
-                                InfraDev.Africa is a strategic infrastructure advisory and delivery-support firm focused on
-                                making projects feasible, bankable, and executable in African contexts.
-                            </p>
+                    <!-- ECOSYSTEM -->
+                    <section class="border-t border-id-navy/10 pt-20">
+                        <div class="flex flex-col md:flex-row gap-12 items-start">
+                            <img src="src/assets/branding/kumea-anchor-seal.svg" class="w-16 h-16 opacity-40" alt="Kumea Anchor">
+                            <div>
+                                <h4 class="font-header font-extrabold text-sm uppercase mb-4">Ecosystem Collaboration</h4>
+                                <p class="text-id-slate text-sm">
+                                    InfraDev.Africa is an independent operating venture within the <strong>Kumea.Africa ecosystem</strong>. Where specialist execution capability is beneficial (energy systems, circular economy, health digitization), it is mobilised under separate agreements.
+                                </p>
+                            </div>
                         </div>
-                        <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
-                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Sectors</h2>
-                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
-                                <li>Power systems: transmission and distribution planning, renewables integration</li>
-                                <li>Decentralised energy: mini-grids, hybrid systems, storage deployment</li>
-                                <li>Urban infrastructure: mobility, housing enabling works, city services</li>
-                                <li>Water and sanitation: access systems, program design, delivery monitoring</li>
-                            </ul>
-                        </div>
-                        <div class="bg-brand-base/60 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
-                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Core services</h2>
-                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
-                                <li>Master planning and investment roadmaps (cities, corridors, SEZs, utilities)</li>
-                                <li>Pre-feasibility and feasibility studies (technical, financial, ESG)</li>
-                                <li>PPP and transaction support (structuring, risk allocation, procurement packs)</li>
-                                <li>Lender and investor due diligence support (data rooms, technical review)</li>
-                            </ul>
-                        </div>
-                        <div class="bg-brand-base/60 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
-                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Why InfraDev</h2>
-                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
-                                <li>Systems thinking: energy, water, health, logistics, and governance as one connected machine.</li>
-                                <li>Context fluency: African delivery realities, stakeholder dynamics, and procurement constraints.</li>
-                                <li>Boardroom plus field: rigorous documents that survive real sites and messy data.</li>
-                            </ul>
-                        </div>
-                    </div>
+                    </section>
 
-                    <div class="bg-brand-surface/70 border border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-2xl">
-                        <h2 class="text-xl font-bold text-white font-display mb-4">How we work</h2>
-                        <p class="text-gray-300 text-sm mb-4">Typical engagement formats:</p>
-                        <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
-                            <li>Rapid diagnostic (2-4 weeks)</li>
-                            <li>Feasibility / structuring (6-16 weeks)</li>
-                            <li>Delivery support / PMO (3-18 months)</li>
-                        </ul>
-                        <p class="text-gray-300 text-sm mt-4">Primary geography: DRC with pan-African execution through partnerships.</p>
-                    </div>
-
-                    <div class="text-center">
-                        <p class="text-[11px] font-bold uppercase tracking-[0.25em] text-gray-400 font-display">Track Record &amp; Deliverables</p>
-                        <p class="text-gray-500 text-sm italic mt-2">Representative experience of leadership and typical outputs</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
-                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Experience</h2>
-                            <p class="text-gray-300 text-sm mb-3">Selected leadership experience (prior roles):</p>
-                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
-                                <li>Power networks planning and advisory across Africa (transmission/distribution, renewables integration).</li>
-                                <li>Senegal grid stability support (USAID/USEA programme with Mott MacDonald, 2017-2019): technical facilitation, bilingual delivery, data collection and dynamic model support (CYME), and capacity-building recommendations.</li>
-                                <li>Luanda integrated planning assignments (master planning / infrastructure coordination).</li>
-                                <li>Ghana gas-to-power strategy support (Genser Energy): commercial and delivery-oriented advisory.</li>
-                                <li>Company-managed healthcare system transformation (Watu Wetu Health System): multi-phase programme design, governance and performance tracking.</li>
-                            </ul>
-                        </div>
-                        <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
-                            <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Deliverables</h2>
-                            <p class="text-gray-300 text-sm mb-3">Outputs we produce (examples):</p>
-                            <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
-                                <li>Feasibility reports (technical, economic, financial model interface, ESG)</li>
-                                <li>Investment notes and decision memos for boards and DFIs</li>
-                                <li>PPP / procurement packs: TORs, RFPs, evaluation frameworks, draft risk matrices</li>
-                                <li>Implementation plans: phased roadmaps, CAPEX/OPEX logic, governance and reporting systems</li>
-                                <li>Dashboards: progress tracking, KPI trees, action logs, stakeholder maps</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="bg-brand-base/70 border border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-2xl">
-                        <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Delivery principles</h2>
-                        <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
-                            <li>Evidence-first: assumptions labelled, data gaps logged, decisions traceable.</li>
-                            <li>Bankability: we write for lenders, not for theatre.</li>
-                            <li>Localisation: designs adapted to procurement, operations, and skills realities.</li>
-                            <li>Partner-ready: clear interfaces for OEMs, EPCs, DFIs and public agencies.</li>
-                        </ul>
-                    </div>
-
-                    <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
-                        <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Contact</h2>
-                        <p class="text-gray-300 text-sm">Managing Director: Ted Kivoto Isengingo</p>
-                        <p class="text-gray-300 text-sm">Website: <a href="https://www.infradev.africa" target="_blank" rel="noopener" class="text-brand-accent hover:text-white transition-colors">www.infradev.africa</a></p>
-                        <p class="text-gray-300 text-sm">Address: 16 Av Lokele, Gombe, Kinshasa, DRC</p>
-                    </div>
-
-                    <div class="text-gray-400 text-xs font-light leading-relaxed border-t border-white/10 pt-6">
-                        Relationship and disclaimer: InfraDev.Africa is an independent venture within the Kumea.Africa ecosystem (House of Brands). This document is for information only and does not constitute a binding offer; any engagement is subject to contract.
-                    </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
-    <footer class="bg-brand-surface/80 border-t border-white/10 py-10">
-    <div class="max-w-site mx-auto px-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-sm text-gray-400">
-        <div class="flex items-center gap-3">
-            <div class="relative w-8 h-8 bg-brand-accent rounded-md flex items-center justify-center shrink-0 overflow-hidden">
-                <span class="material-symbols-outlined absolute text-brand-base opacity-20 text-2xl translate-x-1 translate-y-1">public</span>
-                <span class="font-display font-extrabold text-brand-base text-xs tracking-tighter relative z-10">ID.</span>
+    <footer class="bg-id-navy border-t border-id-gold/20 py-10 px-6 text-white">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-sm">
+            <div class="flex items-center gap-3">
+                <div class="id-tile-3deg bg-id-gold w-8 h-8 flex items-center justify-center shadow-lg">
+                    <span class="id-counter-rotate font-header font-extrabold text-id-navy text-[10px]">ID.</span>
+                </div>
+                <div>
+                    <p class="font-semibold">InfraDev.Africa</p>
+                    <p class="text-id-grey">Institutional Infrastructure Advisory</p>
+                </div>
             </div>
-            <div>
-                <p class="text-white font-semibold">InfraDev.Africa</p>
-                <p>Institutional Infrastructure Advisory</p>
+            <div class="flex flex-wrap items-center gap-4 text-xs md:text-sm">
+                <a class="text-id-gold hover:text-white transition-colors" href="mailto:info@infradev.africa">info@infradev.africa</a>
+                <span class="text-id-grey">|</span>
+                <a class="text-id-grey hover:text-white transition-colors" href="index.html">Access InfraDev site</a>
+                <span class="text-id-grey">|</span>
+                <a class="text-id-grey hover:text-white transition-colors inline-flex items-center gap-2" href="https://kumea.africa" target="_blank" rel="noopener">
+                    <img src="src/assets/branding/kumea-anchor-seal.svg" alt="Kumea anchor seal" class="h-5 w-auto" loading="lazy"/>
+                </a>
             </div>
         </div>
-        <div class="flex flex-wrap items-center gap-4">
-            <a class="text-brand-accent hover:text-white transition-colors" href="mailto:info@infradev.africa">info@infradev.africa</a>
-            <span class="text-gray-600">|</span>
-            <a class="text-gray-400 hover:text-white transition-colors" href="index.html">Access InfraDev site</a>
-            <span class="text-gray-600">|</span>
-            <a class="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2" href="https://kumea.africa" target="_blank" rel="noopener">
-                <img src="src/assets/branding/kumea-anchor-seal.svg" alt="Kumea anchor seal" class="h-5 w-auto" loading="lazy"/>
-            </a>
+        <div class="max-w-7xl mx-auto mt-6 pt-6 border-t border-white/10 text-xs text-id-grey">
+            <p>&copy; 2026 Kumea Africa Holding SARL.</p>
+            <p>InfraDev.Africa operates within the Kumea.Africa ecosystem.</p>
         </div>
-    </div>
-    <div class="max-w-site mx-auto px-4 mt-6 pt-6 border-t border-white/5 text-xs text-gray-500">
-        <p>&copy; 2026 Kumea Africa Holding SARL.</p>
-        <p>InfraDev.Africa operates within the Kumea.Africa ecosystem.</p>
-    </div>
-</footer>
+    </footer>
 
 </body>
 </html>
-
-

@@ -568,7 +568,7 @@
                 </p>
             </div>
 
-            <form class="space-y-6" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success.html">
+            <form id="contact-form" class="space-y-6" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success.html">
                 <input type="hidden" name="form-name" value="contact" />
                 <!-- Honeypot field for spam prevention -->
                 <p class="hidden">
@@ -580,13 +580,13 @@
                         <label class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
                             <span class="lang-en">Name</span><span class="lang-fr hidden">Nom</span>
                         </label>
-                        <input name="name" data-placeholder-en="Cedrick Mayele" data-placeholder-fr="Cedrick Mayele" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light" placeholder="Cedrick Mayele" type="text" required/>
+                        <input name="name" autocomplete="name" data-placeholder-en="Cedrick Mayele" data-placeholder-fr="Cedrick Mayele" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light" placeholder="Cedrick Mayele" type="text" required/>
                     </div>
                     <div class="space-y-2">
                         <label class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
                             <span class="lang-en">Organisation</span><span class="lang-fr hidden">Organisation</span>
                         </label>
-                        <input name="organisation" data-placeholder-en="Company SARL" data-placeholder-fr="Company SARL" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light" placeholder="Company SARL" type="text" required/>
+                        <input name="organisation" autocomplete="organization" data-placeholder-en="Company SARL" data-placeholder-fr="Company SARL" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light" placeholder="Company SARL" type="text" required/>
                     </div>
                 </div>
 
@@ -594,7 +594,7 @@
                     <label class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
                         <span class="lang-en">Email</span><span class="lang-fr hidden">Email</span>
                     </label>
-                    <input name="email" data-placeholder-en="cedrick@example.com" data-placeholder-fr="cedrick@example.com" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light" placeholder="cedrick@example.com" type="email" required/>
+                    <input name="email" autocomplete="email" data-placeholder-en="cedrick@example.com" data-placeholder-fr="cedrick@example.com" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light" placeholder="cedrick@example.com" type="email" required/>
                 </div>
 
                 <div class="space-y-2">
@@ -610,6 +610,18 @@
                         <option value="North Africa" data-label-en="North Africa" data-label-fr="Afrique du Nord">North Africa</option>
                         <option value="DRC" data-label-en="DRC" data-label-fr="RDC">DRC</option>
                         <option value="International" data-label-en="International" data-label-fr="International">International</option>
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="entry-point-select" class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
+                        <span class="lang-en">Project Entry Point</span><span class="lang-fr hidden">Point d'entrée du projet</span>
+                    </label>
+                    <select id="entry-point-select" name="entry_point" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all appearance-none cursor-pointer text-sm font-light" required>
+                        <option value="" disabled selected data-label-en="Choose the best-fit entry point..." data-label-fr="Choisissez le point d'entrée le plus adapté...">Choose the best-fit entry point...</option>
+                        <option value="project_idea" data-label-en="We have a project idea" data-label-fr="Nous avons une idée de projet">We have a project idea</option>
+                        <option value="project_in_development" data-label-en="We have a project in development" data-label-fr="Nous avons un projet en développement">We have a project in development</option>
+                        <option value="project_entering_delivery" data-label-en="We have a project entering delivery" data-label-fr="Nous avons un projet entrant en phase de livraison">We have a project entering delivery</option>
                     </select>
                 </div>
 
