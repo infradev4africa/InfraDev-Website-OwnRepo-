@@ -3,1523 +3,328 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Dossier DG TRIOMF | InfraDev.Africa</title>
-    <meta name="description" content="Dossier DG TRIOMF — Note de cadrage, ordre de service, heads of terms, annexes."/>
-    <link rel="icon" type="image/svg+xml" href="public/favicon.svg"/>
-    <link rel="shortcut icon" href="public/favicon.svg"/>
-
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet"/>
+    <title>Command Dashboard | TRIOMF BOMA | InfraDev.Africa</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            base: 'var(--color-base)',
-                            surface: 'var(--color-surface)',
-                            accent: 'var(--color-accent)',
-                            muted: 'var(--color-muted)',
-                        }
+                        id: { navy: '#0A1F44', gold: '#F9C70C', goldDeep: '#B8860B', surface: '#F7F7F5', slate: '#334155', grey: '#9CA3AF' }
                     },
-                    fontFamily: {
-                        display: ["Montserrat", "sans-serif"],
-                        heading: ["Poppins", "sans-serif"],
-                        body: ["Inter", "sans-serif"],
-                    },
-                    borderRadius: {
-                        pill: "9999px",
-                    },
-                    maxWidth: {
-                        site: "1120px",
-                    }
+                    fontFamily: { header: ["Montserrat", "sans-serif"], body: ["Inter", "sans-serif"] }
                 },
             },
         }
     </script>
-    <link rel="stylesheet" href="assets/styles/site.css"/>
+    
+    <style>
+        /* Governance DNA */
+        .id-tile-governed { transform: rotate(3deg); border-radius: 12px; }
+        .id-counter-rotate { transform: rotate(-3deg); }
+        
+        /* Watermark Layer */
+        .watermark {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 7vw;
+            color: rgba(10, 31, 68, 0.03);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 1000;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        /* Passcode Gate UI */
+        #passcode-gate { background-color: #0A1F44; }
+        .gate-card { background: #F7F7F5; border: 2px solid #F9C70C; border-radius: 12px; }
+
+        /* Accordion / Details Logic */
+        details summary::-webkit-details-marker { display:none; }
+        summary { list-style: none; cursor: pointer; outline: none; }
+        .governance-card { background: white; border-radius: 16px; border: 1px solid rgba(10, 31, 68, 0.08); transition: all 0.3s ease; position: relative; }
+        .governance-card:hover { border-color: #F9C70C; }
+
+        /* Institutional Tables */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+        th { background: #0A1F44; color: #F9C70C; padding: 12px; text-align: left; text-transform: uppercase; font-size: 10px; border: 1px solid rgba(255,255,255,0.1); }
+        td { padding: 12px; border-bottom: 0.5pt solid #E2E8F0; vertical-align: top; color: #334155; border-right: 0.5pt solid #F1F5F9; }
+        
+        /* Milestone List */
+        .milestone-row { display: flex; gap: 15px; margin-bottom: 12px; padding-left: 10px; border-left: 3px solid #F9C70C; }
+        .milestone-id { font-family: 'Montserrat'; font-weight: 800; color: #0A1F44; min-width: 45px; }
+
+        .hidden-content { display: none; }
+        .locked body { overflow: hidden; }
+    </style>
 </head>
-<body class="bg-brand-base text-white antialiased relative overflow-x-hidden locked">
 
-    <div id="passcode-gate" class="fixed inset-0 z-[100] items-center justify-center bg-brand-base/95 backdrop-blur-md p-6">
-        <div class="w-full max-w-md bg-brand-surface/90 border border-white/10 rounded-3xl p-8 shadow-2xl text-center">
-            <div class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-red-200 font-display mb-4">
-                <span class="material-symbols-outlined text-xs">lock</span>
-                Confidential proposal • Work in progress
+<body class="bg-id-navy text-white font-body">
+
+    <!-- WATERMARK -->
+    <div class="watermark">DRAFT — CONFIDENTIEL</div>
+
+    <!-- PASSCODE GATE -->
+    <div id="passcode-gate" class="fixed inset-0 z-[2000] flex items-center justify-center p-6">
+        <div class="w-full max-w-md gate-card p-10 shadow-2xl text-center">
+            <div class="id-tile-governed bg-id-gold w-16 h-16 mx-auto flex items-center justify-center mb-6">
+                <span class="id-counter-rotate font-header font-extrabold text-id-navy text-sm">ID.</span>
             </div>
-            <h1 class="text-2xl font-bold font-display text-white mb-2">Accès sécurisé</h1>
-            <p class="text-gray-400 text-sm mb-6">Entrez le code pour accéder au document.</p>
-            <div class="space-y-3">
-                <input id="passcode-input" type="password" autocomplete="off" placeholder="Passcode" aria-label="Code d'acces" class="w-full bg-brand-base border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light">
-                <p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-gray-400">Indice : titre&init</p>
-                <p id="passcode-error" role="alert" aria-live="assertive" class="text-xs text-red-200 hidden">Code incorrect. Veuillez réessayer.</p>
-                <button id="passcode-submit" aria-label="Soumettre le code d'acces" class="w-full bg-brand-accent text-brand-base font-bold text-xs font-display rounded-pill py-3 hover:bg-white transition-all uppercase tracking-widest">
-                    Accéder
-                </button>
+            <h1 class="text-id-navy font-header font-extrabold text-xl uppercase mb-2 tracking-tighter">Accès Gouvernance</h1>
+            <p class="text-id-slate text-[10px] mb-6 font-bold uppercase tracking-widest opacity-60">Triomf Boma — Dossier DG</p>
+            <div class="space-y-4">
+                <input id="passcode-input" type="password" placeholder="Passcode" class="w-full bg-white border-2 border-id-grey rounded px-4 py-3 text-id-navy outline-none focus:border-id-gold transition-all text-center font-bold tracking-widest">
+                <button onclick="unlockGate()" class="w-full bg-id-navy text-id-gold font-header font-extrabold py-4 uppercase tracking-widest hover:bg-id-slate transition-all shadow-xl">Valider l'Accès</button>
+                <p id="error-msg" class="text-[10px] text-red-600 hidden font-extrabold uppercase mt-2">Accès Refusé. Code Incorrect.</p>
             </div>
         </div>
     </div>
 
-    <div class="page-content">
-        <div class="fixed inset-0 bg-grid pointer-events-none z-[-1]"></div>
-        <div class="absolute inset-x-0 top-0 h-[420px] bg-gradient-to-b from-brand-accent/10 via-transparent to-transparent pointer-events-none"></div>
-
-    <header class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-site">
-        <div class="bg-brand-surface/80 backdrop-blur-xl border border-white/10 rounded-pill px-6 py-3 shadow-2xl flex items-center justify-between">
-            <a class="flex items-center gap-3 group" href="index.html" aria-label="Access InfraDev site">
-                <div class="relative w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center shrink-0 overflow-hidden shadow-[0_0_15px_rgba(249,199,12,0.3)]">
-                    <span class="material-symbols-outlined absolute text-brand-base opacity-20 text-4xl translate-x-1 translate-y-1">public</span>
-                    <span class="font-display font-extrabold text-brand-base text-xs tracking-tighter relative z-10">ID.</span>
-                </div>
-                <div class="flex flex-col hidden sm:flex">
-                    <h2 class="text-sm font-bold tracking-tight font-display leading-none">
-                        <span class="text-white">Infra</span><span class="text-brand-accent">Dev</span>
-                    </h2>
-                    <p class="text-brand-accent/90 text-[9px] font-medium uppercase tracking-[0.2em] leading-none font-display">Advisory</p>
-                </div>
-            </a>
-
-            <a class="inline-flex items-center gap-2 text-[10px] font-bold bg-brand-accent text-brand-base px-5 py-2.5 rounded-pill hover:bg-white transition-all hover:shadow-[0_0_20px_rgba(249,199,12,0.4)] font-display uppercase tracking-widest" href="index.html">
-                <span class="material-symbols-outlined text-sm">arrow_back</span>
-                Access InfraDev site
-            </a>
-        </div>
-    </header>
-
-    
-    
-    
-    
-    
-    
-    <main class="pt-32 pb-20">
-        <section class="px-4">
-            <div class="max-w-site mx-auto">
-                <div class="flex flex-col gap-8">
-                    <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-brand-surface border border-white/10 shadow-xl backdrop-blur-sm w-fit">
-                        <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
-                        <span class="text-[11px] font-bold tracking-[0.15em] text-gray-300 uppercase font-display">Dossier DG — TRIOMF (Boma)</span>
+    <!-- MAIN DASHBOARD -->
+    <div id="main-content" class="hidden-content">
+        <header class="p-6 border-b border-white/10 sticky top-0 bg-id-navy/95 backdrop-blur-xl z-50">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="id-tile-governed bg-id-gold w-10 h-10 flex items-center justify-center">
+                        <span class="id-counter-rotate font-header font-extrabold text-id-navy text-xs">ID.</span>
                     </div>
-                    <div class="inline-flex flex-col gap-1 px-5 py-3 rounded-2xl border border-red-400/40 bg-red-500/10 shadow-xl w-fit">
-                        <div class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-red-200 font-display">
-                            <span class="material-symbols-outlined text-xs">lock</span>
-                            Confidential proposal • Work in progress
-                        </div>
-                        <div class="text-[10px] font-semibold uppercase tracking-[0.2em] text-red-100/80 font-display">
-                            Proposition confidentielle • Travail en cours
-                        </div>
-                    </div>
-
-                    <div class="space-y-4">
-                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.05] font-display">
-                            Dossier de décision — TRIOMF RDC
-                        </h1>
-                        <p class="text-lg md:text-xl text-gray-300 max-w-4xl font-light">
-                            Ce dossier rassemble toutes les pièces essentielles pour décision DG et sécurisation des décaissements. Le parcours suit une logique opérationnelle claire : justification, décision, conditions commerciales, puis preuves de méthode.
-                        </p>
-                        <p class="text-base text-gray-400 max-w-4xl">
-                            Vous pouvez demander le pack Word/Excel et soumettre des commentaires via la section « Demandes &amp; commentaires » en bas de page (accès contrôlé pour confidentialité).
-                        </p>
-                    </div>
-
-                    <div class="id-grid-institutional triomf-command-center">
-                        <aside class="triomf-sidebar" aria-label="Metadonnees institutionnelles du projet">
-                            <section class="triomf-meta-card id-tile-governed">
-                                <div class="id-counter-rotation">
-                                    <p class="triomf-meta-title">Project Metadata</p>
-                                    <div class="triomf-meta-list">
-                                        <span><strong>Status:</strong> Confidential Draft for DG Validation</span>
-                                        <span><strong>Version:</strong> v2.0 Institutional Command Center</span>
-                                        <span><strong>Project:</strong> TRIOMF Boma - Contrat de controle</span>
-                                        <span><strong>Context:</strong> FPI / BCC / IGF Governance Alignment</span>
-                                        <div class="flex flex-wrap gap-2 pt-1">
-                                            <span class="triomf-meta-pill">Compliance</span>
-                                            <span class="triomf-meta-pill">Bankability</span>
-                                            <span class="triomf-meta-pill">Decaissement</span>
-                                            <span class="triomf-meta-pill">LTA / AMO</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section class="triomf-meta-card" aria-label="Verrou de controle">
-                                <p class="triomf-meta-title">Verrou de Controle</p>
-                                <article class="id-insight-box mt-3">
-                                    <h3>Outcome: Capital Protection</h3>
-                                    <p>Le paiement est autorise uniquement apres verification croisee des preuves documentaires et terrain, avec visa InfraDev.</p>
-                                    <ul>
-                                        <li>Mitigation prioritaire: blocage des paiements non conformes.</li>
-                                        <li>Valeur creee: traçabilite CAPEX -> assets auditables.</li>
-                                        <li>Canal DG: reporting direct pour arbitrage rapide.</li>
-                                    </ul>
-                                </article>
-                            </section>
-
-                            <section class="triomf-meta-card">
-                                <p class="triomf-meta-title">Command Actions</p>
-                                <div class="triomf-meta-list">
-                                    <a class="text-brand-base hover:text-brand-accent transition-colors font-semibold" href="#section-i">Ouvrir la Note de Cadrage</a>
-                                    <a class="text-brand-base hover:text-brand-accent transition-colors font-semibold" href="#section-iii">Verifier les Heads of Terms</a>
-                                    <a class="text-brand-base hover:text-brand-accent transition-colors font-semibold" href="#section-iv">Acceder aux Annexes / Templates</a>
-                                    <a class="text-brand-base hover:text-brand-accent transition-colors font-semibold" href="#request-pack">Demander le Pack Word/Excel</a>
-                                    <a class="text-brand-base hover:text-brand-accent transition-colors font-semibold" href="triomf-full-pack.html" target="_blank" rel="noopener">Ouvrir la Version Document</a>
-                                </div>
-                            </section>
-
-                            <section class="triomf-meta-card">
-                                <p class="triomf-meta-title">Certification</p>
-                                <div class="flex items-center gap-3 mt-3">
-                                    <img src="src/assets/branding/certification-stamp.svg" alt="Certification stamp for service fait controls" class="id-cert-stamp" loading="lazy"/>
-                                    <p class="text-sm">Repere formel pour les certificats de service fait et les grilles de decaissement.</p>
-                                </div>
-                            </section>
-                        </aside>
-
-                        <div class="triomf-main space-y-8">
-                            <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-6">
-                                <div class="bg-brand-surface/70 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
-                                    <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Project Command Center</h2>
-                                    <ol class="space-y-3 text-sm text-gray-300">
-                                        <li><a class="hover:text-white transition-colors" href="#section-i"><strong>I.</strong> Note de Cadrage Stratégique — <span class="text-gray-400">Risque institutionnel -> dispositif de mitigation</span></a></li>
-                                        <li><a class="hover:text-white transition-colors" href="#section-ii"><strong>II.</strong> Ordre de Service — <span class="text-gray-400">Decision DG -> mandat executable</span></a></li>
-                                        <li><a class="hover:text-white transition-colors" href="#section-iii"><strong>III.</strong> Heads of Terms — <span class="text-gray-400">Structure contractuelle -> securisation commerciale</span></a></li>
-                                        <li><a class="hover:text-white transition-colors" href="#section-iv"><strong>IV.</strong> Annexes / Templates — <span class="text-gray-400">Preuves de methode -> auditabilite</span></a></li>
-                                    </ol>
-                                </div>
-                                <div class="bg-brand-base/60 border border-white/10 rounded-3xl p-6 md:p-8 shadow-xl">
-                                    <h2 class="text-sm font-bold text-brand-accent uppercase tracking-[0.2em] mb-4">Execution Guidance</h2>
-                                    <ul class="list-disc list-inside space-y-2 text-sm text-gray-300">
-                                        <li>Lecture orientee decision: chaque bloc commence par le risque a neutraliser.</li>
-                                        <li>Les tables HoT et Decaissement restent navigables sur mobile et projecteur.</li>
-                                        <li>Les annexes sont traitees comme composants operationnels telechargeables.</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <article class="id-insight-box" aria-label="Insight de mitigation">
-                                    <h3>Mitigation Outcome</h3>
-                                    <p>Le dispositif LTA/AMO protege le FPI contre les decaissements non conformes et reduit le risque de capture operationnelle.</p>
-                                </article>
-                                <article class="id-insight-box" aria-label="Insight de valeur">
-                                    <h3>Value Creation Outcome</h3>
-                                    <p>Le modele consolide accelere la prise de decision DG via une base probante unique: ordres, termes, annexes et preuves terrain.</p>
-                                </article>
-                            </div>
-
-                            <div class="space-y-10">
-                        <section id="section-i" class="dg-section">
-        <details class="dg-details">
-            <summary class="dg-summary">
-                <div class="dg-card">
-                    <div class="dg-card-header">
-                        <div class="dg-index">I</div>
-                        <div>
-                            <p class="dg-label">Section I</p>
-                            <h2 class="dg-title">Note de Cadrage Stratégique</h2>
-                            <p class="dg-desc">The “Why” & “What” — justification, positionnement, dispositif de contrôle.</p>
-                        </div>
-                    </div>
-                    <ul class="dg-highlights"><li>Pourquoi un verrou de contrôle est requis</li><li>Positionnement InfraDev comme tiers de confiance du DG</li><li>Périmètre, phases et logique d’exécution</li></ul>
-                    <div class="dg-summary-footer">
-                        <span class="dg-expand-closed">Voir le contenu</span>
-                        <span class="dg-expand-open">Masquer le contenu</span>
-                        <span class="material-symbols-outlined dg-chevron">expand_more</span>
+                    <div class="hidden sm:block">
+                        <h2 class="font-header font-extrabold text-xs tracking-tight">Infra<span class="text-id-gold">Dev</span>.Africa</h2>
+                        <p class="text-[8px] uppercase font-bold tracking-[0.3em] text-id-gold/70">Institutional Governance</p>
                     </div>
                 </div>
-            </summary>
-            <div class="doc-panel">
-                <div class="dg-section-heading">SECTION I: NOTE DE CADRAGE STRATÉGIQUE</div>
-                <div class="dg-meta-box">
-                    <p class="dg-meta-title">CONFIDENTIEL — NOTE DE PRÉSENTATION</p>
-                    <p class="dg-meta-line">Version: v1.1 | Date: 11 février 2026</p>
-                    <p class="dg-meta-line">Auteur: InfraDev.Africa — Key Expert: Ted Kivoto Isengingo</p>
+                <div class="flex items-center gap-6">
+                    <a href="triomf-full-pack.html" class="text-[10px] font-bold text-id-gold hover:text-white uppercase tracking-[0.2em] flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm">menu_book</span> View Full Pack
+                    </a>
                 </div>
-                <div class="doc-content">
-<h1 id="limpératif-de-sécurité">1. L’impératif de sécurité</h1>
-<p>Dans un contexte post-Bukanga Lonzo et compte tenu de la surveillance
-institutionnelle (BCC / IGF), la relance de Boma requiert un dispositif
-de contrôle qui protège le FPI et la Direction Générale: l’objectif est
-de certifier la réalité des actifs et des travaux avant toute décision
-de décaissement.</p>
-<p><em>Message clé: le FPI ne paie que ce qui est vérifié (preuves
-documentaires + preuves terrain).</em></p>
-<h1 id="dispositif-proposé-tiers-de-confiance">2. Dispositif proposé: «
-Tiers de confiance »</h1>
-<ul>
-<li><p>Statut: AMO / Lender’s Technical Advisor (LTA) — fondé de pouvoir
-technique.</p></li>
-<li><p>Rôle: « les yeux du DG » — canal de reporting direct et
-exclusif.</p></li>
-<li><p>Mécanisme: pré-contrôle des demandes de paiement; sans visa
-InfraDev, le paiement est bloqué.</p></li>
-<li><p>Contrôle à la source: inspection fournisseurs / pré-shipment en
-RSA lorsque pertinent.</p></li>
-</ul>
-<h1 id="pourquoi-infradev.africa">3. Pourquoi InfraDev.Africa</h1>
-<ul>
-<li><p>Structure: cabinet d’ingénierie &amp; advisory orienté
-gouvernance d’exécution (master planning, PPP/delivery,
-contrôle).</p></li>
-<li><p>Approche: traçabilité (registres, grilles), preuves, reporting et
-discipline documentaire.</p></li>
-<li><p>Neutralité: contrôle indépendant du management opérationnel du
-projet.</p></li>
-</ul>
-<p><em>InfraDev.Africa (Kumea Africa Holding SARL) — RCCM:
-CD/KNG/RCCM/24-B-01462 | IDNAT: 01-A0101-N49087K.</em></p>
-<h1 id="modèle-économique-neutre-pour-le-fpi">4. Modèle économique
-(neutre pour le FPI)</h1>
-<p>Le DG a indiqué que la rémunération ne doit pas provenir du budget de
-fonctionnement du FPI. Le schéma proposé reste une imputation projet
-(CAPEX), mais avec un mécanisme qui protège l’indépendance du
-contrôleur: les honoraires du LTA/AMO sont préfinancés dans un compte
-séquestre (escrow) alimenté avant démarrage, et les paiements
-d’honoraires sont déclenchés automatiquement sur base des livrables
-remis au DG du FPI (sans approbation de l’opérateur). Ainsi, le projet
-finance la mission, mais ne peut pas « capturer » le contrôleur.</p>
-<h1 id="périmètre-base-extensions-possibles">5. Périmètre — base +
-extensions possibles</h1>
-<h2 id="base-ltaamo">Base (LTA/AMO)</h2>
-<ul>
-<li><p>Audit initial (Boma + RSA) et mise en place outils de
-contrôle.</p></li>
-<li><p>Certifications de paiement (service fait) + grille de
-décaissement.</p></li>
-<li><p>Rapports mensuels de conformité (CAPEX-&gt;assets + preuves
-physiques + chaîne documentaire) + alertes DG.</p></li>
-</ul>
-<p>Limites de responsabilité (à formaliser): l’AMO/LTA certifie
-l’existence, l’intégrité et la fonctionnalité technique des actifs,
-ainsi que la traçabilité CAPEX. Il n’assume aucune responsabilité sur
-l’OPEX, la distribution, ni la viabilité commerciale des ventes
-d’engrais.</p>
-<h2 id="extensions-à-intégrer-si-pertinent">Extensions (à intégrer si
-pertinent)</h2>
-<ul>
-<li><p>Contrôle documentaire / PMO: circuit de validation, data-room,
-registres de correspondance, suivi des décisions.</p></li>
-<li><p>Procurement watch: cohérence BOQ / commandes / livraisons /
-installations.</p></li>
-<li><p>ESG/HSE: registre risques, checklist terrain, log incidents et
-correctifs (si demandé).</p></li>
-<li><p>Support « conformité » pour échanges BCC/IGF: note flash, annexes
-preuves, matrice risques.</p></li>
-<li><p>Logistics readiness audit: accès route/port, zones de
-déchargement, interfaces logistiques nécessaires (sans juger la
-performance commerciale).</p></li>
-<li><p>FX &amp; import-payment compliance watch: pour paiements
-offshore, exiger pièces réglementaires (Model IB/IS, attestations,
-preuves bancaires) et cohérence prix/quantités.</p></li>
-<li><p>Domanialité &amp; intégrité des limites du site: vérification
-titres/plan cadastral/PV de bornage (réduction risque de blocage
-communautaire/parastatal).</p></li>
-<li><p>Vendor integrity screen: RCCM, bénéficiaires effectifs, adresse
-physique, sanctions/PEP check proportionné
-(anti-sociétés-écrans).</p></li>
-<li><p>Validation de la route procédurale: procédure normale vs
-exceptionnelle; traçabilité des engagements/ordonnancements quand
-applicable.</p></li>
-</ul>
-<p><em>Ces extensions couvrent typiquement des fonctions de contrôle
-interne/risque et peuvent être calibrées selon les attentes du
-DG.</em></p>
-<h1 id="plan-daction-immédiat-j0j15">6. Plan d’action immédiat
-(J0–J15)</h1>
-<ul>
-<li><p>J0: OS/mandat signé — accès site Boma + fournisseurs
-RSA.</p></li>
-<li><p>J1–J5: collecte docs clés + data-room minimum + protocole
-certification.</p></li>
-<li><p>J5–J10: visite Boma (inventaire contradictoire) + registre actifs
-v1.</p></li>
-<li><p>J10–J15: note « Flash » (2–3 pages) pour appuyer la levée des
-mesures conservatoires (BCC).</p></li>
-</ul>
-<h1 id="durée-et-continuité">7. Durée et continuité</h1>
-<p>Engagement minimum recommandé: 36 mois (3 ans) afin de rassurer la
-BCC sur la continuité du contrôle et couvrir le cycle d’exécution et de
-mise en régime. La charge est ajustable (retainer + missions
-terrain).</p>
-<h1 id="points-à-verrouiller-dans-la-négociation">8. Points à
-verrouiller dans la négociation</h1>
-<ul>
-<li><p>Mandat clair: droit d’accès, droit de demander preuves, droit de
-bloquer paiements non conformes.</p></li>
-<li><p>Canal DG: réunions régulières + alertes ad hoc.</p></li>
-<li><p>Schéma contractuel: payeur AFRICOM, reporting DG FPI,
-indépendance InfraDev.</p></li>
-<li><p>Budget de contrôle: retainer + frais terrain; plafond adossé à la
-valeur totale du projet/contrat.</p></li>
-<li><p>Clause de remplacement: Key Expert soumis à accord DG.</p></li>
-</ul>
-</div>
             </div>
-        </details>
-    </section>
+        </header>
 
-<section id="section-ii" class="dg-section">
-        <details class="dg-details">
-            <summary class="dg-summary">
-                <div class="dg-card">
-                    <div class="dg-card-header">
-                        <div class="dg-index">II</div>
-                        <div>
-                            <p class="dg-label">Section II</p>
-                            <h2 class="dg-title">Ordre de Service</h2>
-                            <p class="dg-desc">The “Decision” — validation, mandat et signature.</p>
-                        </div>
-                    </div>
-                    <ul class="dg-highlights"><li>Parties, références et objet de la mission</li><li>Mandat, responsabilités et périmètre de contrôle</li><li>Durée, modalités et principes de rémunération</li></ul>
-                    <div class="dg-summary-footer">
-                        <span class="dg-expand-closed">Voir le contenu</span>
-                        <span class="dg-expand-open">Masquer le contenu</span>
-                        <span class="material-symbols-outlined dg-chevron">expand_more</span>
-                    </div>
+        <main class="max-w-4xl mx-auto py-24 px-6 pb-40">
+            
+            <!-- STRATEGIC TITLE -->
+            <section class="mb-20">
+                <div class="id-tile-governed bg-id-gold text-id-navy px-4 py-1 inline-block font-header font-extrabold text-[10px] uppercase tracking-widest mb-6">
+                    <span class="id-counter-rotate block">Mandat de Tiers de Confiance</span>
                 </div>
-            </summary>
-            <div class="doc-panel">
-                <div class="dg-section-heading">SECTION II: ORDRE DE SERVICE</div>
-                <div class="dg-meta-box">
-                    <p class="dg-meta-title">CONFIDENTIEL — PROJET</p>
-                    <p class="dg-meta-line">Version: v1.1 | Date: 11 février 2026</p>
-                    <p class="dg-meta-line">Auteur: InfraDev.Africa — Key Expert: Ted Kivoto Isengingo</p>
-                </div>
-                <div class="doc-content">
-<h1 id="parties-références">1. Parties &amp; références</h1>
-<table>
-<colgroup>
-<col class="col-w-28" />
-<col class="col-w-71" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>Émetteur (à signer)</strong></th>
-<th>Fonds de Promotion de l’Industrie (FPI)<br />
-Direction Générale<br />
-[Adresse FPI]<br />
-Kinshasa, RDC</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Destinataire</strong></td>
-<td>InfraDev.Africa (Kumea Africa Holding SARL)<br />
-RCCM: CD/KNG/RCCM/24-B-01462 | IDNAT: 01-A0101-N49087K<br />
-15 Avenue du Grand Séminaire, Q/Nganda, C/Kintámbó, Kinshasa, RDC</td>
-</tr>
-<tr>
-<td><strong>Référence OS</strong></td>
-<td>[OS-REF-XXXX]</td>
-</tr>
-<tr>
-<td><strong>Date</strong></td>
-<td>[JJ mois AAAA]</td>
-</tr>
-<tr>
-<td><strong>Objet</strong></td>
-<td>Démarrage de la mission AMO — contrôle technique &amp; financier
-(tiers de confiance / fondé de pouvoir technique)</td>
-</tr>
-</tbody>
-</table>
-<h1 id="contexte-impératif-de-sécurité">2. Contexte &amp; impératif de
-sécurité</h1>
-<p>Le projet de relance du site de Boma (Triomf RDC) est surveillé et
-exige un dispositif de contrôle robuste. Dans un contexte de sensibilité
-institutionnelle, l’objectif de la présente mission est de protéger
-l’intégrité des décaissements et de sécuriser la responsabilité
-managériale de la Direction Générale par une certification indépendante
-de la réalité des actifs et des travaux.</p>
-<p><em>Principe directeur: « Pas de certification = pas de paiement.
-»</em></p>
-<p>Limites: le contrôle vise la traçabilité CAPEX-&gt;assets et la
-conformité des paiements. Il n’emporte aucune garantie de performance
-commerciale, de rentabilité ou d’exploitation.</p>
-<h1 id="nature-de-la-mission">3. Nature de la mission</h1>
-<table>
-<colgroup>
-<col class="col-w-28" />
-<col class="col-w-71" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>Type</strong></th>
-<th>Assistance à Maîtrise d’Ouvrage (AMO) / Lender’s Technical Advisor
-(LTA) / Independent Engineer</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Rattachement</strong></td>
-<td>Le mandataire rapporte exclusivement au Directeur Général du FPI
-(canal direct).</td>
-</tr>
-<tr>
-<td><strong>Statut</strong></td>
-<td>Fondé de pouvoir technique (mandat de contrôle et de certification,
-sans gestion opérationnelle du projet).</td>
-</tr>
-<tr>
-<td><strong>Périmètre</strong></td>
-<td>Contrôle technique, contrôle financier, vérification documentaire et
-preuves terrain, suivi d’exécution.</td>
-</tr>
-</tbody>
-</table>
-<h1 id="périmètre-scope-phases">4. Périmètre (scope) — phases</h1>
-<h2 id="phase-a-audit-initial-mise-en-place-j0j30">Phase A — Audit
-initial &amp; mise en place (J0–J30)</h2>
-<ul>
-<li><p>Inventaire contradictoire du site de Boma:
-identification/étiquetage des actifs existants, état, localisation,
-preuves photo.</p></li>
-<li><p>Séparation du passif (anciens équipements) et des nouveaux
-investissements (CAPEX projet).</p></li>
-<li><p>Audit « à la source » (Johannesburg / RSA): vérification
-fournisseurs, capacités, stocks, conditions d’expédition
-(pré-shipment).</p></li>
-<li><p>Mise en place des outils: registre des actifs, grille de contrôle
-des décaissements, protocole de certification, data-room
-minimum.</p></li>
-</ul>
-<h2 id="phase-b-contrôle-dexécution-certifications-continu">Phase B —
-Contrôle d’exécution &amp; certifications (continu)</h2>
-<ul>
-<li><p>Contre-expertise technique de toute demande de paiement
-(factures, situations, PV, bons de livraison, etc.).</p></li>
-<li><p>Vérification cohérence: budget/ligne CAPEX, quantités, preuves
-terrain, avancement physique vs financier. Inclut, si applicable: pièces
-de change/import (Model IB/IS), traçabilité bancaire, et validation de
-la route procédurale (normale vs exceptionnelle).</p></li>
-<li><p>Visa « Bon à Payer » (ou rejet motivé) transmis au DG du FPI
-avant tout décaissement.</p></li>
-<li><p>Contrôle logistique RSA→Boma lorsque pertinent: inspection avant
-expédition, traçabilité, réception.</p></li>
-</ul>
-<h2 id="workstream-optionnel-esg-es-hse-si-requis">Workstream optionnel
-— ESG / E&amp;S / HSE (si requis)</h2>
-<ul>
-<li><p>Registre des risques ESG/E&amp;S/HSE (probabilité, impact,
-mitigation, propriétaire).</p></li>
-<li><p>Checklist conformité terrain (sécurité, stockage produits
-chimiques, déchets/effluents, incidents) + audit « chemical management »
-(nitrate/acides) si applicable.</p></li>
-<li><p>Log incidents / non-conformités + actions correctives avec
-preuves. Inclut contrôle EPI/PPE (existence vs facturation) lorsque
-pertinent.</p></li>
-<li><p>Section ESG/HSE (1–2 pages) intégrée au rapport mensuel.</p></li>
-</ul>
-<h2
-id="workstream-optionnel-conformité-financière-intégrité-fournisseurs-si-requis">Workstream
-optionnel — Conformité financière &amp; intégrité fournisseurs (si
-requis)</h2>
-<ul>
-<li><p>Vendor integrity screen: RCCM, adresse, bénéficiaires effectifs
-(approche proportionnée) et documentation anti-sociétés-écrans.</p></li>
-<li><p>FX &amp; import documentation watch: exigence des pièces
-change/import (Model IB/IS, attestations OCC/inspection si applicable)
-avant certification de paiements offshore.</p></li>
-<li><p>Domanialité &amp; limites site: collecte et revue des titres, PV
-de bornage, et alertes en cas de risque foncier bloquant.</p></li>
-<li><p>Logistics readiness check: interfaces route/port et capacité de
-manutention nécessaires à la réception et l’évacuation des
-intrants/produits.</p></li>
-</ul>
-<p><em>Ce volet peut être délivré par InfraDev ou par un sous-consultant
-spécialisé, sous coordination InfraDev.</em></p>
-<h1 id="livrables-attendus">5. Livrables attendus</h1>
-<ul>
-<li><p>Rapport « Flash » J+15 (2–3 pages): activation du dispositif de
-contrôle + risques rouges + décisions attendues.</p></li>
-<li><p>Rapport d’audit initial (J+30): état des lieux, registre des
-actifs v1, matrice risques, protocole de certification.</p></li>
-<li><p>Grille de contrôle des décaissements (template) + data-room
-minimum.</p></li>
-<li><p>Rapports mensuels: avancement physique/financier, conformité,
-liste des paiements certifiés/rejetés, points de blocage.</p></li>
-<li><p>Notes ad hoc au DG du FPI (en cas d’écart critique, fraude
-présumée, incident majeur, etc.).</p></li>
-</ul>
-<h1 id="durée-présence">6. Durée &amp; présence</h1>
-<p>La mission est alignée sur le cycle de financement et de mise en
-œuvre du projet. Durée cible: 36 mois (avec possibilité d’extension). La
-présence est mixte (Kinshasa / Boma / Johannesburg) selon les besoins de
-contrôle à la source et sur site.</p>
-<h1 id="modalités-financières-neutralité-budgétaire-fpi">7. Modalités
-financières (neutralité budgétaire FPI)</h1>
-<p>Les honoraires et frais logistiques liés au contrôle peuvent être
-imputés sur la ligne projet « Frais de contrôle &amp; surveillance »
-(CAPEX), sans impacter le budget de fonctionnement du FPI, conformément
-aux pratiques courantes de contrôle indépendant.</p>
-<p><em>Le détail des honoraires et modalités de paiement est précisé
-dans les Terms of Reference / HoT associés (Annexes).</em></p>
-<h1 id="pouvoirs-accès-coopération">8. Pouvoirs, accès &amp;
-coopération</h1>
-<ul>
-<li><p>Accès aux sites (Boma) et aux fournisseurs/ateliers (RSA)
-nécessaires à la vérification.</p></li>
-<li><p>Accès aux documents projet: contrats, BOQ, budgets, factures, BL,
-PV, rapports, correspondances, etc.</p></li>
-<li><p>Droit de demander des preuves complémentaires et de recommander
-la suspension d’un paiement en cas d’écart.</p></li>
-<li><p>Coopération attendue des parties (AFRICOM / Triomf RDC /
-fournisseurs).</p></li>
-</ul>
-<h1 id="confidentialité-intégrité">9. Confidentialité &amp;
-intégrité</h1>
-<p>Le mandataire est tenu à une confidentialité stricte. Toute suspicion
-de fraude, conflit d’intérêts, ou écart majeur est signalée sans délai
-au DG du FPI via le canal direct.</p>
-<h1 id="entrée-en-vigueur">10. Entrée en vigueur</h1>
-<p>Le présent Ordre de Service prend effet à la date de signature et
-autorise le démarrage immédiat des activités de contrôle (J0).</p>
-<h1 id="signatures-à-compléter">11. Signatures (à compléter)</h1>
-<table>
-<colgroup>
-<col class="col-w-50" />
-<col class="col-w-50" />
-</colgroup>
-<thead>
-<tr>
-<th>Pour le FPI<br />
-Le Directeur Général<br />
-<br />
-Nom: ____________________<br />
-Signature: _______________<br />
-Date: ____________________</th>
-<th>Pour InfraDev.Africa<br />
-Ted Kivoto Isengingo<br />
-Managing Director / Key Expert<br />
-<br />
-Signature: _______________<br />
-Date: ____________________</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h1 id="annexes-références">Annexes (références)</h1>
-<ul>
-<li><p>Annexe A — Terms of Reference (ToR) / Heads of Terms (HoT) —
-mission LTA/AMO (tripartite).</p></li>
-<li><p>Annexe B — Templates opérationnels (registre actifs, certificat
-service fait, grille décaissement, rapport mensuel, ESG/HSE).</p></li>
-</ul>
-</div>
-            </div>
-        </details>
-    </section>
+                <h1 class="font-header font-extrabold text-5xl md:text-7xl mb-8 leading-[0.95] tracking-tighter">
+                    Dossier DG : <br><span class="text-id-gold">Projet Triomf</span>
+                </h1>
+                <p class="text-id-grey text-xl font-light leading-relaxed max-w-2xl">
+                    Pack consolidé v1.1 — Dispositif "Verrou de Contrôle" pour la sécurisation des investissements du FPI.
+                </p>
+            </section>
 
-<section id="section-iii" class="dg-section">
-        <details class="dg-details">
-            <summary class="dg-summary">
-                <div class="dg-card">
-                    <div class="dg-card-header">
-                        <div class="dg-index">III</div>
-                        <div>
-                            <p class="dg-label">Section III</p>
-                            <h2 class="dg-title">Heads of Terms</h2>
-                            <p class="dg-desc">Commercial Details — conditions clés et structure contractuelle.</p>
-                        </div>
-                    </div>
-                    <ul class="dg-highlights"><li>Structure contractuelle et gouvernance</li><li>Conditions financières et mécanismes de paiement</li><li>Obligations, livrables et exclusions</li></ul>
-                    <div class="dg-summary-footer">
-                        <span class="dg-expand-closed">Voir le contenu</span>
-                        <span class="dg-expand-open">Masquer le contenu</span>
-                        <span class="material-symbols-outlined dg-chevron">expand_more</span>
-                    </div>
-                </div>
-            </summary>
-            <div class="doc-panel">
-                <div class="dg-section-heading">SECTION III: HEADS OF TERMS</div>
-                <div class="dg-meta-box">
-                    <p class="dg-meta-title">CONFIDENTIEL — DRAFT DE NÉGOCIATION</p>
-                    <p class="dg-meta-line">Version: v1.1 | Date: 11 février 2026</p>
-                    <p class="dg-meta-line">Auteur: InfraDev.Africa — Key Expert: Ted Kivoto Isengingo</p>
-                </div>
-                <div class="doc-content">
-<h1 id="objet-du-document">1. Objet du document</h1>
-<p>Le présent Heads of Terms (HoT) fixe les principes commerciaux et
-opérationnels de la mission de contrôle indépendant (LTA/AMO) réalisée
-par InfraDev.Africa, dans un schéma où la rémunération est budgétée au
-projet (CAPEX) et sécurisée via un mécanisme de paiement indépendant
-(compte séquestre/escrow) afin d’éviter toute capture par l’opérateur,
-avec un reporting exclusif au Directeur Général du FPI.</p>
-<h1 id="parties-à-confirmer">2. Parties (à confirmer)</h1>
-<table>
-<colgroup>
-<col class="col-w-50" />
-<col class="col-w-50" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>Bailleur / Autorité de contrôle</strong></th>
-<th>Fonds de Promotion de l’Industrie (FPI) — Direction Générale</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Entreprise projet / Payeur</strong></td>
-<td>AFRICOM [raison sociale complète + RCCM/IDNAT + adresse]</td>
-</tr>
-<tr>
-<td><strong>Partenaire technique / Exécutant</strong></td>
-<td>Triomf RDC / Triomf SA [détails à confirmer]</td>
-</tr>
-<tr>
-<td><strong>Conseil / Contrôleur (LTA)</strong></td>
-<td>InfraDev.Africa (Kumea Africa Holding SARL) — RCCM:
-CD/KNG/RCCM/24-B-01462 | IDNAT: 01-A0101-N49087K</td>
-</tr>
-</tbody>
-</table>
-<h1 id="gouvernance-indépendance">3. Gouvernance &amp; indépendance</h1>
-<ul>
-<li><p>InfraDev agit comme tiers de confiance technique: ses
-certifications conditionnent les paiements (« no cert = no pay
-»).</p></li>
-<li><p>InfraDev rapporte exclusivement au DG du FPI (canal
-direct).</p></li>
-<li><p>Le projet assure le financement des honoraires via un compte
-séquestre/escrow préfinancé. L’opérateur (AFRICOM) n’a aucun droit
-d’instruction sur les conclusions techniques ni sur le déclenchement des
-paiements d’honoraires du LTA.</p></li>
-<li><p>Triomf RDC/SA et fournisseurs coopèrent et donnent accès aux
-preuves nécessaires.</p></li>
-</ul>
-<h1 id="durée-engagement-minimum">4. Durée — engagement minimum</h1>
-<p>Durée cible: 36 mois (engagement minimum), alignée sur le cycle de
-financement et la période critique d’exécution. Prolongation possible
-par avenant.</p>
-<h1 id="périmètre-scope-synthèse">5. Périmètre (scope) — synthèse</h1>
-<ul>
-<li><p>Audit initial (J0–J30): état des lieux Boma + audit fournisseurs
-RSA + mise en place outils.</p></li>
-<li><p>Contrôle continu: pré-approbation des factures/situations,
-contrôle avancement physique/financier, preuves terrain, visa « Bon à
-payer ».</p></li>
-<li><p>Rapports mensuels de conformité (incluant, si requis, volet
-ESG/HSE).</p></li>
-<li><p>Alertes ad hoc au DG en cas d’écarts critiques.</p></li>
-</ul>
-<h1 id="key-expert-équipe-remplacement">6. Key expert, équipe &amp;
-remplacement</h1>
-<p>Key Expert (proposé) : Ted Kivoto Isengingo — Managing Director,
-InfraDev.Africa.</p>
-<ul>
-<li><p>InfraDev garantit la disponibilité du Key Expert et de l’équipe
-mobilisée selon le plan de charge.</p></li>
-<li><p>Tout remplacement du Key Expert est soumis à l’accord préalable
-du DG du FPI.</p></li>
-<li><p>Recours possible à des sous-consultants (ESG/HSE, juridique,
-QA/QC) sous responsabilité InfraDev.</p></li>
-</ul>
-<h1 id="modalités-de-rémunération-à-finaliser">7. Modalités de
-rémunération (à finaliser)</h1>
-<p>La mission est budgétée au projet au titre des « Frais de contrôle
-&amp; surveillance » (CAPEX). Pour garantir l’indépendance du LTA
-(éviter que l’entité auditée contrôle le paiement), les honoraires sont
-préfinancés dans un compte séquestre (escrow) irrévocable avant le
-démarrage. Les décaissements d’honoraires sont automatiques sur base des
-livrables transmis au DG du FPI (rapport mensuel de conformité / avis de
-certification), sans approbation de l’opérateur ou du partenaire
-technique.</p>
-<p>Paramètres à finaliser: (i) Banque/agent séquestre; (ii) montant
-ring-fencé (12 mois glissants minimum, idéalement 36 mois); (iii)
-calendrier de décaissement; (iv) mécanisme de rechargement automatique
-si solde &lt; 3 mois.</p>
-<p><em>Les chiffres ci-dessous sont des placeholders structurants — à
-ajuster après accès au budget et au calendrier contractuel.</em></p>
-<h2 id="structure-de-fees-option-recommandée">7.1 Structure de fees —
-option recommandée</h2>
-<table>
-<colgroup>
-<col class="col-w-25" />
-<col class="col-w-25" />
-<col class="col-w-25" />
-<col class="col-w-25" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>Composant</strong></th>
-<th><strong>Base</strong></th>
-<th><strong>Montant (USD)</strong></th>
-<th><strong>Commentaires</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Retainer mensuel LTA</td>
-<td>Mensuel (36 mois)</td>
-<td>[à proposer]</td>
-<td>Inclut reporting, certifications, coordination, réunions DG</td>
-</tr>
-<tr>
-<td>J0–J30 Audit initial</td>
-<td>Forfait</td>
-<td>[à proposer]</td>
-<td>État des lieux Boma + audit RSA + outils (registre/grille)</td>
-</tr>
-<tr>
-<td>Missions terrain</td>
-<td>Par mission</td>
-<td>[à proposer]</td>
-<td>Per diem + logistique selon ordre de mission</td>
-</tr>
-<tr>
-<td>Frais de déplacement</td>
-<td>Au réel / plafonné</td>
-<td>[à proposer]</td>
-<td>RSA↔︎Boma, Kin↔︎Boma (billets, hôtels, transferts)</td>
-</tr>
-<tr>
-<td>Option ESG/HSE</td>
-<td>Mensuel ou forfait</td>
-<td>[à proposer]</td>
-<td>Registre + checklist + section report / incidents</td>
-</tr>
-</tbody>
-</table>
-<h2 id="clause-de-plafond-cap-liée-à-la-valeur-du-contrat">7.2 Clause de
-plafond (cap) liée à la valeur du contrat</h2>
-<p>Plafond indicatif: [0,8%–1,2%] de la valeur totale du projet/contrat,
-à confirmer selon le budget et la matrice risques. Un plafond protège
-AFRICOM, tandis qu’un retainer assure la continuité de contrôle exigée
-par la BCC.</p>
-<h1 id="modalités-de-paiement">8. Modalités de paiement</h1>
-<ul>
-<li><p>Paiement du retainer: mensuel, payé depuis l’escrow, déclenché à
-réception du Rapport Mensuel de Conformité (J+5 maximum).</p></li>
-<li><p>Paiement de l’audit initial: 50% à l’Ordre de Service (OS), 50% à
-remise du rapport J+30 (paiement via escrow).</p></li>
-<li><p>Frais terrain: sur ordre de mission validé (DG FPI) +
-justificatifs, avec plafond par mission.</p></li>
-<li><p>Retenue / suspension: en cas de non-coopération documentée d’une
-partie, InfraDev notifie le DG.</p></li>
-</ul>
-<h1 id="clauses-clés-compliance">9. Clauses clés (compliance)</h1>
-<ul>
-<li><p>Anti-corruption / conflit d’intérêts: déclaration + obligation de
-signalement.</p></li>
-<li><p>Confidentialité: informations projet et conclusions
-techniques.</p></li>
-<li><p>Données &amp; preuves: archivage sécurisé (data-room
-minimum).</p></li>
-<li><p>Non-subordination: InfraDev conserve son indépendance
-d’analyse.</p></li>
-<li><p>Limitation de responsabilité: InfraDev certifie l’existence et la
-fonctionnalité technique des actifs (CAPEX-&gt;assets) et la conformité
-documentaire des paiements. InfraDev n’émet aucune opinion sur la
-viabilité commerciale (OPEX, ventes, rentabilité) ni sur la performance
-opérationnelle de l’usine.</p></li>
-<li><p>Résiliation: pour cause (faute grave, non-paiement,
-non-coopération), avec préavis [30 jours].</p></li>
-</ul>
-<h1 id="prochaines-étapes-j0j15">10. Prochaines étapes (J0–J15)</h1>
-<ul>
-<li><p>Valider le schéma contractuel (tripartite) + désignation
-officielle du Key Expert.</p></li>
-<li><p>Émettre l’Ordre de Service (OS) donnant mandat d’accès au site et
-aux fournisseurs RSA.</p></li>
-<li><p>Définir le circuit documentaire: factures → preuves →
-certification → décaissement.</p></li>
-<li><p>Produire la note « Flash » destinée à appuyer la levée des
-mesures conservatoires (BCC).</p></li>
-</ul>
-<h1 id="signatures-principes">11. Signatures (principes)</h1>
-<p>Ce HoT n’est pas un contrat. Il sert de base à la rédaction du
-contrat final et des Termes de Référence (ToR) à signer entre les
-parties.</p>
-<table>
-<colgroup>
-<col class="col-w-33" />
-<col class="col-w-33" />
-<col class="col-w-33" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>FPI (DG)</strong></th>
-<th><strong>AFRICOM (DG/DF)</strong></th>
-<th><strong>InfraDev.Africa (MD)</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Nom: ____________________<br />
-Signature: _______________<br />
-Date: ____________________</td>
-<td>Nom: ____________________<br />
-Signature: _______________<br />
-Date: ____________________</td>
-<td>Nom: ____________________<br />
-Signature: _______________<br />
-Date: ____________________</td>
-</tr>
-</tbody>
-</table>
-</div>
-            </div>
-        </details>
-    </section>
+            <!-- ACCORDION SYSTEM (ZERO TRUNCATION) -->
+            <div class="space-y-6">
 
-<section id="section-iv" class="dg-section">
-        <details class="dg-details">
-            <summary class="dg-summary">
-                <div class="dg-card">
-                    <div class="dg-card-header">
-                        <div class="dg-index">IV</div>
-                        <div>
-                            <p class="dg-label">Section IV</p>
-                            <h2 class="dg-title">Annexes / Templates</h2>
-                            <p class="dg-desc">Proof of Method — annexes techniques et modèles opérationnels.</p>
-                        </div>
-                    </div>
-                    <ul class="dg-highlights"><li>Grilles de contrôle et checklists</li><li>Templates de reporting et registres</li><li>Outils de suivi et de conformité</li></ul>
-                    <div class="dg-summary-footer">
-                        <span class="dg-expand-closed">Voir le contenu</span>
-                        <span class="dg-expand-open">Masquer le contenu</span>
-                        <span class="material-symbols-outlined dg-chevron">expand_more</span>
-                    </div>
-                </div>
-            </summary>
-            <div class="doc-panel">
-                <div class="dg-section-heading">SECTION IV: ANNEXES / TEMPLATES</div>
-                <div class="dg-meta-box">
-                    <p class="dg-meta-title">CONFIDENTIEL — OUTILS DE CONTRÔLE</p>
-                    <p class="dg-meta-line">Version: v1.1 | Date: 11 février 2026</p>
-                    <p class="dg-meta-line">Auteur: InfraDev.Africa — Key Expert: Ted Kivoto Isengingo</p>
-                </div>
-                <div class="doc-content">
-<h1 id="annexe-1-registre-des-actifs-asset-register">Annexe 1 — Registre
-des actifs (Asset Register)</h1>
-<p><em>But: prouver l’existence, l’état et la traçabilité des
-équipements (avant et après investissement).</em></p>
-<table>
-<colgroup>
-<col class="col-w-11" />
-<col class="col-w-11" />
-<col class="col-w-11" />
-<col class="col-w-11" />
-<col class="col-w-11" />
-<col class="col-w-11" />
-<col class="col-w-11" />
-<col class="col-w-11" />
-<col class="col-w-11" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>ID</strong></th>
-<th><strong>Équipement / Description</strong></th>
-<th><strong>Marque/Modèle</strong></th>
-<th><strong>N° Série</strong></th>
-<th><strong>Qté</strong></th>
-<th><strong>Localisation</strong></th>
-<th><strong>État</strong></th>
-<th><strong>Preuves (photo/doc)</strong></th>
-<th><strong>Commentaires</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h1 id="annexe-2-certificat-de-service-fait-avis-de-conformité">Annexe 2
-— Certificat de service fait / Avis de conformité</h1>
-<p><em>À utiliser pour chaque demande de paiement. Le certificat est
-requis avant visa « Bon à payer ».</em></p>
-<table>
-<colgroup>
-<col class="col-w-50" />
-<col class="col-w-50" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>Référence facture / situation</strong></th>
-<th>[à compléter]</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Fournisseur</strong></td>
-<td>[à compléter]</td>
-</tr>
-<tr>
-<td><strong>Lot / BOQ / Ligne CAPEX</strong></td>
-<td>[à compléter]</td>
-</tr>
-<tr>
-<td><strong>Période / Date</strong></td>
-<td>[à compléter]</td>
-</tr>
-<tr>
-<td><strong>Montant demandé</strong></td>
-<td>[à compléter]</td>
-</tr>
-</tbody>
-</table>
-<h2 id="constats-vérifications">Constats &amp; vérifications</h2>
-<ul>
-<li><p>Preuves documentaires reçues et vérifiées (BL, PV, fiches
-techniques, certificats, etc.).</p></li>
-<li><p>Preuves terrain (photos, géolocalisation, inspection physique,
-témoins contradictoires).</p></li>
-<li><p>Cohérence quantité / spécification / installation / mise en
-service (si applicable).</p></li>
-</ul>
-<h2 id="décision">Décision</h2>
-<table>
-<colgroup>
-<col class="col-w-50" />
-<col class="col-w-50" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>Décision</strong></th>
-<th>☐ Conforme — Visa « Bon à Payer »<br />
-☐ Non conforme — Paiement bloqué<br />
-☐ Conforme sous réserve (actions correctives)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Motifs / Observations</td>
-<td></td>
-</tr>
-<tr>
-<td>Actions correctives attendues</td>
-<td></td>
-</tr>
-<tr>
-<td>Visa InfraDev (LTA)</td>
-<td>Nom: ____________________<br />
-Signature: _______________<br />
-Date: ____________________</td>
-</tr>
-</tbody>
-</table>
-<h1
-id="annexe-3-grille-de-contrôle-des-décaissements-disbursement-control-grid">Annexe
-3 — Grille de contrôle des décaissements (Disbursement Control
-Grid)</h1>
-<p>Note: la grille vise la traçabilité des paiements vers des actifs
-(CAPEX-&gt;assets) et la conformité documentaire. Elle ne constitue pas
-une validation de performance commerciale.</p>
-<p><em>But: relier chaque paiement à une preuve physique, une ligne
-budgétaire et une décision de contrôle.</em></p>
-<table>
-<colgroup>
-<col class="col-w-10" />
-<col class="col-w-10" />
-<col class="col-w-10" />
-<col class="col-w-10" />
-<col class="col-w-10" />
-<col class="col-w-10" />
-<col class="col-w-10" />
-<col class="col-w-10" />
-<col class="col-w-10" />
-<col class="col-w-10" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>N°</strong></th>
-<th><strong>Facture/Ref</strong></th>
-<th><strong>Fournisseur</strong></th>
-<th><strong>Ligne CAPEX</strong></th>
-<th><strong>Objet</strong></th>
-<th><strong>Montant</strong></th>
-<th>Preuves physiques (actif/serial/photo)</th>
-<th>Pièces conformité (contrat/BOQ/IB/IS/OCC)</th>
-<th><strong>Décision LTA</strong></th>
-<th><strong>Commentaires</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>2</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>3</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>4</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>5</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>6</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>7</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>8</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>9</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h1 id="annexe-4-rapport-mensuel-outline">Annexe 4 — Rapport mensuel
-(outline)</h1>
-<p><em>Structure recommandée (5–12 pages selon intensité du
-mois).</em></p>
-<ul>
-<li><p>1. Résumé exécutif (1 page): décisions, risques rouges, paiements
-certifiés / bloqués.</p></li>
-<li><p>2. Avancement / preuves physiques: travaux réalisés, équipements
-reçus/posés, photos clés, numéros de série.</p></li>
-<li><p>3. Traçabilité CAPEX: décaissements, engagements, pièces
-justificatives (incl. IB/IS/OCC si applicable), écarts vs
-budget.</p></li>
-<li><p>4. Conformité: chaîne documentaire, non-conformités, actions
-correctives, route procédurale (normale vs exceptionnelle) si
-applicable.</p></li>
-<li><p>5. Logistique (si applicable): pré-shipment, transport,
-réception, traçabilité.</p></li>
-<li><p>6. Risques &amp; mitigations: matrice mise à jour +
-recommandations.</p></li>
-<li><p>7. (Option) ESG/HSE: incidents, sécurité, déchets/effluents,
-correctifs.</p></li>
-<li><p>Annexes: registre actifs (delta), grilles, certificats, PV,
-photos.</p></li>
-</ul>
-<h1 id="annexe-5-registre-esg-es-hse-option">Annexe 5 — Registre ESG /
-E&amp;S / HSE (option)</h1>
-<p><em>Format minimal compatible avec exigences DFI / IGF / BCC (si
-demandé).</em></p>
-<table>
-<colgroup>
-<col class="col-w-12" />
-<col class="col-w-12" />
-<col class="col-w-12" />
-<col class="col-w-12" />
-<col class="col-w-12" />
-<col class="col-w-12" />
-<col class="col-w-12" />
-<col class="col-w-12" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>ID</strong></th>
-<th><strong>Risque</strong></th>
-<th><strong>Catégorie</strong></th>
-<th><strong>Prob.</strong></th>
-<th><strong>Impact</strong></th>
-<th><strong>Niveau</strong></th>
-<th><strong>Mesure</strong></th>
-<th><strong>Responsable / Échéance</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h1 id="annexe-6-checklist-j0j15-mise-en-route-du-contrôle">Annexe 6 —
-Checklist J0–J15 (mise en route du contrôle)</h1>
-<p>☐ OS signé + mandat d’accès (site Boma + fournisseurs RSA).</p>
-<p>☐ Point focal DG FPI désigné (canal direct).</p>
-<p>☐ Data-room minimum: contrats, BOQ, budget, calendrier, liste
-fournisseurs, situation des paiements.</p>
-<p>☐ Plan de visite Boma (inventaire contradictoire) + équipe locale
-d’appui.</p>
-<p>☐ Plan de visite RSA (pré-shipment / audit fournisseur) si
-pertinent.</p>
-<p>☐ Templates validés: registre actifs, certificat service fait, grille
-décaissement, rapport mensuel.</p>
-<p>☐ Note « Flash » (2–3 pages) prête pour BCC: dispositif actif +
-mesures de mitigation.</p>
-</div>
-            </div>
-        </details>
-    </section>
-                    </div>
-
-                    <section id="request-pack" class="bg-brand-surface/70 border border-white/10 rounded-[2.5rem] p-8 md:p-10 shadow-2xl">
-                        <div class="flex flex-col lg:flex-row lg:items-start gap-8">
-                            <div class="lg:w-1/2">
-                                <h2 class="text-xl font-bold text-white font-display">Demandes &amp; commentaires</h2>
-                                <p class="text-gray-300 text-sm mt-3">
-                                    Pour des raisons de confidentialité, les versions Word/Excel sont transmises uniquement sur demande nominative. Merci de préciser le destinataire et l’usage prévu.
-                                </p>
-                                <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                                    <a class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-pill bg-white text-brand-base font-bold text-xs uppercase tracking-widest hover:bg-brand-accent transition-all" aria-label="Ouvrir la version document du pack consolide TRIOMF" href="triomf-full-pack.html" target="_blank" rel="noopener">
-                                        <span class="material-symbols-outlined text-base">menu_book</span>
-                                        Version Document
-                                    </a>
-                                    <a class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-pill bg-brand-accent text-brand-base font-bold text-xs uppercase tracking-widest hover:bg-white transition-all" aria-label="Demander le pack Word TRIOMF" href="mailto:info@infradev.africa?subject=Demande%20Pack%20Word%20-%20Dossier%20DG%20TRIOMF">
-                                        <span class="material-symbols-outlined text-base">description</span>
-                                        Demander Word
-                                    </a>
-                                    <a class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-pill border border-brand-accent/40 text-brand-accent font-bold text-xs uppercase tracking-widest hover:bg-brand-surface transition-all" aria-label="Demander le pack Excel TRIOMF" href="mailto:info@infradev.africa?subject=Demande%20Pack%20Excel%20-%20Dossier%20DG%20TRIOMF">
-                                        <span class="material-symbols-outlined text-base">table_chart</span>
-                                        Demander Excel
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="lg:w-1/2">
-                                <label class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em]">Commentaires (DG)</label>
-                                <textarea id="dg-comments" aria-label="Commentaires DG TRIOMF" class="w-full mt-3 bg-brand-base border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all text-sm font-light min-h-[140px]" placeholder="Vos remarques, points d’arbitrage ou questions clés..."></textarea>
-                                <button id="dg-comment-submit" aria-label="Envoyer les commentaires par email" class="w-full mt-4 bg-brand-accent text-brand-base font-bold text-xs font-display rounded-pill py-3 hover:bg-white transition-all uppercase tracking-widest">Envoyer par email</button>
-                                <p class="text-[10px] text-gray-400 mt-2">Le commentaire sera envoyé à info@infradev.africa avec un objet dédié.</p>
+                <!-- 01. NOTE DE CADRAGE -->
+                <details class="group governance-card bg-white rounded-2xl overflow-hidden shadow-2xl">
+                    <summary class="p-8 flex justify-between items-center text-id-navy">
+                        <div class="flex items-center gap-6">
+                            <span class="font-header font-extrabold text-5xl opacity-10">01</span>
+                            <div>
+                                <h3 class="font-header font-extrabold text-lg uppercase">Note de Cadrage Stratégique</h3>
+                                <p class="text-[10px] font-bold text-id-goldDeep uppercase tracking-widest">Positionnement & Verrou de Contrôle</p>
                             </div>
                         </div>
-                    </section>
-                </div>
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div class="p-10 border-t border-id-navy/5 bg-id-surface text-id-slate text-sm">
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="font-bold text-id-navy uppercase text-xs mb-3 border-b border-id-navy/10 pb-1">1. L’impératif de sécurité</h4>
+                                <p>Dans un contexte post-Bukanga Lonzo et compte tenu de la surveillance institutionnelle (BCC / IGF), la relance de Boma requiert un dispositif de contrôle qui protège le FPI et la Direction Générale : certifier la réalité des actifs avant toute décision de décaissement. <strong>Message clé : Le FPI ne paie que ce qui est vérifié.</strong></p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-id-navy uppercase text-xs mb-3 border-b border-id-navy/10 pb-1">2. Dispositif : « Tiers de confiance »</h4>
+                                <p>Statut : AMO / Lender’s Technical Advisor (LTA) — Fondé de pouvoir technique. Rôle : « les yeux du DG ». Sans visa InfraDev, le paiement est bloqué. Contrôle à la source : inspection fournisseurs en RSA.</p>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold text-id-navy uppercase text-xs mb-3 border-b border-id-navy/10 pb-1">3. Pourquoi InfraDev.Africa</h4>
+                                <p>Cabinet d’ingénierie & advisory orienté gouvernance d’exécution. Neutralité garantie par un contrôle indépendant du management opérationnel.</p>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold text-id-navy uppercase text-xs mb-3 border-b border-id-navy/10 pb-1">4. Modèle économique (Neutralité)</h4>
+                                <p>Imputation CAPEX via un compte séquestre (escrow) préfinancé. Les paiements d’honoraires sont déclenchés automatiquement sur base des livrables remis au DG, empêchant toute capture par l'opérateur.</p>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold text-id-navy uppercase text-xs mb-4">6. Plan d’action immédiat (J0–J15)</h4>
+                                <div class="space-y-4">
+                                    <div class="milestone-row"><span class="milestone-id">J0</span><p><strong>Mandat :</strong> OS/mandat signé — Accès site Boma + fournisseurs RSA.</p></div>
+                                    <div class="milestone-row"><span class="milestone-id">J1-J5</span><p><strong>Setup :</strong> Collecte docs clés + data-room minimum + protocole certification.</p></div>
+                                    <div class="milestone-row"><span class="milestone-id">J5-J10</span><p><strong>Terrain :</strong> Visite Boma (Inventaire contradictoire) + registre actifs v1.</p></div>
+                                    <div class="milestone-row"><span class="milestone-id">J10-J15</span><p><strong>Reporting :</strong> Note « Flash » stratégique pour la levée des mesures conservatoires (BCC).</p></div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-bold text-id-navy uppercase text-xs mb-3 border-b border-id-navy/10 pb-1">7. Durée et continuité</h4>
+                                <p>Engagement minimum : 36 mois pour rassurer la BCC sur la continuité du contrôle et couvrir le cycle d’exécution.</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- 02. HEADS OF TERMS -->
+                <details class="group governance-card bg-white rounded-2xl overflow-hidden shadow-2xl">
+                    <summary class="p-8 flex justify-between items-center text-id-navy">
+                        <div class="flex items-center gap-6">
+                            <span class="font-header font-extrabold text-5xl opacity-10">02</span>
+                            <div>
+                                <h3 class="font-header font-extrabold text-lg uppercase">Heads of Terms (Tripartite)</h3>
+                                <p class="text-[10px] font-bold text-id-goldDeep uppercase tracking-widest">Gouvernance Commerciale & Indépendance</p>
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div class="p-10 border-t border-id-navy/5 bg-id-surface text-id-slate text-sm">
+                        <h4 class="font-bold text-id-navy uppercase text-xs mb-4">Structure de Fee & Gouvernance</h4>
+                        <table>
+                            <thead>
+                                <tr><th>Partie</th><th>Rôle / Responsabilité</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>FPI (DG)</strong></td><td>Bailleur / Autorité de contrôle (Canal direct de reporting)</td></tr>
+                                <tr><td><strong>AFRICOM</strong></td><td>Entreprise projet / Payeur (Pas de droit d'instruction technique)</td></tr>
+                                <tr><td><strong>Triomf RDC</strong></td><td>Partenaire technique / Exécutant (Obligation de coopération)</td></tr>
+                                <tr><td><strong>InfraDev</strong></td><td>LTA / AMO — Tiers de confiance (Certification "No Cert = No Pay")</td></tr>
+                            </tbody>
+                        </table>
+
+                        <h4 class="font-bold text-id-navy uppercase text-xs mt-8 mb-4">Structure Financière (LTA Fees)</h4>
+                        <table>
+                            <thead>
+                                <tr><th>Composant</th><th>Base</th><th>Observation</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Retainer Mensuel</td><td>36 Mois</td><td>Indépendance via Escrow préfinancé</td></tr>
+                                <tr><td>Audit Initial</td><td>Forfaitaire</td><td>J30 : État des lieux Boma + Audit RSA</td></tr>
+                                <tr><td>Missions Terrain</td><td>Par mission</td><td>Per diem + logistique au réel</td></tr>
+                                <tr><td>Plafond (Cap)</td><td>0,8% - 1,2%</td><td>Adossé à la valeur totale du contrat/projet</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </details>
+
+                <!-- 03. ORDRE DE SERVICE -->
+                <details class="group governance-card bg-white rounded-2xl overflow-hidden shadow-2xl">
+                    <summary class="p-8 flex justify-between items-center text-id-navy">
+                        <div class="flex items-center gap-6">
+                            <span class="font-header font-extrabold text-5xl opacity-10">03</span>
+                            <div>
+                                <h3 class="font-header font-extrabold text-lg uppercase">Ordre de Service / Mandat</h3>
+                                <p class="text-[10px] font-bold text-id-goldDeep uppercase tracking-widest">Lettre de Mission Exécutive</p>
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div class="p-10 border-t border-id-navy/5 bg-id-surface text-id-slate text-sm">
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-bold text-id-navy uppercase text-xs mb-2">Phase A : Audit initial (J0–J30)</h4>
+                                <p>Inventaire contradictoire Boma, marquage des actifs, séparation passif/investissements, audit fournisseurs Johannesburg.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-id-navy uppercase text-xs mb-2">Phase B : Contrôle & Certifications</h4>
+                                <p>Contre-expertise de toute demande de paiement, visa « Bon à Payer », surveillance Model IB/IS et traçabilité bancaire.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-id-navy uppercase text-xs mb-2">Compliance Étendue</h4>
+                                <p>Vendor integrity screen (anti-sociétés-écrans), registre risques ESG/HSE, audit foncier et readiness logistique.</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- 04. ANNEXES & CHECKLIST -->
+                <details class="group governance-card bg-white rounded-2xl overflow-hidden shadow-2xl">
+                    <summary class="p-8 flex justify-between items-center text-id-navy">
+                        <div class="flex items-center gap-6">
+                            <span class="font-header font-extrabold text-5xl opacity-10">04</span>
+                            <div>
+                                <h3 class="font-header font-extrabold text-lg uppercase">Annexes & Outils Opérationnels</h3>
+                                <p class="text-[10px] font-bold text-id-goldDeep uppercase tracking-widest">Preuves de Méthode & Checklist J0-J15</p>
+                            </div>
+                        </div>
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <div class="p-10 border-t border-id-navy/5 bg-id-surface text-id-slate text-sm">
+                        <h4 class="font-bold text-id-navy uppercase text-xs mb-4">Annexe 6 : Checklist de Mise en Route (J0-J15)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 font-bold text-id-navy">
+                            <div class="space-y-2">
+                                <p>☐ OS signé + mandat d'accès Boma/RSA.</p>
+                                <p>☐ Point focal DG FPI désigné.</p>
+                                <p>☐ Data-room minimum (Contrats/BOQ/Budget).</p>
+                            </div>
+                            <div class="space-y-2">
+                                <p>☐ Plan de visite Boma + équipe d'appui.</p>
+                                <p>☐ Templates validés (Registre/Certificat SF).</p>
+                                <p>☐ Note « Flash » prête pour la BCC.</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-10 pt-10 border-t border-id-navy/10 space-y-4">
+                            <p><strong>Annexe 1 :</strong> Registre des Actifs (Traçabilité Marque/Série/Photo).</p>
+                            <p><strong>Annexe 2 :</strong> Certificat de Service Fait (Visa obligatoire avant paiement).</p>
+                            <p><strong>Annexe 3 :</strong> Grille de contrôle des décaissements (CAPEX -> Assets).</p>
+                        </div>
+                    </div>
+                </details>
+
             </div>
-                </div>
-            </div>
-        </section>
-    </main>
+        </main>
 
-
-
-
-
-
-
-    <footer class="bg-brand-surface/80 border-t border-white/10 py-10">
-    <div class="max-w-site mx-auto px-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-sm text-gray-400">
-        <div class="flex items-center gap-3">
-            <div class="relative w-8 h-8 bg-brand-accent rounded-md flex items-center justify-center shrink-0 overflow-hidden">
-                <span class="material-symbols-outlined absolute text-brand-base opacity-20 text-2xl translate-x-1 translate-y-1">public</span>
-                <span class="font-display font-extrabold text-brand-base text-xs tracking-tighter relative z-10">ID.</span>
-            </div>
-            <div>
-                <p class="text-white font-semibold">InfraDev.Africa</p>
-                <p>Institutional Infrastructure Advisory</p>
+        <!-- COMMAND ACTION BAR -->
+        <div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[90%] max-w-lg z-[1500]">
+            <div class="bg-white/10 backdrop-blur-2xl border border-white/20 p-3 rounded-2xl shadow-2xl flex gap-3">
+                <a href="triomf-full-pack.html" class="flex-1 bg-id-gold text-id-navy h-14 rounded-xl flex items-center justify-center gap-3 font-header font-extrabold text-[11px] uppercase tracking-widest hover:bg-white transition-all shadow-lg">
+                    <span class="material-symbols-outlined text-xl">description</span> View PDF Pack
+                </a>
+                <a href="https://wa.me/243891187001?text=Discuss%20Triomf%20Boma%20Project" class="flex-1 bg-[#25D366] text-white h-14 rounded-xl flex items-center justify-center gap-3 font-header font-extrabold text-[11px] uppercase tracking-widest hover:brightness-110 transition-all shadow-lg">
+                    <span class="material-symbols-outlined text-xl">chat</span> WhatsApp Secure
+                </a>
             </div>
         </div>
-        <div class="flex flex-wrap items-center gap-4">
-            <a class="text-brand-accent hover:text-white transition-colors" href="mailto:info@infradev.africa">info@infradev.africa</a>
-            <span class="text-gray-600">|</span>
-            <a class="text-gray-400 hover:text-white transition-colors" href="index.html">Access InfraDev site</a>
-            <span class="text-gray-600">|</span>
-            <a class="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2" href="https://kumea.africa" target="_blank" rel="noopener">
-                <img src="src/assets/branding/kumea-anchor-seal.svg" alt="Kumea anchor seal" class="h-5 w-auto" loading="lazy"/>
-            </a>
-        </div>
-    </div>
-    <div class="max-w-site mx-auto px-4 mt-6 pt-6 border-t border-white/5 text-xs text-gray-500">
-        <p>&copy; 2026 Kumea Africa Holding SARL.</p>
-        <p>InfraDev.Africa operates within the Kumea.Africa ecosystem.</p>
-    </div>
-</footer>
-
     </div>
 
     <script>
         const PASSCODE = 'DGHCB01';
-        const bodyEl = document.body;
-        const passcodeInput = document.getElementById('passcode-input');
-        const passcodeError = document.getElementById('passcode-error');
-        const passcodeSubmit = document.getElementById('passcode-submit');
-
+        
         function unlockGate() {
-            const entered = (passcodeInput?.value || '').trim().toUpperCase();
-            if (entered === PASSCODE) {
-                sessionStorage.setItem('triomf_unlocked', '1');
-                bodyEl.classList.remove('locked');
-                if (passcodeError) passcodeError.classList.add('hidden');
-                if (passcodeInput) passcodeInput.value = '';
-            } else if (passcodeError) {
-                passcodeError.classList.remove('hidden');
+            const val = document.getElementById('passcode-input').value.toUpperCase();
+            if (val === PASSCODE) {
+                document.getElementById('passcode-gate').classList.add('hidden');
+                document.getElementById('main-content').classList.remove('hidden-content');
+                document.body.classList.remove('locked');
+            } else {
+                document.getElementById('error-msg').classList.remove('hidden');
             }
         }
 
-        function initGate() {
-            const unlocked = sessionStorage.getItem('triomf_unlocked') === '1';
-            if (unlocked) {
-                bodyEl.classList.remove('locked');
-                return;
-            }
-            passcodeSubmit?.addEventListener('click', unlockGate);
-            passcodeInput?.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    unlockGate();
-                }
+        // Close others when one opens
+        const details = document.querySelectorAll("details");
+        details.forEach((targetDetail) => {
+            targetDetail.addEventListener("click", () => {
+                details.forEach((detail) => {
+                    if (detail !== targetDetail) {
+                        detail.removeAttribute("open");
+                    }
+                });
             });
-            passcodeInput?.addEventListener('input', () => {
-                passcodeError?.classList.add('hidden');
-            });
-            passcodeInput?.focus();
-        }
-
-        function initCommentCTA() {
-            const commentBtn = document.getElementById('dg-comment-submit');
-            const commentField = document.getElementById('dg-comments');
-            if (!commentBtn || !commentField) return;
-
-            commentBtn.addEventListener('click', () => {
-                const commentText = commentField.value.trim();
-                const body = encodeURIComponent(`Commentaires DG TRIOMF:\n\n${commentText || '[Ajouter vos commentaires ici]'}`);
-                window.location.href = `mailto:info@infradev.africa?subject=Commentaires%20-%20Dossier%20DG%20TRIOMF&body=${body}`;
-            });
-        }
-
-        function initGovernedTables() {
-            const tables = document.querySelectorAll('.doc-content table');
-            tables.forEach((table, index) => {
-                table.classList.add('id-table-governed');
-                if (table.parentElement?.classList.contains('id-table-scroll')) return;
-
-                const wrapper = document.createElement('div');
-                wrapper.className = 'id-table-scroll';
-                wrapper.setAttribute('role', 'region');
-                wrapper.setAttribute('tabindex', '0');
-                wrapper.setAttribute('aria-label', `Tableau institutionnel ${index + 1}`);
-
-                table.parentNode.insertBefore(wrapper, table);
-                wrapper.appendChild(table);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initGate();
-            initCommentCTA();
-            initGovernedTables();
         });
     </script>
-
 </body>
 </html>
-
-

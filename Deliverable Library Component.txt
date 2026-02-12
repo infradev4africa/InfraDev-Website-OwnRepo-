@@ -1,0 +1,491 @@
+
+This execution provides the Deliverables Library Component, the engine of your /capability page. It is engineered for Institutional Gravity—moving away from "marketing fluff" toward a Data-Room interface that signals readiness to DFI and Sovereign auditors.
+I have followed the Zero-Truncation Mandate, ensuring every single deliverable from your Capability Statement is hard-coded into the system.
+I. The Engineering Blueprint (VS Code Assets)
+You will need two files in your project directory:
+deliverables.css (The Governance Style)
+capability-library.html (The Structural Content)
+1. The Governance Style (deliverables.css)
+This CSS implements the Institutional Grid and the Geometric Rule (3° tilt) for active states.
+code
+CSS
+/* 
+   InfraDev Deliverables Library - Governance Layer v2.0 
+   Mandate: Institutional Gravity & Zero-Drift
+*/
+
+:root {
+    --id-navy: #0A1F44;
+    --id-gold: #F9C70C;
+    --id-gold-deep: #B8860B;
+    --id-off-white: #F7F7F5;
+    --id-slate: #334155;
+    --id-grey: #9CA3AF;
+    --id-border: #E2E8F0;
+    --id-font-header: 'Montserrat', sans-serif;
+    --id-font-body: 'Inter', sans-serif;
+}
+
+.id-library-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    padding: 40px;
+    background-color: white;
+    font-family: var(--id-font-body);
+}
+
+/* Sidebar Navigation */
+.id-sidebar-nav {
+    position: sticky;
+    top: 40px;
+    height: fit-content;
+}
+
+.id-nav-header {
+    font-family: var(--id-font-header);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--id-gold-deep);
+    margin-bottom: 20px;
+}
+
+.id-nav-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 12px 15px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--id-slate);
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.id-nav-btn:hover {
+    color: var(--id-navy);
+    background-color: var(--id-off-white);
+}
+
+.id-nav-btn.active {
+    color: var(--id-navy);
+    font-weight: 700;
+    border-left: 4px solid var(--id-gold);
+    background-color: var(--id-off-white);
+}
+
+/* Main Content Area */
+.id-library-main h1 {
+    font-family: var(--id-font-header);
+    font-size: 24px;
+    text-transform: uppercase;
+    color: var(--id-navy);
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--id-gold);
+    display: inline-block;
+}
+
+.id-deliverable-card {
+    background: white;
+    border: 1px solid var(--id-border);
+    margin-bottom: 16px;
+    transition: transform 0.2s ease;
+}
+
+.id-deliverable-card:hover {
+    border-color: var(--id-gold);
+}
+
+.id-card-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background-color: white;
+}
+
+.id-card-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--id-navy);
+}
+
+.id-card-tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    background: var(--id-off-white);
+    padding: 4px 8px;
+    border: 1px solid var(--id-grey);
+    color: var(--id-slate);
+}
+
+.id-card-body {
+    padding: 0 20px 20px 20px;
+    display: none; /* Controlled by JS */
+    color: var(--id-slate);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.id-card-body.visible {
+    display: block;
+}
+
+/* Verification Stamp Styling */
+.id-certification-note {
+    font-size: 11px;
+    color: var(--id-gold-deep);
+    margin-top: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* 3-Degree Rotation Law for Badges */
+.id-badge-rotated {
+    display: inline-block;
+    background-color: var(--id-gold);
+    color: var(--id-navy);
+    padding: 4px 10px;
+    font-weight: 800;
+    font-size: 10px;
+    border-radius: 4px;
+    transform: rotate(3deg);
+    margin-right: 10px;
+}
+2. The Structural Content (capability-library.html)
+This HTML contains the full text of your library, organized by the specific modules.
+code
+Html
+<div class="id-library-container">
+    
+    <!-- Sidebar Filters -->
+    <aside class="id-sidebar-nav">
+        <div class="id-nav-header">Filter by Capability</div>
+        <button class="id-nav-btn active" onclick="filterLibrary('all')">All Deliverables</button>
+        <button class="id-nav-btn" onclick="filterLibrary('feasibility')">Feasibility & Due Diligence</button>
+        <button class="id-nav-btn" onclick="filterLibrary('ppp')">PPP / Delivery Structuring</button>
+        <button class="id-nav-btn" onclick="filterLibrary('master')">Master Planning</button>
+        <button class="id-nav-btn" onclick="filterLibrary('assurance')">Delivery Assurance (OE)</button>
+        <button class="id-nav-btn" onclick="filterLibrary('esg')">ESG / E&S / HSE</button>
+        <button class="id-nav-btn" onclick="filterLibrary('compliance')">Financial Compliance</button>
+        <button class="id-nav-btn" onclick="filterLibrary('digital')">Digital PMO & AI</button>
+    </aside>
+
+    <!-- Main Library Area -->
+    <main class="id-library-main">
+        <h1>Deliverables Library</h1>
+        <p style="margin-bottom: 40px; color: var(--id-slate);">Institutional outputs designed to bridge the gap between concept and investment decision.</p>
+
+        <!-- FEASIBILITY CATEGORY -->
+        <div class="lib-section" data-category="feasibility">
+            <h3 class="id-nav-header">Feasibility & Due Diligence</h3>
+            
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Pre-feasibility / Screening Note</span>
+                    <span class="id-card-tag">Institutional</span>
+                </div>
+                <div class="id-card-body">
+                    Constraints scan, data gaps identification, early risk triggers, and next-step ToR (Terms of Reference) outline.
+                    <div class="id-certification-note">Decision Gate Tool</div>
+                </div>
+            </div>
+
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Options Analysis</span>
+                    <span class="id-card-tag">Institutional</span>
+                </div>
+                <div class="id-card-body">
+                    2–4 solution pathways, cost/schedule bands, risk comparison, and formal recommendation for project direction.
+                </div>
+            </div>
+
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Feasibility Report (Decision-Ready)</span>
+                    <span class="id-badge-rotated">Bankable</span>
+                </div>
+                <div class="id-card-body">
+                    Technical, commercial, and implementation plan + comprehensive annexes and assumptions log. Aligned with DFI standards.
+                </div>
+            </div>
+            
+            <!-- TRUNCATION PREVENTION: Continuing all items -->
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Risk Register (Living)</span>
+                    <span class="id-card-tag">Institutional</span>
+                </div>
+                <div class="id-card-body">
+                    Probability/impact matrix, mitigation strategies, assigned owners, deadlines, and early-warning triggers.
+                </div>
+            </div>
+
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Stakeholder & Institutional Map</span>
+                    <span class="id-card-tag">Institutional</span>
+                </div>
+                <div class="id-card-body">
+                    Mapping of approval authorities, decision gates, and institutional coordination plans.
+                </div>
+            </div>
+
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Bankability Pack</span>
+                    <span class="id-badge-rotated">Required by Lenders</span>
+                </div>
+                <div class="id-card-body">
+                    Investment narrative + model inputs + procurement pathway + data room starter index.
+                </div>
+            </div>
+        </div>
+
+        <!-- PPP / DELIVERY STRUCTURING -->
+        <div class="lib-section" data-category="ppp">
+            <h3 class="id-nav-header">PPP / Delivery Structuring</h3>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">PPP/Delivery Suitability Note</span>
+                    <span class="id-card-tag">Structuring</span>
+                </div>
+                <div class="id-card-body">Rationale, affordability approach, and risk allocation logic.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Procurement Strategy & Packaging</span>
+                    <span class="id-card-tag">Structuring</span>
+                </div>
+                <div class="id-card-body">Lots definition, contract strategy, evaluation logic, and implementation timeline.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Heads of Terms (Term Sheet)</span>
+                    <span class="id-badge-rotated">Negotiation Ready</span>
+                </div>
+                <div class="id-card-body">Key commercial positions for negotiation and approval.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">SPV / Operating Model Outline</span>
+                    <span class="id-card-tag">Structuring</span>
+                </div>
+                <div class="id-card-body">Roles, governance, interfaces, and performance obligations.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Data Room Index (Minimum Viable)</span>
+                    <span class="id-card-tag">Structuring</span>
+                </div>
+                <div class="id-card-body">Document checklist by workstream + owners.</div>
+            </div>
+        </div>
+
+        <!-- MASTER PLANNING -->
+        <div class="lib-section" data-category="master">
+            <h3 class="id-nav-header">Master Planning</h3>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">System / Sector Diagnostic</span>
+                    <span class="id-card-tag">Master Planning</span>
+                </div>
+                <div class="id-card-body">Bottlenecks, baseline, governance gaps, and investment needs.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Sequenced Delivery Roadmap (12–36 months)</span>
+                    <span class="id-card-tag">Master Planning</span>
+                </div>
+                <div class="id-card-body">Work packages, dependencies, approvals, and funding gates.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Portfolio Prioritisation Model</span>
+                    <span class="id-badge-rotated">Strategic</span>
+                </div>
+                <div class="id-card-body">Scoring criteria + sensitivity analysis and recommended “starter set.”</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Institutional Alignment Pack</span>
+                    <span class="id-card-tag">Master Planning</span>
+                </div>
+                <div class="id-card-body">Mandates, coordination design, and decision cadence.</div>
+            </div>
+        </div>
+
+        <!-- DELIVERY ASSURANCE -->
+        <div class="lib-section" data-category="assurance">
+            <h3 class="id-nav-header">Delivery Assurance (Owner’s Engineer)</h3>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Controls Pack (Baseline)</span>
+                    <span class="id-card-tag">Assurance</span>
+                </div>
+                <div class="id-card-body">Scope/schedule/cost baseline + change-control rules.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Monthly Progress Report</span>
+                    <span class="id-card-tag">Assurance</span>
+                </div>
+                <div class="id-card-body">Progress, issues/actions, photos, look-ahead, and decision requests.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Certification Support Memo</span>
+                    <span class="id-badge-rotated">Evidence-Backed</span>
+                </div>
+                <div class="id-card-body">Evidence-backed review of payment/works completion.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Variations / Claims Log</span>
+                    <span class="id-card-tag">Assurance</span>
+                </div>
+                <div class="id-card-body">Disciplined tracking of variations, impacts, and status.</div>
+            </div>
+        </div>
+
+        <!-- ESG / E&S / HSE -->
+        <div class="lib-section" data-category="esg">
+            <h3 class="id-nav-header">ESG / E&S / HSE</h3>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">ESG/E&S/HSE Risk Register</span>
+                    <span class="id-badge-rotated">IFC Aligned</span>
+                </div>
+                <div class="id-card-body">Probability/impact/mitigation/owner.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Field Compliance Checklist</span>
+                    <span class="id-card-tag">Field Operations</span>
+                </div>
+                <div class="id-card-body">Safety, chemicals, waste/effluent, incidents + site audit pack.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Incident & Non-Conformity Log</span>
+                    <span class="id-card-tag">Field Operations</span>
+                </div>
+                <div class="id-card-body">Corrective actions with proof + closure criteria.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Monthly ESG/HSE Insert</span>
+                    <span class="id-card-tag">Assurance</span>
+                </div>
+                <div class="id-card-body">KPIs, incidents, trends, top risks, and actions (1–2 pages).</div>
+            </div>
+        </div>
+
+        <!-- COMPLIANCE & VENDOR -->
+        <div class="lib-section" data-category="compliance">
+            <h3 class="id-nav-header">Financial Compliance & Vendor Integrity</h3>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Vendor Integrity Screen</span>
+                    <span class="id-card-tag">Integrity</span>
+                </div>
+                <div class="id-card-body">Proportionate RCCM, address, and beneficial owner checks for red flags.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Import/FX Documentation Watch</span>
+                    <span class="id-badge-rotated">Pre-Payment</span>
+                </div>
+                <div class="id-card-body">Pre-payment checklist for offshore payments.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Land Tenure & Boundary Readiness</span>
+                    <span class="id-card-tag">Integrity</span>
+                </div>
+                <div class="id-card-body">Titles/PVs + blocking-risk alerts.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Logistics Readiness Check</span>
+                    <span class="id-card-tag">Integrity</span>
+                </div>
+                <div class="id-card-body">Route/port interfaces, handling constraints, and critical risks.</div>
+            </div>
+        </div>
+
+        <!-- DIGITAL PMO & AI -->
+        <div class="lib-section" data-category="digital">
+            <h3 class="id-nav-header">Digital PMO & AI Evidence Room</h3>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">OCR + Evidence Library Setup</span>
+                    <span class="id-card-tag">Digital Assets</span>
+                </div>
+                <div class="id-card-body">Searchable archive + index discipline.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Consistency/Anomaly Checks</span>
+                    <span class="id-badge-rotated">AI Assisted</span>
+                </div>
+                <div class="id-card-body">Detection of missing docs, duplicates, and mismatches (human-validated).</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Living Registers</span>
+                    <span class="id-card-tag">Digital Assets</span>
+                </div>
+                <div class="id-card-body">Timestamped risks, issues, decisions, actions, and ESG/HSE incidents.</div>
+            </div>
+            <div class="id-deliverable-card">
+                <div class="id-card-header" onclick="toggleCard(this)">
+                    <span class="id-card-title">Monthly Report Drafting Assist</span>
+                    <span class="id-card-tag">Digital Assets</span>
+                </div>
+                <div class="id-card-body">Structured drafts + source traceability (human-validated).</div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    // Filtering Logic
+    function filterLibrary(category) {
+        const sections = document.querySelectorAll('.lib-section');
+        const buttons = document.querySelectorAll('.id-nav-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+
+        sections.forEach(section => {
+            if (category === 'all' || section.getAttribute('data-category') === category) {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+    }
+
+    // Accordion Logic
+    function toggleCard(element) {
+        const body = element.nextElementSibling;
+        body.classList.toggle('visible');
+    }
+</script>
+
+II. Panel Implementation Instructions
+Agent 1 (CSS Governor): Apply the variables.css tokens to the primary project file.
+Agent 2 (Structural Engineer): Embed this HTML into the /capability page body.
+Agent 5 (QA Specialist): Ensure the id-badge-rotated class is tested on different screen sizes to prevent overlapping.
+III. Constructive Final Critique
+The Outcome: The library is now a technical asset map. It looks like a high-level data room, which is exactly what a DFI or a Ministry official expects to see before engaging.
+The Logic: By keeping the descriptions short but the titles technical, we satisfy both the "Scannable" and "Zero Truncation" requirements.
+This is the complete Deliverables Library for your VS Code project. What is our next move?
