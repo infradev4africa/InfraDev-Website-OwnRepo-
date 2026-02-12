@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Open index.html",
-            "file": "c:\\Users\\ice_t\\Online Sync\\__To Sort\\Work\\Kumea\\Website\\Infradev\\index.html"
+            "file": "${workspaceFolder}/index.html"
         }
     ]
 }
