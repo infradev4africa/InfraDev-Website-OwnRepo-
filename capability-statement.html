@@ -74,7 +74,10 @@
                 <div class="flex flex-col gap-8">
                     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                         <div class="flex items-center gap-4">
-                            <img src="public/infradev-logo-gold-transparent.svg" alt="InfraDev.Africa" class="w-14 h-14 object-contain" loading="lazy"/>
+                            <div class="relative w-14 h-14 bg-brand-accent rounded-xl flex items-center justify-center shrink-0 overflow-hidden shadow-[0_0_20px_rgba(249,199,12,0.35)]">
+                                <span class="material-symbols-outlined absolute text-brand-base opacity-20 text-5xl translate-x-1 translate-y-1">public</span>
+                                <span class="font-display font-extrabold text-brand-base text-lg tracking-tighter relative z-10">ID.</span>
+                            </div>
                             <div>
                                 <p class="text-[11px] font-bold tracking-[0.2em] text-gray-300 uppercase font-display">Capability Statement</p>
                                 <h1 class="text-3xl md:text-5xl font-bold text-white font-display">InfraDev.Africa | Solutionists</h1>
@@ -180,12 +183,36 @@
                     </div>
 
                     <div class="text-gray-400 text-xs font-light leading-relaxed border-t border-white/10 pt-6">
-                        Relationship and disclaimer: This document is issued by InfraDev.Africa for information only and does not constitute a binding offer; any engagement is subject to contract.
+                        Relationship and disclaimer: InfraDev.Africa is an independent venture within the Kumea.Africa ecosystem (House of Brands). This document is for information only and does not constitute a binding offer; any engagement is subject to contract.
                     </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <footer class="bg-brand-surface/80 border-t border-white/10 py-10">
+        <div class="max-w-site mx-auto px-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-sm text-gray-400">
+            <div class="flex items-center gap-3">
+                <div class="relative w-8 h-8 bg-brand-accent rounded-md flex items-center justify-center shrink-0 overflow-hidden">
+                    <span class="material-symbols-outlined absolute text-brand-base opacity-20 text-2xl translate-x-1 translate-y-1">public</span>
+                    <span class="font-display font-extrabold text-brand-base text-xs tracking-tighter relative z-10">ID.</span>
+                </div>
+                <div>
+                    <p class="text-white font-semibold">InfraDev.Africa</p>
+                    <p>Institutional Infrastructure Advisory</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <a class="text-brand-accent hover:text-white transition-colors" href="mailto:info@infradev.africa">info@infradev.africa</a>
+                <span class="text-gray-600">|</span>
+                <a class="text-gray-400 hover:text-white transition-colors" href="index.html">Access InfraDev site</a>
+            </div>
+        </div>
+        <div class="max-w-site mx-auto px-4 mt-6 pt-6 border-t border-white/5 text-xs text-gray-500">
+            <p>© 2026 Kumea Africa Holding SARL.</p>
+            <p>InfraDev.Africa operates within the Kumea.Africa ecosystem.</p>
+        </div>
+    </footer>
 
 </body>
 </html>
