@@ -639,6 +639,9 @@
                     <div class="bg-brand-base/40 border border-white/10 rounded-xl p-3">
                         <div id="turnstile-widget" class="min-h-[72px]" data-sitekey="__TURNSTILE_SITE_KEY__"></div>
                         <input id="turnstile-token" type="hidden" name="cf-turnstile-response" />
+                        <p id="turnstile-help" class="hidden mt-2 text-xs text-amber-300">
+                            Verification widget did not load. Disable blockers/privacy shields for this site, then refresh.
+                        </p>
                     </div>
                     <p class="text-xs text-gray-500 mb-0">
                         <span class="lang-en">A verification email will be sent before your request is routed to our team.</span>
@@ -954,6 +957,9 @@
             INSIGHTS_PAGE: 'https://linkedin.com/company/infradev-africa' // LinkedIn page
         };
         let turnstileWidgetId = null;
+        let turnstileInitAttempts = 0;
+        let turnstileDidRender = false;
+        const TURNSTILE_MAX_INIT_ATTEMPTS = 20;
 
         // =============================================================================
         // GSAP ANIMATION - Dynamic Blueprint Background
@@ -1152,6 +1158,16 @@
             statusBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
+        function setTurnstileHelpVisible(visible, enText, frText) {
+            const help = document.getElementById('turnstile-help');
+            if (!help) return;
+
+            if (enText && frText) {
+                help.textContent = currentLang === 'fr' ? frText : enText;
+            }
+            help.classList.toggle('hidden', !visible);
+        }
+
         function initTurnstileWidget() {
             const widgetContainer = document.getElementById('turnstile-widget');
             const tokenField = document.getElementById('turnstile-token');
@@ -1160,6 +1176,11 @@
 
             const siteKey = (widgetContainer.dataset.sitekey || '').trim();
             if (!siteKey || siteKey.includes('__TURNSTILE_SITE_KEY__')) {
+                setTurnstileHelpVisible(
+                    true,
+                    'Verification is not configured yet. Contact support.',
+                    'La verification n est pas encore configuree. Contactez le support.'
+                );
                 setContactStatus(
                     'error',
                     'Verification is not configured yet. Please refresh, or contact support if this persists.',
@@ -1169,29 +1190,66 @@
             }
 
             if (!window.turnstile || typeof window.turnstile.render !== 'function') {
-                window.setTimeout(initTurnstileWidget, 400);
+                turnstileInitAttempts += 1;
+                if (turnstileInitAttempts >= TURNSTILE_MAX_INIT_ATTEMPTS) {
+                    setTurnstileHelpVisible(
+                        true,
+                        'Verification widget did not load. Disable blockers/privacy shields and refresh.',
+                        'Le widget de verification ne se charge pas. Desactivez les bloqueurs/protections puis actualisez.'
+                    );
+                    setContactStatus(
+                        'error',
+                        'Verification widget did not load. Please disable blockers and refresh this page.',
+                        'Le widget de verification ne se charge pas. Veuillez desactiver les bloqueurs puis actualiser cette page.'
+                    );
+                    return;
+                }
+                window.setTimeout(initTurnstileWidget, 450);
                 return;
             }
 
-            turnstileWidgetId = window.turnstile.render(widgetContainer, {
-                sitekey: siteKey,
-                theme: 'dark',
-                size: 'flexible',
-                callback: function(token) {
-                    tokenField.value = token || '';
-                },
-                'expired-callback': function() {
-                    tokenField.value = '';
-                },
-                'error-callback': function() {
-                    tokenField.value = '';
-                    setContactStatus(
-                        'error',
-                        'Verification challenge failed to load. Refresh and retry.',
-                        'Le challenge de verification n a pas pu se charger. Actualisez la page puis reessayez.'
-                    );
-                }
-            });
+            try {
+                turnstileWidgetId = window.turnstile.render(widgetContainer, {
+                    sitekey: siteKey,
+                    theme: 'dark',
+                    size: 'flexible',
+                    callback: function(token) {
+                        tokenField.value = token || '';
+                        setTurnstileHelpVisible(false);
+                    },
+                    'expired-callback': function() {
+                        tokenField.value = '';
+                    },
+                    'error-callback': function() {
+                        tokenField.value = '';
+                        setTurnstileHelpVisible(
+                            true,
+                            'Verification challenge failed to load. Refresh and retry.',
+                            'Le challenge de verification n a pas pu se charger. Actualisez la page puis reessayez.'
+                        );
+                        setContactStatus(
+                            'error',
+                            'Verification challenge failed to load. Refresh and retry.',
+                            'Le challenge de verification n a pas pu se charger. Actualisez la page puis reessayez.'
+                        );
+                    }
+                });
+                turnstileDidRender = true;
+                setTurnstileHelpVisible(false);
+            } catch (error) {
+                turnstileDidRender = false;
+                turnstileWidgetId = null;
+                setTurnstileHelpVisible(
+                    true,
+                    'Verification widget failed to initialize. Refresh and retry.',
+                    'Le widget de verification n a pas pu s initialiser. Actualisez puis reessayez.'
+                );
+                setContactStatus(
+                    'error',
+                    'Verification widget failed to initialize. Please refresh and retry.',
+                    'Le widget de verification n a pas pu s initialiser. Veuillez actualiser puis reessayer.'
+                );
+            }
         }
 
         async function submitContactForm(event) {
@@ -1203,11 +1261,24 @@
             const turnstileToken = (formData.get('cf-turnstile-response') || '').toString().trim();
 
             if (!turnstileToken) {
-                setContactStatus(
-                    'error',
-                    'Please complete the verification challenge below, then click Send Message.',
-                    'Veuillez completer la verification ci-dessous, puis cliquer sur Envoyer.'
-                );
+                if (!turnstileDidRender || turnstileWidgetId === null) {
+                    setTurnstileHelpVisible(
+                        true,
+                        'Verification widget is not visible yet. Disable blockers/privacy shields and refresh.',
+                        'Le widget de verification n est pas encore visible. Desactivez les bloqueurs/protections puis actualisez.'
+                    );
+                    setContactStatus(
+                        'error',
+                        'Verification widget is not loaded. Disable blockers/privacy shields and refresh.',
+                        'Le widget de verification n est pas charge. Desactivez les bloqueurs/protections puis actualisez.'
+                    );
+                } else {
+                    setContactStatus(
+                        'error',
+                        'Please complete the verification challenge below, then click Send Message.',
+                        'Veuillez completer la verification ci-dessous, puis cliquer sur Envoyer.'
+                    );
+                }
                 const verificationBlock = document.getElementById('contact-verification-block');
                 if (verificationBlock) {
                     verificationBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
