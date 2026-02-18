@@ -1356,9 +1356,12 @@
                     'Email de verification envoye. Ouvrez votre boite mail et cliquez sur le lien securise pour confirmer votre demande.'
                 );
             } catch (error) {
+                const serverMessage = (error && typeof error.message === 'string' && error.message.trim())
+                    ? error.message.trim()
+                    : 'Submission failed. Please retry in a moment.';
                 setContactStatus(
                     'error',
-                    'Submission failed. Please retry in a moment.',
+                    serverMessage,
                     'Echec de l envoi. Veuillez reessayer dans un instant.'
                 );
             } finally {

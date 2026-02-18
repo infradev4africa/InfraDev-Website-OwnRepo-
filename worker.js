@@ -107,13 +107,21 @@ async function handleContactInitiate(request, env, url) {
   const verificationLink = `${url.origin}/api/contact/verify?token=${encodeURIComponent(token)}`;
 
   const verificationEmail = buildVerificationEmail(tokenPayload, verificationLink);
-  await sendResendEmail(env, {
-    to: [tokenPayload.email],
-    subject: verificationEmail.subject,
-    html: verificationEmail.html,
-    text: verificationEmail.text,
-    replyTo: env.LEAD_DESTINATION_EMAIL || env.EMAIL_FROM,
-  });
+  try {
+    await sendResendEmail(env, {
+      to: [tokenPayload.email],
+      subject: verificationEmail.subject,
+      html: verificationEmail.html,
+      text: verificationEmail.text,
+      replyTo: env.LEAD_DESTINATION_EMAIL || env.EMAIL_FROM,
+    });
+  } catch (error) {
+    console.error("Contact initiate email failed", formatErrorForLog(error));
+    const providerMessage = mapEmailDeliveryError(error);
+    return wantsHtmlResponse
+      ? htmlResponse(502, renderStatusPage("Submission Failed", providerMessage))
+      : jsonResponse(502, { ok: false, error: providerMessage, code: "EMAIL_DELIVERY_FAILED" });
+  }
 
   if (wantsHtmlResponse) {
     return Response.redirect(`${url.origin}/success.html?status=verify-email`, 302);
@@ -182,21 +190,36 @@ async function handleContactVerify(request, env, url) {
     );
   }
 
-  await sendResendEmail(env, {
-    to: destinationList,
-    subject: leadEmail.subject,
-    html: leadEmail.html,
-    text: leadEmail.text,
-    replyTo: payload.email,
-  });
+  try {
+    await sendResendEmail(env, {
+      to: destinationList,
+      subject: leadEmail.subject,
+      html: leadEmail.html,
+      text: leadEmail.text,
+      replyTo: payload.email,
+    });
+  } catch (error) {
+    console.error("Lead notification email failed", formatErrorForLog(error));
+    return htmlResponse(
+      502,
+      renderStatusPage(
+        "Delivery Error",
+        "Lead routing email failed to send. Please contact info@infradev.africa and retry verification."
+      )
+    );
+  }
 
   const receiptEmail = buildSubmitterReceiptEmail(payload);
-  await sendResendEmail(env, {
-    to: [payload.email],
-    subject: receiptEmail.subject,
-    html: receiptEmail.html,
-    text: receiptEmail.text,
-  });
+  try {
+    await sendResendEmail(env, {
+      to: [payload.email],
+      subject: receiptEmail.subject,
+      html: receiptEmail.html,
+      text: receiptEmail.text,
+    });
+  } catch (error) {
+    console.error("Submitter receipt email failed", formatErrorForLog(error));
+  }
 
   if (env.LEADS_KV) {
     await env.LEADS_KV.put(replayKey, String(Date.now()), { expirationTtl: REPLAY_TTL_SECONDS });
@@ -318,8 +341,13 @@ async function sendResendEmail(env, { to, subject, html, text, replyTo }) {
     throw new Error("No email recipients provided.");
   }
 
+  const fromAddress = sanitizeSingleLine(env.EMAIL_FROM, 254);
+  if (!fromAddress || !isValidEmail(fromAddress)) {
+    throw new Error("EMAIL_FROM is missing or invalid.");
+  }
+
   const payload = {
-    from: env.EMAIL_FROM,
+    from: fromAddress,
     to: cleanedRecipients,
     subject,
     html,
@@ -342,6 +370,46 @@ async function sendResendEmail(env, { to, subject, html, text, replyTo }) {
     const bodyText = await response.text();
     throw new Error(`Resend failed (${response.status}): ${bodyText}`);
   }
+}
+
+function mapEmailDeliveryError(error) {
+  const message = String(error?.message || "").toLowerCase();
+
+  if (
+    message.includes("email_from is missing or invalid") ||
+    message.includes("from") && message.includes("invalid")
+  ) {
+    return "Email sender address is not configured correctly. Please contact support.";
+  }
+
+  if (
+    message.includes("domain is not verified") ||
+    message.includes("verify a domain") ||
+    message.includes("sender") && message.includes("verify")
+  ) {
+    return "Email sender identity is not verified yet. Please contact support.";
+  }
+
+  if (
+    message.includes("401") ||
+    message.includes("403") ||
+    message.includes("unauthorized") ||
+    message.includes("invalid api key") ||
+    message.includes("authentication")
+  ) {
+    return "Email delivery authentication failed on the server. Please contact support.";
+  }
+
+  if (message.includes("429") || message.includes("rate limit")) {
+    return "Email service is temporarily rate-limited. Please retry in a moment.";
+  }
+
+  return "Submission failed because email delivery could not be completed. Please retry shortly.";
+}
+
+function formatErrorForLog(error) {
+  if (error instanceof Error) return error.message;
+  return String(error);
 }
 
 function buildVerificationEmail(payload, verificationLink) {
