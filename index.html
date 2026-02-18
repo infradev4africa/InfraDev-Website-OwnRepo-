@@ -575,8 +575,6 @@
                     <label>Don't fill this out if you're human: <input name="bot-field" /></label>
                 </p>
 
-                <div id="contact-form-status" class="hidden text-sm rounded-xl px-4 py-3 border"></div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-2">
                         <label class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
@@ -634,7 +632,7 @@
                     <textarea name="message" data-placeholder-en="Briefly describe the project or inquiry..." data-placeholder-fr="Décrivez brièvement votre projet ou votre besoin…" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all min-h-[140px] text-sm font-light" placeholder="Briefly describe the project or inquiry..." required></textarea>
                 </div>
 
-                <div class="space-y-2">
+                <div id="contact-verification-block" class="space-y-2">
                     <label class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
                         <span class="lang-en">Verification</span><span class="lang-fr hidden">Verification</span>
                     </label>
@@ -644,6 +642,8 @@
                         <span class="lang-fr hidden">Un email de verification sera envoye avant le routage de votre demande a notre equipe.</span>
                     </p>
                 </div>
+
+                <div id="contact-form-status" class="hidden text-sm rounded-xl px-4 py-3 border"></div>
 
                 <button id="contact-submit-btn" class="w-full bg-brand-accent text-brand-base font-bold text-sm font-display rounded-pill py-5 mt-6 hover:bg-white hover:scale-[1.01] active:scale-[0.99] transition-all shadow-lg shadow-brand-accent/20 uppercase tracking-widest" type="submit">
                     <span class="lang-en">Send Message</span><span class="lang-fr hidden">Envoyer</span>
@@ -1144,6 +1144,8 @@
             }
 
             statusBox.textContent = currentLang === 'fr' ? frText : enText;
+
+            statusBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         async function submitContactForm(event) {
@@ -1157,9 +1159,13 @@
             if (!turnstileToken) {
                 setContactStatus(
                     'error',
-                    'Please complete the verification challenge before submitting.',
-                    'Veuillez completer la verification avant envoi.'
+                    'Please complete the verification challenge below, then click Send Message.',
+                    'Veuillez completer la verification ci-dessous, puis cliquer sur Envoyer.'
                 );
+                const verificationBlock = document.getElementById('contact-verification-block');
+                if (verificationBlock) {
+                    verificationBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
                 return;
             }
 
