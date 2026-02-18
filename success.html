@@ -71,13 +71,13 @@
                 </div>
 
                 <h1 class="text-3xl md:text-4xl font-bold text-white mb-4 font-display">
-                    <span class="lang-en">Message Sent</span>
-                    <span class="lang-fr hidden">Message envoye</span>
+                    <span id="success-title-en" class="lang-en">Message Sent</span>
+                    <span id="success-title-fr" class="lang-fr hidden">Message envoye</span>
                 </h1>
 
                 <p class="text-gray-400 text-lg font-light mb-8">
-                    <span class="lang-en">Thank you for reaching out. Our team will review your inquiry and respond shortly.</span>
-                    <span class="lang-fr hidden">Merci de nous avoir contactes. Notre equipe examinera votre demande et vous repondra dans les meilleurs delais.</span>
+                    <span id="success-body-en" class="lang-en">Thank you for reaching out. Our team will review your inquiry and respond shortly.</span>
+                    <span id="success-body-fr" class="lang-fr hidden">Merci de nous avoir contactes. Notre equipe examinera votre demande et vous repondra dans les meilleurs delais.</span>
                 </p>
 
                 <a href="index.html" class="inline-flex items-center gap-3 bg-brand-accent text-brand-base font-bold text-sm font-display rounded-pill py-4 px-8 hover:bg-white transition-all shadow-lg shadow-brand-accent/20 uppercase tracking-widest">
@@ -118,6 +118,53 @@
     </div>
 
     <script>
+        const STATUS_COPY = {
+            'verify-email': {
+                enTitle: 'Check Your Inbox',
+                enBody: 'We sent a verification link to your email. Confirm it to route your request to our team.',
+                frTitle: 'Verifiez votre boite mail',
+                frBody: 'Nous avons envoye un lien de verification a votre email. Confirmez-le pour transmettre votre demande a notre equipe.'
+            },
+            verified: {
+                enTitle: 'Email Verified',
+                enBody: 'Your request has been verified and routed to our team.',
+                frTitle: 'Email verifie',
+                frBody: 'Votre demande a ete verifiee et transmise a notre equipe.'
+            },
+            'already-verified': {
+                enTitle: 'Already Verified',
+                enBody: 'This verification link has already been used. Your request is already in our queue.',
+                frTitle: 'Deja verifie',
+                frBody: 'Ce lien de verification a deja ete utilise. Votre demande est deja dans notre file.'
+            },
+            expired: {
+                enTitle: 'Verification Link Expired',
+                enBody: 'Please submit the form again to receive a fresh verification link.',
+                frTitle: 'Lien de verification expire',
+                frBody: 'Veuillez soumettre le formulaire a nouveau pour recevoir un nouveau lien.'
+            },
+            'invalid-token': {
+                enTitle: 'Invalid Verification Link',
+                enBody: 'The verification link is invalid. Please submit the form again.',
+                frTitle: 'Lien de verification invalide',
+                frBody: 'Le lien de verification est invalide. Veuillez soumettre le formulaire a nouveau.'
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('status');
+        const statusCopy = STATUS_COPY[status];
+        if (statusCopy) {
+            const titleEn = document.getElementById('success-title-en');
+            const titleFr = document.getElementById('success-title-fr');
+            const bodyEn = document.getElementById('success-body-en');
+            const bodyFr = document.getElementById('success-body-fr');
+            if (titleEn) titleEn.textContent = statusCopy.enTitle;
+            if (titleFr) titleFr.textContent = statusCopy.frTitle;
+            if (bodyEn) bodyEn.textContent = statusCopy.enBody;
+            if (bodyFr) bodyFr.textContent = statusCopy.frBody;
+        }
+
         // Check stored language preference
         const currentLang = localStorage.getItem('site_lang') || 'en';
         const enElements = document.querySelectorAll('.lang-en');

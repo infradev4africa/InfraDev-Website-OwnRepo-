@@ -31,3 +31,20 @@ This repository hosts the InfraDev.Africa web surfaces and institutional documen
 - Previous baseline: `v1.1.0`
 - Current governance baseline: `v2.0.0`
 - Metadata source: `src/assets/branding/brandkit.metadata.json`
+
+## Contact Form Security (Cloudflare Worker)
+The landing-page form now uses:
+- Cloudflare Turnstile challenge
+- Email verification link (double opt-in)
+- Server-side routing through `worker.js`
+
+Required runtime configuration:
+- `TURNSTILE_SITE_KEY`
+- `TURNSTILE_SECRET`
+- `VERIFICATION_SIGNING_SECRET`
+- `RESEND_API_KEY`
+- `EMAIL_FROM`
+- `LEAD_DESTINATION_EMAIL`
+
+Optional (recommended) anti-replay storage:
+- KV binding `LEADS_KV` for one-time verification-link enforcement.

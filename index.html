@@ -15,6 +15,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script>
@@ -568,12 +569,13 @@
                 </p>
             </div>
 
-            <form id="contact-form" class="space-y-6" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/success.html">
-                <input type="hidden" name="form-name" value="contact" />
+            <form id="contact-form" class="space-y-6" name="contact" method="POST" action="/api/contact/initiate">
                 <!-- Honeypot field for spam prevention -->
                 <p class="hidden">
                     <label>Don't fill this out if you're human: <input name="bot-field" /></label>
                 </p>
+
+                <div id="contact-form-status" class="hidden text-sm rounded-xl px-4 py-3 border"></div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-2">
@@ -632,7 +634,18 @@
                     <textarea name="message" data-placeholder-en="Briefly describe the project or inquiry..." data-placeholder-fr="Décrivez brièvement votre projet ou votre besoin…" class="w-full bg-brand-base border border-white/10 rounded-xl px-5 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-all min-h-[140px] text-sm font-light" placeholder="Briefly describe the project or inquiry..." required></textarea>
                 </div>
 
-                <button class="w-full bg-brand-accent text-brand-base font-bold text-sm font-display rounded-pill py-5 mt-6 hover:bg-white hover:scale-[1.01] active:scale-[0.99] transition-all shadow-lg shadow-brand-accent/20 uppercase tracking-widest" type="submit">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-brand-accent uppercase tracking-[0.15em] ml-1">
+                        <span class="lang-en">Verification</span><span class="lang-fr hidden">Verification</span>
+                    </label>
+                    <div class="cf-turnstile" data-sitekey="__TURNSTILE_SITE_KEY__" data-theme="dark" data-size="flexible"></div>
+                    <p class="text-xs text-gray-500 mb-0">
+                        <span class="lang-en">A verification email will be sent before your request is routed to our team.</span>
+                        <span class="lang-fr hidden">Un email de verification sera envoye avant le routage de votre demande a notre equipe.</span>
+                    </p>
+                </div>
+
+                <button id="contact-submit-btn" class="w-full bg-brand-accent text-brand-base font-bold text-sm font-display rounded-pill py-5 mt-6 hover:bg-white hover:scale-[1.01] active:scale-[0.99] transition-all shadow-lg shadow-brand-accent/20 uppercase tracking-widest" type="submit">
                     <span class="lang-en">Send Message</span><span class="lang-fr hidden">Envoyer</span>
                 </button>
             </form>
@@ -1109,6 +1122,108 @@
             if (insightsBtn) {
                 insightsBtn.href = SITE_URLS.INSIGHTS_PAGE;
             }
+        });
+
+        function setContactStatus(kind, enText, frText) {
+            const statusBox = document.getElementById('contact-form-status');
+            if (!statusBox) return;
+
+            statusBox.classList.remove(
+                'hidden',
+                'border-red-500/40', 'bg-red-500/10', 'text-red-200',
+                'border-brand-accent/40', 'bg-brand-accent/10', 'text-brand-accent',
+                'border-emerald-500/40', 'bg-emerald-500/10', 'text-emerald-200'
+            );
+
+            if (kind === 'error') {
+                statusBox.classList.add('border-red-500/40', 'bg-red-500/10', 'text-red-200');
+            } else if (kind === 'success') {
+                statusBox.classList.add('border-emerald-500/40', 'bg-emerald-500/10', 'text-emerald-200');
+            } else {
+                statusBox.classList.add('border-brand-accent/40', 'bg-brand-accent/10', 'text-brand-accent');
+            }
+
+            statusBox.textContent = currentLang === 'fr' ? frText : enText;
+        }
+
+        async function submitContactForm(event) {
+            event.preventDefault();
+
+            const contactForm = event.currentTarget;
+            const submitButton = document.getElementById('contact-submit-btn');
+            const formData = new FormData(contactForm);
+            const turnstileToken = (formData.get('cf-turnstile-response') || '').toString().trim();
+
+            if (!turnstileToken) {
+                setContactStatus(
+                    'error',
+                    'Please complete the verification challenge before submitting.',
+                    'Veuillez completer la verification avant envoi.'
+                );
+                return;
+            }
+
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.classList.add('opacity-60', 'cursor-not-allowed');
+            }
+
+            setContactStatus(
+                'info',
+                'Submitting request. Please wait...',
+                'Envoi en cours. Veuillez patienter...'
+            );
+
+            const payload = {
+                name: (formData.get('name') || '').toString(),
+                organisation: (formData.get('organisation') || '').toString(),
+                email: (formData.get('email') || '').toString(),
+                region: (formData.get('region') || '').toString(),
+                entry_point: (formData.get('entry_point') || '').toString(),
+                message: (formData.get('message') || '').toString(),
+                turnstileToken
+            };
+
+            try {
+                const response = await fetch('/api/contact/initiate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok || !result.ok) {
+                    throw new Error(result.error || 'Unable to submit request.');
+                }
+
+                contactForm.reset();
+                if (window.turnstile && typeof window.turnstile.reset === 'function') {
+                    window.turnstile.reset();
+                }
+
+                setContactStatus(
+                    'success',
+                    'Verification email sent. Open your inbox and click the secure link to confirm your request.',
+                    'Email de verification envoye. Ouvrez votre boite mail et cliquez sur le lien securise pour confirmer votre demande.'
+                );
+            } catch (error) {
+                setContactStatus(
+                    'error',
+                    'Submission failed. Please retry in a moment.',
+                    'Echec de l envoi. Veuillez reessayer dans un instant.'
+                );
+            } finally {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.classList.remove('opacity-60', 'cursor-not-allowed');
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const contactForm = document.getElementById('contact-form');
+            if (!contactForm) return;
+            contactForm.addEventListener('submit', submitContactForm);
         });
 
         // --- LEGAL MODAL LOGIC ---
