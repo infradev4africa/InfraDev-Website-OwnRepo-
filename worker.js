@@ -21,6 +21,16 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    if (url.pathname === "/api/runtime-config") {
+      if (request.method !== "GET") {
+        return jsonResponse(405, { ok: false, error: "Method not allowed." });
+      }
+      return jsonResponse(200, {
+        ok: true,
+        turnstileSiteKey: env.TURNSTILE_SITE_KEY || "",
+      });
+    }
+
     if (url.pathname === "/api/contact/initiate") {
       if (request.method !== "POST") {
         return jsonResponse(405, { ok: false, error: "Method not allowed." });

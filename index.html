@@ -960,6 +960,7 @@
         let turnstileInitAttempts = 0;
         let turnstileDidRender = false;
         const TURNSTILE_MAX_INIT_ATTEMPTS = 20;
+        let resolvedTurnstileSiteKey = null;
 
         // =============================================================================
         // GSAP ANIMATION - Dynamic Blueprint Background
@@ -1168,13 +1169,36 @@
             help.classList.toggle('hidden', !visible);
         }
 
-        function initTurnstileWidget() {
+        async function resolveTurnstileSiteKey() {
+            if (resolvedTurnstileSiteKey) return resolvedTurnstileSiteKey;
+            try {
+                const response = await fetch('/api/runtime-config', { cache: 'no-store' });
+                if (!response.ok) return '';
+                const result = await response.json().catch(() => ({}));
+                const key = (result.turnstileSiteKey || '').toString().trim();
+                if (key) {
+                    resolvedTurnstileSiteKey = key;
+                }
+                return key;
+            } catch (error) {
+                return '';
+            }
+        }
+
+        async function initTurnstileWidget() {
             const widgetContainer = document.getElementById('turnstile-widget');
             const tokenField = document.getElementById('turnstile-token');
             if (!widgetContainer || !tokenField) return;
             if (turnstileWidgetId !== null) return;
 
-            const siteKey = (widgetContainer.dataset.sitekey || '').trim();
+            let siteKey = (widgetContainer.dataset.sitekey || '').trim();
+            if (!siteKey || siteKey.includes('__TURNSTILE_SITE_KEY__')) {
+                siteKey = await resolveTurnstileSiteKey();
+                if (siteKey) {
+                    widgetContainer.dataset.sitekey = siteKey;
+                }
+            }
+
             if (!siteKey || siteKey.includes('__TURNSTILE_SITE_KEY__')) {
                 setTurnstileHelpVisible(
                     true,
@@ -1204,7 +1228,7 @@
                     );
                     return;
                 }
-                window.setTimeout(initTurnstileWidget, 450);
+                window.setTimeout(function() { void initTurnstileWidget(); }, 450);
                 return;
             }
 
@@ -1349,7 +1373,7 @@
             const contactForm = document.getElementById('contact-form');
             if (!contactForm) return;
             contactForm.addEventListener('submit', submitContactForm);
-            initTurnstileWidget();
+            void initTurnstileWidget();
         });
 
         // --- LEGAL MODAL LOGIC ---
