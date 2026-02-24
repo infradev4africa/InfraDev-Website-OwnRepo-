@@ -15,7 +15,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+    <script id="turnstile-api-script" src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script>
@@ -961,8 +961,10 @@
         let turnstileDidRender = false;
         let turnstileLoadState = 'idle';
         let turnstileLastError = '';
+        let turnstileScriptReadyPromise = null;
         const TURNSTILE_MAX_INIT_ATTEMPTS = 20;
         const TURNSTILE_TOKEN_WAIT_MS = 8000;
+        const TURNSTILE_SCRIPT_WAIT_MS = 9000;
         let resolvedTurnstileSiteKey = null;
 
         // =============================================================================
@@ -1201,6 +1203,72 @@
             return (tokenField.value || '').toString().trim();
         }
 
+        function isTurnstileApiReady() {
+            return Boolean(window.turnstile && typeof window.turnstile.render === 'function');
+        }
+
+        // Defensive loader:
+        // - Waits for the existing Turnstile script tag.
+        // - Re-injects script if missing.
+        // - Returns a boolean instead of throwing so caller can control retry messaging.
+        async function ensureTurnstileScriptReady() {
+            if (isTurnstileApiReady()) return true;
+            if (turnstileScriptReadyPromise) return turnstileScriptReadyPromise;
+
+            turnstileScriptReadyPromise = new Promise((resolve) => {
+                let settled = false;
+                const finish = (ready, errorCode) => {
+                    if (settled) return;
+                    settled = true;
+                    if (!ready && errorCode) {
+                        turnstileLastError = errorCode;
+                    }
+                    resolve(ready);
+                };
+
+                const timeoutId = window.setTimeout(() => {
+                    finish(isTurnstileApiReady(), 'turnstile-script-timeout');
+                }, TURNSTILE_SCRIPT_WAIT_MS);
+
+                const onLoad = () => {
+                    window.clearTimeout(timeoutId);
+                    finish(isTurnstileApiReady(), isTurnstileApiReady() ? '' : 'turnstile-script-loaded-no-api');
+                };
+                const onError = () => {
+                    window.clearTimeout(timeoutId);
+                    finish(false, 'turnstile-script-load-error');
+                };
+
+                let scriptEl = document.getElementById('turnstile-api-script');
+                if (!scriptEl) {
+                    scriptEl = document.createElement('script');
+                    scriptEl.id = 'turnstile-api-script';
+                    scriptEl.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+                    scriptEl.async = true;
+                    scriptEl.defer = true;
+                    document.head.appendChild(scriptEl);
+                }
+
+                scriptEl.addEventListener('load', onLoad, { once: true });
+                scriptEl.addEventListener('error', onError, { once: true });
+
+                // If API is already ready by the time listeners are attached.
+                window.setTimeout(() => {
+                    if (isTurnstileApiReady()) {
+                        window.clearTimeout(timeoutId);
+                        finish(true, '');
+                    }
+                }, 0);
+            });
+
+            const ready = await turnstileScriptReadyPromise;
+            if (!ready) {
+                // Allow retries to create a fresh loader promise.
+                turnstileScriptReadyPromise = null;
+            }
+            return ready;
+        }
+
         async function initTurnstileWidget() {
             const widgetContainer = document.getElementById('turnstile-widget');
             const tokenField = document.getElementById('turnstile-token');
@@ -1233,7 +1301,9 @@
                 return;
             }
 
-            if (!window.turnstile || typeof window.turnstile.render !== 'function') {
+            const scriptReady = await ensureTurnstileScriptReady();
+
+            if (!scriptReady || !isTurnstileApiReady()) {
                 turnstileInitAttempts += 1;
                 if (turnstileInitAttempts >= TURNSTILE_MAX_INIT_ATTEMPTS) {
                     turnstileLoadState = 'failed-script';
@@ -1244,8 +1314,12 @@
                     );
                     setContactStatus(
                         'error',
-                        'Verification widget did not load. Please disable blockers and refresh this page.',
-                        'Le widget de verification ne se charge pas. Veuillez desactiver les bloqueurs puis actualiser cette page.'
+                        turnstileLastError
+                            ? `Verification widget did not load (${turnstileLastError}). Please disable blockers and refresh this page.`
+                            : 'Verification widget did not load. Please disable blockers and refresh this page.',
+                        turnstileLastError
+                            ? `Le widget de verification ne se charge pas (${turnstileLastError}). Veuillez desactiver les bloqueurs puis actualiser cette page.`
+                            : 'Le widget de verification ne se charge pas. Veuillez desactiver les bloqueurs puis actualiser cette page.'
                     );
                     return;
                 }
