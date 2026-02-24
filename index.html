@@ -960,7 +960,9 @@
         let turnstileInitAttempts = 0;
         let turnstileDidRender = false;
         let turnstileLoadState = 'idle';
+        let turnstileLastError = '';
         const TURNSTILE_MAX_INIT_ATTEMPTS = 20;
+        const TURNSTILE_TOKEN_WAIT_MS = 8000;
         let resolvedTurnstileSiteKey = null;
 
         // =============================================================================
@@ -1186,6 +1188,19 @@
             }
         }
 
+        async function waitForTurnstileToken(maxWaitMs) {
+            const tokenField = document.getElementById('turnstile-token');
+            if (!tokenField) return '';
+
+            const startedAt = Date.now();
+            while ((Date.now() - startedAt) < maxWaitMs) {
+                const token = (tokenField.value || '').toString().trim();
+                if (token) return token;
+                await new Promise((resolve) => window.setTimeout(resolve, 180));
+            }
+            return (tokenField.value || '').toString().trim();
+        }
+
         async function initTurnstileWidget() {
             const widgetContainer = document.getElementById('turnstile-widget');
             const tokenField = document.getElementById('turnstile-token');
@@ -1245,13 +1260,15 @@
                     size: 'flexible',
                     callback: function(token) {
                         tokenField.value = token || '';
+                        turnstileLastError = '';
                         setTurnstileHelpVisible(false);
                     },
                     'expired-callback': function() {
                         tokenField.value = '';
                     },
-                    'error-callback': function() {
+                    'error-callback': function(errorCode) {
                         turnstileLoadState = 'failed-widget';
+                        turnstileLastError = (errorCode || '').toString();
                         tokenField.value = '';
                         setTurnstileHelpVisible(
                             true,
@@ -1260,8 +1277,12 @@
                         );
                         setContactStatus(
                             'error',
-                            'Verification challenge failed to load. Refresh and retry.',
-                            'Le challenge de verification n a pas pu se charger. Actualisez la page puis reessayez.'
+                            turnstileLastError
+                                ? `Verification challenge failed to load (${turnstileLastError}). Refresh and retry.`
+                                : 'Verification challenge failed to load. Refresh and retry.',
+                            turnstileLastError
+                                ? `Le challenge de verification n a pas pu se charger (${turnstileLastError}). Actualisez la page puis reessayez.`
+                                : 'Le challenge de verification n a pas pu se charger. Actualisez la page puis reessayez.'
                         );
                     }
                 });
@@ -1291,11 +1312,27 @@
             const contactForm = event.currentTarget;
             const submitButton = document.getElementById('contact-submit-btn');
             const formData = new FormData(contactForm);
-            const turnstileToken = (formData.get('cf-turnstile-response') || '').toString().trim();
+            let turnstileToken = (formData.get('cf-turnstile-response') || '').toString().trim();
 
             if (!turnstileToken) {
                 if (!turnstileDidRender || turnstileWidgetId === null) {
                     await initTurnstileWidget();
+                }
+
+                if (!turnstileToken && turnstileDidRender && turnstileWidgetId !== null && window.turnstile && typeof window.turnstile.execute === 'function') {
+                    setContactStatus(
+                        'info',
+                        'Completing verification challenge. Please wait...',
+                        'Finalisation du challenge de verification. Veuillez patienter...'
+                    );
+
+                    try {
+                        window.turnstile.execute(turnstileWidgetId);
+                    } catch (error) {
+                        turnstileLastError = (error && error.message ? error.message : '').toString();
+                    }
+
+                    turnstileToken = await waitForTurnstileToken(TURNSTILE_TOKEN_WAIT_MS);
                 }
 
                 if (!turnstileDidRender || turnstileWidgetId === null) {
@@ -1323,17 +1360,25 @@
                         );
                     }
                 } else {
-                    setContactStatus(
-                        'error',
-                        'Please complete the verification challenge below, then click Send Message.',
-                        'Veuillez completer la verification ci-dessous, puis cliquer sur Envoyer.'
-                    );
+                    if (!turnstileToken) {
+                        setContactStatus(
+                            'error',
+                            turnstileLastError
+                                ? `Verification challenge did not complete (${turnstileLastError}). Please retry.`
+                                : 'Please complete the verification challenge below, then click Send Message.',
+                            turnstileLastError
+                                ? `Le challenge de verification n a pas pu se terminer (${turnstileLastError}). Veuillez reessayer.`
+                                : 'Veuillez completer la verification ci-dessous, puis cliquer sur Envoyer.'
+                        );
+                    }
                 }
-                const verificationBlock = document.getElementById('contact-verification-block');
-                if (verificationBlock) {
-                    verificationBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (!turnstileToken) {
+                    const verificationBlock = document.getElementById('contact-verification-block');
+                    if (verificationBlock) {
+                        verificationBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    return;
                 }
-                return;
             }
 
             if (submitButton) {
