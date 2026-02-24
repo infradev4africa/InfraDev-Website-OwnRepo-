@@ -959,6 +959,7 @@
         let turnstileWidgetId = null;
         let turnstileInitAttempts = 0;
         let turnstileDidRender = false;
+        let turnstileLoadState = 'idle';
         const TURNSTILE_MAX_INIT_ATTEMPTS = 20;
         let resolvedTurnstileSiteKey = null;
 
@@ -1190,6 +1191,9 @@
             const tokenField = document.getElementById('turnstile-token');
             if (!widgetContainer || !tokenField) return;
             if (turnstileWidgetId !== null) return;
+            if (turnstileLoadState !== 'ready') {
+                turnstileLoadState = 'loading';
+            }
 
             let siteKey = (widgetContainer.dataset.sitekey || '').trim();
             if (!siteKey || siteKey.includes('__TURNSTILE_SITE_KEY__')) {
@@ -1200,6 +1204,7 @@
             }
 
             if (!siteKey || siteKey.includes('__TURNSTILE_SITE_KEY__')) {
+                turnstileLoadState = 'failed-config';
                 setTurnstileHelpVisible(
                     true,
                     'Verification is not configured yet. Contact support.',
@@ -1216,6 +1221,7 @@
             if (!window.turnstile || typeof window.turnstile.render !== 'function') {
                 turnstileInitAttempts += 1;
                 if (turnstileInitAttempts >= TURNSTILE_MAX_INIT_ATTEMPTS) {
+                    turnstileLoadState = 'failed-script';
                     setTurnstileHelpVisible(
                         true,
                         'Verification widget did not load. Disable blockers/privacy shields and refresh.',
@@ -1245,6 +1251,7 @@
                         tokenField.value = '';
                     },
                     'error-callback': function() {
+                        turnstileLoadState = 'failed-widget';
                         tokenField.value = '';
                         setTurnstileHelpVisible(
                             true,
@@ -1259,10 +1266,12 @@
                     }
                 });
                 turnstileDidRender = true;
+                turnstileLoadState = 'ready';
                 setTurnstileHelpVisible(false);
             } catch (error) {
                 turnstileDidRender = false;
                 turnstileWidgetId = null;
+                turnstileLoadState = 'failed-init';
                 setTurnstileHelpVisible(
                     true,
                     'Verification widget failed to initialize. Refresh and retry.',
@@ -1286,16 +1295,33 @@
 
             if (!turnstileToken) {
                 if (!turnstileDidRender || turnstileWidgetId === null) {
-                    setTurnstileHelpVisible(
-                        true,
-                        'Verification widget is not visible yet. Disable blockers/privacy shields and refresh.',
-                        'Le widget de verification n est pas encore visible. Desactivez les bloqueurs/protections puis actualisez.'
-                    );
-                    setContactStatus(
-                        'error',
-                        'Verification widget is not loaded. Disable blockers/privacy shields and refresh.',
-                        'Le widget de verification n est pas charge. Desactivez les bloqueurs/protections puis actualisez.'
-                    );
+                    await initTurnstileWidget();
+                }
+
+                if (!turnstileDidRender || turnstileWidgetId === null) {
+                    if (turnstileLoadState === 'loading' || turnstileLoadState === 'idle') {
+                        setTurnstileHelpVisible(
+                            true,
+                            'Verification challenge is still loading. Please wait a few seconds, then retry.',
+                            'Le challenge de verification est encore en chargement. Veuillez patienter quelques secondes puis reessayer.'
+                        );
+                        setContactStatus(
+                            'info',
+                            'Verification challenge is loading. Please wait a few seconds and click Send Message again.',
+                            'Le challenge de verification se charge. Veuillez patienter quelques secondes puis cliquer a nouveau sur Envoyer.'
+                        );
+                    } else {
+                        setTurnstileHelpVisible(
+                            true,
+                            'Verification widget is not visible yet. Disable blockers/privacy shields and refresh.',
+                            'Le widget de verification n est pas encore visible. Desactivez les bloqueurs/protections puis actualisez.'
+                        );
+                        setContactStatus(
+                            'error',
+                            'Verification widget is not loaded. Disable blockers/privacy shields and refresh.',
+                            'Le widget de verification n est pas charge. Desactivez les bloqueurs/protections puis actualisez.'
+                        );
+                    }
                 } else {
                     setContactStatus(
                         'error',
