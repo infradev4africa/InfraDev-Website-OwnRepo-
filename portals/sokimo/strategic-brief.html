@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SOKIMO Strategic Brief | InfraDev.Africa</title>
+    <meta name="description" content="SOKIMO Strategic Brief - InfraDev Sovereign Mandate Intelligence Node." />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon.svg" />
+
+    <!-- Typography follows current InfraDev site stack for consistency -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Keep Tailwind CDN pattern aligned with existing pages -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // InfraDev core brand anchors (unchanged).
+                        brand: {
+                            base: "#0A1F44",
+                            accent: "#F9C70C",
+                            surface: "#1A2538",
+                            muted: "#94A3B8"
+                        },
+                        // Regalian & Industrial node palette for SOKIMO.
+                        sokimo: {
+                            electric: "#3B82F6",
+                            signal: "#EAB308",
+                            surface: "#F8FAFC"
+                        }
+                    },
+                    fontFamily: {
+                        display: ["Montserrat", "sans-serif"],
+                        body: ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        tile: "12px",
+                        pill: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        /*
+         * Governance rule:
+         * - The tile uses +3deg.
+         * - Inner content counter-rotates to remain optically horizontal.
+         */
+        .id-tile-governed {
+            transform: rotate(3deg);
+            border-radius: 12px;
+            box-shadow: 0 16px 40px rgba(10, 31, 68, 0.10);
+        }
+
+        .id-counter-rotate {
+            transform: rotate(-3deg);
+        }
+
+        /*
+         * Intelligence signal cards:
+         * - Crisp white for high-contrast reading.
+         * - Hover follows 3deg motion law to indicate "active signal capture".
+         */
+        .signal-card {
+            background: #F8FAFC;
+            border-top: 4px solid #3B82F6;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
+            transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+        }
+
+        .signal-card:hover {
+            transform: rotate(3deg) translateY(-4px);
+            border-top-color: #EAB308;
+            box-shadow: 0 26px 48px rgba(15, 23, 42, 0.20);
+        }
+
+        .signal-alert {
+            border-top-color: #EAB308;
+        }
+    </style>
+</head>
+<body class="bg-brand-base text-white font-body antialiased">
+    <!-- Private route marker: intentionally unlinked from public nav -->
+    <header class="border-b border-white/10 bg-brand-base/90 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+            <p class="text-[11px] uppercase tracking-[0.2em] text-brand-accent font-display font-bold">
+                InfraDev Sovereign Mandates | Intelligence Node 02
+            </p>
+            <a href="/index.html" class="text-xs text-gray-300 hover:text-white transition-colors">
+                Return to InfraDev.Africa
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="pt-20 pb-14 px-6 max-w-6xl mx-auto">
+        <div class="id-tile-governed bg-brand-accent text-brand-base w-14 h-14 flex items-center justify-center mb-10">
+            <span class="id-counter-rotate font-display font-extrabold text-sm">ID.</span>
+        </div>
+        <h1 class="font-display font-extrabold text-4xl md:text-6xl mb-6 leading-tight">
+            The Infrastructure of Sovereignty:
+            <span class="text-brand-accent block mt-2">SOKIMO Strategic Brief</span>
+        </h1>
+        <p class="text-blue-100 text-lg md:text-xl font-light max-w-3xl leading-relaxed">
+            Navigating the 2026 Mining Nexus: Digital Reconciliation, Geopolitical Liquidity, and Sovereign Technology.
+        </p>
+    </section>
+
+    <!-- INTELLIGENCE GRID -->
+    <main class="max-w-6xl mx-auto px-6 pb-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <article class="signal-card signal-alert p-8 md:p-10">
+                <span class="text-[10px] font-bold text-sokimo-signal uppercase tracking-[0.3em]">Signal Alpha</span>
+                <h2 class="text-slate-900 font-display font-extrabold text-xl mt-4 mb-4 uppercase">The Digital Reset (CAMI)</h2>
+                <p class="text-slate-600 text-sm mb-6">
+                    The era of legacy paper proof is closing. Imminent risk of digital eviction for un-reconciled permits.
+                </p>
+                <div class="bg-blue-50 p-4 border-l-4 border-sokimo-electric text-slate-900 text-xs font-bold">
+                    Support: Digital Reconciliation Audit
+                </div>
+            </article>
+
+            <article class="signal-card p-8 md:p-10">
+                <span class="text-[10px] font-bold text-sokimo-electric uppercase tracking-[0.3em]">Signal Beta</span>
+                <h2 class="text-slate-900 font-display font-extrabold text-xl mt-4 mb-4 uppercase">$10B Geopolitical Window</h2>
+                <p class="text-slate-600 text-sm mb-6">
+                    US-DRC SAR Treaty explicitly targets gold assets. SOKIMO is the natural vehicle for this liquidity.
+                </p>
+                <div class="bg-blue-50 p-4 border-l-4 border-sokimo-electric text-slate-900 text-xs font-bold">
+                    Support: SAR-Eligibility Packaging
+                </div>
+            </article>
+
+            <article class="signal-card p-8 md:p-10">
+                <span class="text-[10px] font-bold text-sokimo-electric uppercase tracking-[0.3em]">Signal Gamma</span>
+                <h2 class="text-slate-900 font-display font-extrabold text-xl mt-4 mb-4 uppercase">GoldConnect Lever</h2>
+                <p class="text-slate-600 text-sm mb-6">
+                    Formalizing artisanal production in SOKIMO perimeters as an immediate, debt-free revenue stream.
+                </p>
+                <div class="bg-blue-50 p-4 border-l-4 border-sokimo-electric text-slate-900 text-xs font-bold">
+                    Support: Pilot Implementation Design
+                </div>
+            </article>
+
+            <article class="signal-card p-8 md:p-10">
+                <span class="text-[10px] font-bold text-sokimo-electric uppercase tracking-[0.3em]">Signal Delta</span>
+                <h2 class="text-slate-900 font-display font-extrabold text-xl mt-4 mb-4 uppercase">XENAI AI Integration</h2>
+                <p class="text-slate-600 text-sm mb-6">
+                    Xcalibur mapping creates a new standard. SOKIMO data rooms must speak the same tech language.
+                </p>
+                <div class="bg-blue-50 p-4 border-l-4 border-sokimo-electric text-slate-900 text-xs font-bold">
+                    Support: Geological Tech Protocols
+                </div>
+            </article>
+        </div>
+
+        <!-- CTA -->
+        <section class="mt-16 p-10 md:p-12 bg-brand-surface/60 border border-white/10 text-center rounded-tile">
+            <h3 class="font-display font-extrabold text-2xl mb-6">Align with the Council Vision</h3>
+            <a
+                href="https://wa.me/243891187001"
+                class="bg-brand-accent text-brand-base px-10 py-4 inline-block rounded-pill font-display font-extrabold text-xs uppercase tracking-widest hover:bg-white transition-all"
+                rel="noopener"
+                target="_blank"
+            >
+                Open Secure Channel
+            </a>
+        </section>
+    </main>
+
+    <!-- Shared footer structure to stay consistent with InfraDev pages -->
+    <footer class="bg-brand-surface/80 border-t border-white/10 py-10">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 text-sm text-gray-400">
+            <div class="flex items-center gap-3">
+                <div class="relative w-8 h-8 bg-brand-accent rounded-md flex items-center justify-center shrink-0 overflow-hidden">
+                    <span class="font-display font-extrabold text-brand-base text-xs tracking-tighter relative z-10">ID.</span>
+                </div>
+                <div>
+                    <p class="text-white font-semibold">InfraDev.Africa</p>
+                    <p>Institutional Infrastructure Advisory</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+                <a class="text-brand-accent hover:text-white transition-colors" href="mailto:info@infradev.africa">info@infradev.africa</a>
+                <span class="text-gray-600">|</span>
+                <a class="text-gray-400 hover:text-white transition-colors" href="/index.html">Access InfraDev site</a>
+                <span class="text-gray-600">|</span>
+                <a class="text-gray-400 hover:text-white transition-colors inline-flex items-center gap-2" href="https://kumea.africa" target="_blank" rel="noopener">
+                    <img src="/src/assets/branding/kumea-anchor-seal.svg" alt="Kumea anchor seal" class="h-5 w-auto" loading="lazy" />
+                </a>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto px-6 mt-6 pt-6 border-t border-white/5 text-xs text-gray-500">
+            <p>&copy; 2026 Kumea Africa Holding SARL.</p>
+            <p>InfraDev.Africa operates within the Kumea.Africa ecosystem.</p>
+        </div>
+    </footer>
+</body>
+</html>
