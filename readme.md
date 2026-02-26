@@ -31,3 +31,26 @@ This repository hosts the InfraDev.Africa web surfaces and institutional documen
 - Previous baseline: `v1.1.0`
 - Current governance baseline: `v2.0.0`
 - Metadata source: `src/assets/branding/brandkit.metadata.json`
+
+## Private SOKIMO Access Gate
+The path ` /portals/sokimo/* ` is protected by an edge access code gate in `worker.js`.
+
+### How it works
+- Public pages remain open.
+- Requests to ` /portals/sokimo/* ` require a valid signed session cookie.
+- If no valid session exists, users are redirected to ` /_sokimo-unlock `.
+- Successful code entry grants a 12-hour browser session.
+
+### Required Cloudflare secret
+- `SOKIMO_ACCESS_CODE` (required)
+- `SOKIMO_SESSION_SECRET` (optional but recommended for cookie-signing separation)
+
+### Setup in Cloudflare dashboard
+1. Open `Workers & Pages` -> `infradev-website` -> `Settings` -> `Variables and Secrets`.
+2. Add secret `SOKIMO_ACCESS_CODE` with your shared code value.
+3. Optionally add `SOKIMO_SESSION_SECRET` with a long random string.
+4. Redeploy the Worker.
+
+### Security note
+- Do not commit real access codes into Git.
+- Share the code out-of-band (for example via WhatsApp), and rotate it when needed.
