@@ -27,7 +27,7 @@
       margin: 0;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact; }
 
     body {
       background: var(--bg);
@@ -67,7 +67,9 @@
       flex-direction: column;
       overflow: hidden;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      page-break-after: always;
     }
+    .page:last-of-type { page-break-after: auto; }
 
     /* Watermark fixed for print */
     .watermark::before {
@@ -123,11 +125,13 @@
     .signal .sub { font-size: 9.5pt; font-weight: 600; color: var(--muted); margin-bottom: 8px; display: block; }
 
     .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-    .box { border: 1px solid var(--border); background: var(--soft); padding: 12px; }
+    .grid2 { page-break-inside: avoid; break-inside: avoid; }
+    .box { border: 1px solid var(--border); background: var(--soft); padding: 12px; page-break-inside: avoid; break-inside: avoid; }
     .box h4 { font-family: 'Montserrat', sans-serif; font-size: 9pt; text-transform: uppercase; color: var(--navy); margin-bottom: 5px; }
 
     /* Table */
-    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; page-break-inside: avoid; break-inside: avoid; }
+    thead, tbody, tr, td, th { page-break-inside: avoid; break-inside: avoid; }
     th { background: var(--navy); color: white; padding: 8px 12px; text-align: left; font-size: 8pt; text-transform: uppercase; }
     td { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 9.5pt; }
 
@@ -138,6 +142,7 @@
       body { background: white; padding: 0; }
       .topbar { display: none; }
       .page { margin: 0; box-shadow: none; }
+      .page:last-of-type { page-break-after: auto; }
     }
   </style>
 </head>
@@ -209,7 +214,7 @@
         <tr><td><strong>2</strong></td><td>Signal Bêta — Fenêtre RDC–USA (Fonds DFC/SAR)</td><td>02</td></tr>
         <tr><td><strong>3</strong></td><td>Signal Gamma — GOLDCONNECT (Cash-flow & Social)</td><td>02</td></tr>
         <tr><td><strong>4</strong></td><td>Signal Delta — Standard National XENAI (Xcalibur)</td><td>03</td></tr>
-        <tr><td><strong>5</strong></td><td>Conclusion — Plan d'action 30 Jours</td><td>03</td></tr>
+        <tr><td><strong>5</strong></td><td>Conclusion — Plan d'action 30 Jours</td><td>04</td></tr>
       </tbody>
     </table>
     <div class="foot"><div>InfraDev.Africa</div><div>Page 02</div></div>
@@ -259,7 +264,21 @@
       <p><em>Action : Définir un protocole de compatibilité pour re-valoriser les actifs via la géophysique nationale.</em></p>
     </div>
 
+    <div class="foot"><div>InfraDev.Africa</div><div>Page 03</div></div>
+  </section>
+
+  <!-- PAGE 4 : MISSION FLASH -->
+  <section class="page watermark">
+    <div class="doc-header">
+      <div class="brand"><div class="tile"><span>ID.</span></div><div class="name">InfraDev.Africa</div></div>
+      <div class="meta">Plan d'action 30 Jours</div>
+    </div>
+
     <h3>Proposition de Mission Flash (30 Jours)</h3>
+    <p>
+      Pour transformer les signaux en leviers de contrôle opérationnel pour le Conseil,
+      InfraDev propose une mission courte en quatre axes synchronisés.
+    </p>
     <div class="grid2">
       <div class="box">
         <h4>Axe 1 : Compliance</h4>
@@ -279,7 +298,12 @@
       </div>
     </div>
 
-    <div class="foot"><div>InfraDev.Africa</div><div>Page 03</div></div>
+    <div class="kicker">
+      Rendu PDF: ce document est optimisé pour l'impression A4 avec contraintes strictes de pagination
+      et conservation des éléments visuels critiques.
+    </div>
+
+    <div class="foot"><div>InfraDev.Africa</div><div>Page 04</div></div>
   </section>
 
 </body>
