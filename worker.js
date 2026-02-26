@@ -328,6 +328,30 @@ function renderUnlockPage({ nextPath, errorMessage = "" }) {
             border-color: var(--id-gold);
             box-shadow: 0 0 0 3px rgba(249,199,12,0.2);
           }
+          .input-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 16px;
+          }
+          .toggle-visibility {
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.08);
+            color: #e2e8f0;
+            padding: 10px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            white-space: nowrap;
+          }
+          .toggle-visibility:hover {
+            border-color: var(--id-gold);
+            color: white;
+          }
           button {
             width: 100%;
             border: 0;
@@ -357,11 +381,31 @@ function renderUnlockPage({ nextPath, errorMessage = "" }) {
           ${safeError ? `<div class="error">${safeError}</div>` : ""}
           <form method="POST" action="${UNLOCK_PATH}?next=${encodeURIComponent(safeNextPath)}">
             <label for="code">Access Code</label>
-            <input id="code" name="code" type="password" autocomplete="one-time-code" required />
+            <div class="input-row">
+              <input id="code" name="code" type="password" autocomplete="one-time-code" required />
+              <button id="toggle-code-visibility" class="toggle-visibility" type="button" aria-controls="code" aria-pressed="false">
+                Show
+              </button>
+            </div>
             <button type="submit">Open Brief</button>
           </form>
           <small>This session stays active for 12 hours on this browser.</small>
         </main>
+        <script>
+          (function () {
+            const input = document.getElementById("code");
+            const toggle = document.getElementById("toggle-code-visibility");
+            if (!input || !toggle) return;
+
+            toggle.addEventListener("click", function () {
+              const nextType = input.type === "password" ? "text" : "password";
+              input.type = nextType;
+              const showing = nextType === "text";
+              toggle.textContent = showing ? "Hide" : "Show";
+              toggle.setAttribute("aria-pressed", showing ? "true" : "false");
+            });
+          })();
+        </script>
       </body>
     </html>
   `;
