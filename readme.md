@@ -54,3 +54,22 @@ The path ` /portals/sokimo/* ` is protected by an edge access code gate in `work
 ### Security note
 - Do not commit real access codes into Git.
 - Share the code out-of-band (for example via WhatsApp), and rotate it when needed.
+
+## Private FIS RDC Access Gate
+The path ` /portals/fis-rdc/* ` is protected by an edge access code gate in `worker.js`.
+
+### How it works
+- Requests to ` /portals/fis-rdc/* ` require a valid signed session cookie.
+- If no valid session exists, users are redirected to ` /_fis-rdc-unlock `.
+- Successful code entry grants a 12-hour browser session.
+
+### Access code configuration
+- `FIS_RDC_ACCESS_CODE` (optional env/secret override)
+- `FIS_RDC_SESSION_SECRET` (optional, recommended for dedicated signing)
+
+### Current fallback
+- Worker fallback code: `FSI.DGA.NM.01!`
+
+### Optional repo API (still available)
+- `GET /api/fis-rdc/repo`
+- Default repo target is `tise05/FIS-RDC`.

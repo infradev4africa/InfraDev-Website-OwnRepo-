@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Note de Cadrage FIS-RDC | InfraDev.Africa</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            base: "#0A1F44",
+                            accent: "#F9C70C",
+                            surface: "#F7F8FA",
+                            ink: "#111827",
+                            muted: "#4B5563",
+                            line: "#E5E7EB",
+                            good: "#0F766E",
+                            warn: "#B45309",
+                            bad: "#B91C1C"
+                        }
+                    },
+                    fontFamily: {
+                        sans:['Inter', 'sans-serif'],
+                        display:['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --base: #0A1F44;
+            --accent: #F9C70C;
+            --surface: #F7F8FA;
+            --ink: #111827;
+            --muted: #4B5563;
+            --line: #E5E7EB;
+            --good: #0F766E;
+            --warn: #B45309;
+            --bad: #B91C1C;
+        }
+
+        @page { size: A4; margin: 0; }
+        body { background-color: #525659; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-family: 'Inter', sans-serif; }
+
+        .a4-page {
+            width: 210mm;
+            height: 297mm;
+            margin: 10mm auto;
+            background: white;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+            padding: 15mm 20mm;
+            box-sizing: border-box;
+            page-break-after: always;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .cover-page {
+            background-color: #0A1F44 !important;
+            color: white !important;
+            padding: 20mm 25mm;
+        }
+
+        @media print {
+            body { background-color: white; }
+            .a4-page { margin: 0; box-shadow: none; border: none; padding: 15mm 20mm; }
+            .no-print { display: none; }
+        }
+
+        .header-section { flex: 0 0 auto; }
+        .main-content { flex: 1 1 auto; margin-top: 1.5rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; }
+        .footer-section { flex: 0 0 auto; border-top: 1px solid #E5E7EB; padding-top: 0.75rem; }
+
+        .section-title { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 800; color: #0A1F44; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #0A1F44; padding-bottom: 0.5rem; margin-bottom: 1rem; }
+        .badge-id { background-color: #0A1F44; color: #F9C70C; display: flex; align-items: center; justify-content: center; border-radius: 0.5rem; font-family: 'Montserrat', sans-serif; font-weight: 900; }
+        .badge-id-light { background-color: white; color: #0A1F44; display: flex; align-items: center; justify-content: center; border-radius: 0.5rem; font-family: 'Montserrat', sans-serif; font-weight: 900; }
+
+        .watermark { position: relative; }
+        .watermark::before {
+            content: "CONFIDENTIEL";
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-35deg);
+            font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 60pt;
+            color: rgba(10,31,68,0.03);
+            pointer-events: none; white-space: nowrap; z-index: 0;
+        }
+        .layer-z1 { position: relative; z-index: 1; }
+
+        .callout {
+            border-left: 4px solid var(--base);
+            padding: 12px 16px;
+            background: #f8fafc;
+            margin: 14px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .callout.good { border-left-color: var(--good); background: #f0fdfa; }
+        .callout.warn { border-left-color: var(--warn); background: #fffbeb; }
+        .callout.bad { border-left-color: var(--bad); background: #fef2f2; }
+        .callout.option { border-left-color: var(--accent); background: #fefce8; }
+
+        .callout h4 { font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--base); text-transform: uppercase; letter-spacing: .06em; font-size: 12px; margin-bottom: 6px; }
+        .callout.bad h4 { color: var(--bad); }
+        .callout.warn h4 { color: var(--warn); }
+        .callout.good h4 { color: var(--good); }
+        .callout.option h4 { color: #856B00; }
+
+        .callout p { font-size: 12px; line-height: 1.55; color: #374151; }
+        .callout ul { padding-left: 18px; margin-top: 6px; font-size: 12px; color: #374151; list-style-type: disc;}
+        .callout li { margin-bottom: 4px; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 11.5px; background: white; }
+        th { text-align: left; background: var(--base); color: white; padding: 10px 12px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        td { padding: 12px 12px; border-bottom: 1px solid var(--line); vertical-align: top; color: #374151; line-height: 1.5; }
+        tr:nth-child(even) td { background-color: var(--surface); }
+
+        .timeline { margin-top: 14px; padding-left: 24px; border-left: 2px solid var(--line); display:flex; flex-direction:column; gap: 20px; }
+        .step { position:relative; }
+        .dot { position:absolute; left: -31px; top: 4px; width: 12px; height: 12px; border-radius: 999px; background: var(--base); border: 2px solid white; box-shadow: 0 0 0 2px var(--base); }
+        .dot.accent { background: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+        .dot.hollow { background: white; box-shadow: 0 0 0 2px var(--muted); }
+
+        .diagram-container { margin: 12px 0; border: 1px solid var(--line); border-left: 4px solid var(--base); border-radius: 10px; padding: 16px; background: white; }
+        svg.id-svg { width: 100%; height: auto; display: block; margin: 10px 0;}
+        .diagram-brief { font-size: 11.5px; color: #374151; margin-bottom: 12px; }
+        .diagram-brief ul { margin-top: 4px; padding-left: 16px; list-style-type: disc;}
+        .diagram-brief li { margin-bottom: 2px; }
+        .diagram-note { font-size: 11.5px; color: var(--muted); font-style: italic; margin-top: 12px; border-top: 1px dashed var(--line); padding-top: 10px;}
+    </style>
+</head>
+<body class="text-brand-ink antialiased pb-12">
+
+    <div class="no-print fixed top-0 left-0 w-full bg-brand-base p-3 flex justify-center gap-4 z-50 shadow-lg">
+        <button onclick="window.print()" class="bg-brand-accent text-brand-base font-extrabold text-xs tracking-wider uppercase px-5 py-2.5 rounded-lg hover:bg-yellow-400 transition">Générer le PDF (A4)</button>
+    </div>
+    <div class="no-print h-16"></div>
+
+    <!-- PAGE 1 : COUVERTURE BLEUE -->
+    <div class="a4-page cover-page">
+        <div class="header-section flex justify-between items-start">
+            <div class="badge-id-light h-16 w-16 text-3xl shadow-lg">ID.</div>
+            <div class="text-right text-white">
+                <p class="font-display font-bold tracking-widest uppercase text-sm">Note de Cadrage Stratégique</p>
+                <p class="text-brand-accent font-mono text-[11px] mt-1">Réf: INFRA-FIS-2026-03-01</p>
+                <p class="text-gray-300 font-mono text-[11px]">03 Mars 2026</p>
+            </div>
+        </div>
+
+        <div class="main-content justify-center items-start">
+            <h2 class="font-display text-brand-accent text-sm font-bold tracking-[0.2em] uppercase mb-4">Infrastructure & Gouvernance</h2>
+            <h1 class="font-display text-[44px] font-black text-white leading-[1.1] mb-6">
+                Le "Système d'Exploitation"<br>du FIS-RDC.
+            </h1>
+            <p class="text-[17px] text-gray-300 font-light leading-relaxed max-w-2xl border-l-4 border-brand-accent pl-6 py-2 italic">
+                Sécuriser le démarrage, stabiliser les processus décisionnels et protéger la signature institutionnelle pour les 90 premiers jours.
+            </p>
+        </div>
+
+        <div class="footer-section border-t border-white/20 pt-6 flex justify-between items-end text-white">
+            <div>
+                <p class="text-brand-accent text-[10px] font-bold tracking-widest uppercase mb-1">À l'attention de :</p>
+                <p class="font-display font-bold text-lg">Mme Nina Massangu</p>
+                <p class="text-gray-400 text-xs uppercase tracking-wider">Directrice Générale Adjointe — FIS-RDC</p>
+            </div>
+            <div class="text-right">
+                <p class="text-brand-accent text-[10px] font-bold tracking-widest uppercase mb-1">Expertise par :</p>
+                <p class="font-display font-bold text-lg">Ted Kivoto Isengingo</p>
+                <p class="text-gray-400 text-xs uppercase tracking-wider">Managing Partner — InfraDev.Africa</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 2 : SOMMAIRE & LETTRE -->
+    <div class="a4-page watermark">
+        <div class="header-section flex justify-between items-end border-b-2 border-brand-line pb-3">
+            <div class="flex items-center gap-3">
+                <div class="badge-id h-10 w-10 text-xl">ID.</div>
+                <p class="font-display font-black text-brand-base uppercase tracking-wide text-lg">InfraDev.Africa</p>
+            </div>
+            <p class="text-[10px] font-mono text-brand-muted uppercase font-bold text-right">I. Introduction & Sommaire</p>
+        </div>
+
+        <div class="main-content layer-z1 text-[12.5px] leading-relaxed text-gray-800">
+            <h2 class="section-title">Ambition Sécurisée : Un Message de Sérénité</h2>
+            <p class="mb-3"><strong>Madame la Directrice Générale Adjointe,</strong></p>
+            <p class="mb-3">Votre nomination marque le début d'une ère nouvelle pour l'investissement souverain en RDC. Cependant, les 90 premiers jours sont critiques : la vision doit résister à l'afflux massif de dossiers non-structurés et aux pressions de conformité immédiates.</p>
+            <p class="mb-4">Notre mission est de vous offrir la <strong>sérénité opérationnelle</strong>. Nous n'agissons pas comme de simples auditeurs, mais comme une Task-Force senior dédiée à l'installation d'une méthode de travail (Operating System) qui filtre le bruit et protège votre signature institutionnelle.</p>
+
+            <div class="callout good">
+                <h4>L'Expertise humaine avant tout</h4>
+                <p>Nous déployons des experts seniors pour cadrer manuellement vos processus. Si le volume de dossiers l'exige, nous pouvons intégrer des solutions d'intelligence décisionnelle sur-mesure pour traiter vos archives et accélérer l'analyse, tout en garantissant la souveraineté totale de vos données.</p>
+            </div>
+
+            <h3 class="font-bold text-brand-base text-[13px] uppercase tracking-wide mb-3 border-b border-brand-line pb-1 mt-4">Comment lire ce document</h3>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="border-l-4 border-brand-base p-2 bg-transparent">
+                    <p class="font-bold text-brand-base text-[11.5px] mb-1">Lecture Rapide (Pages 3 à 5)</p>
+                    <p class="text-[11px] text-gray-600">Saisir notre lecture de vos vulnérabilités immédiates et découvrir notre plan d'action (Feuille de route 90 jours).</p>
+                </div>
+                <div class="border-l-4 border-brand-base p-2 bg-transparent">
+                    <p class="font-bold text-brand-base text-[11.5px] mb-1">Lecture Détaillée (Pages 6 à 11)</p>
+                    <p class="text-[11px] text-gray-600">Découvrir notre outillage (Glossaire, Minimum Deal File) et consulter les schémas d'ingénierie en annexe.</p>
+                </div>
+            </div>
+
+            <h3 class="font-bold text-brand-base text-[13px] uppercase tracking-wide mb-3 border-b border-brand-line pb-1">Sommaire Exécutif</h3>
+            <ul class="space-y-1.5 text-[12px] font-medium text-gray-700 pl-2 list-none">
+                <li><span class="text-brand-accent mr-2">■</span> <strong>Section 1 :</strong> Notre identité et notre mode opératoire</li>
+                <li><span class="text-brand-accent mr-2">■</span> <strong>Section 2 :</strong> Diagnostic : La vulnérabilité du démarrage</li>
+                <li><span class="text-brand-accent mr-2">■</span> <strong>Section 3 :</strong> Le Bouclier Opérationnel & Technologique</li>
+                <li><span class="text-brand-accent mr-2">■</span> <strong>Section 4 :</strong> Plan de déploiement (0 à 90 jours)</li>
+                <li><span class="text-brand-accent mr-2">■</span> <strong>Section 5 :</strong> Mode opératoire & transfert de compétences</li>
+                <li><span class="text-brand-accent mr-2">■</span> <strong>Annexes :</strong> Outils, Glossaire et Schémas</li>
+            </ul>
+        </div>
+
+        <div class="footer-section flex justify-between items-center text-[10px] font-mono text-brand-muted">
+            <p>InfraDev.Africa | Pack Exécutif FIS-RDC</p>
+            <p>Page 2 / 11</p>
+        </div>
+    </div>
+
+    <!-- PAGE 3 : NOTRE ROLE & RESSOURCES -->
+    <div class="a4-page watermark">
+        <div class="header-section flex justify-between items-end border-b-2 border-brand-line pb-3">
+            <div class="flex items-center gap-3">
+                <div class="badge-id h-10 w-10 text-xl">ID.</div>
+                <p class="font-display font-black text-brand-base uppercase tracking-wide text-lg">InfraDev.Africa</p>
+            </div>
+            <p class="text-[10px] font-mono text-brand-muted uppercase font-bold text-right">II. Ressources Mobilisées</p>
+        </div>
+
+        <div class="main-content layer-z1 text-[12.5px]">
+            <h2 class="section-title">1. Votre Task-Force : Doers & Stratèges</h2>
+            <p class="mb-4 text-gray-800 leading-relaxed">Nous intervenons comme un <strong>secrétariat technique tactique</strong>. Notre rôle est de prendre la charge de l'instruction pour que la Direction puisse se concentrer sur les arbitrages stratégiques.</p>
+
+            <div class="callout good">
+                <h4>Nous calibrons l'appui avec vous</h4>
+                <p>Nous ne présumons pas de vos capacités internes actuelles. Nous calibrons l’appui après un diagnostic court, sur dossiers réels.</p>
+                <ul>
+                    <li><strong>À confirmer rapidement :</strong> délégations DG/DGA/CA et contraintes internes de validation.</li>
+                    <li><strong>Notre méthode :</strong> diagnostic J0–J10 → pilote sur 1 dossier → transfert des routines.</li>
+                </ul>
+            </div>
+
+            <div class="grid grid-cols-2 gap-5 mb-5 mt-4">
+                <div class="border-l-4 border-brand-base p-2">
+                    <h4 class="font-bold text-brand-base uppercase text-[11px] mb-1">Ancrage Senior</h4>
+                    <p class="text-[11px] text-gray-600 leading-relaxed">Détachement d'experts seniors (Finance/Infra) pour piloter l'exécution quotidienne et assurer le transfert de compétences.</p>
+                </div>
+                <div class="border-l-4 border-brand-accent p-2">
+                    <h4 class="font-bold text-brand-base uppercase text-[11px] mb-1">Écosystème d'Appui</h4>
+                    <p class="text-[11px] text-gray-600 leading-relaxed">Accès à nos pôles back-office : conformité juridique, ingénierie ESG (BM/BEI) et structuration de concessions.</p>
+                </div>
+            </div>
+
+            <div class="callout option">
+                <h4>Option — Automatisation documentaire et Intelligence Décisionnelle</h4>
+                <p>La méthode fonctionne parfaitement de manière manuelle. Cependant, si le volume de dossiers est très élevé ou s'il faut récupérer de vieilles archives (concessions historiques), nous pouvons proposer un outillage d'automatisation (numérisation, extraction, workflows IA).</p>
+                <ul>
+                    <li><strong>Déploiement souverain :</strong> Installation sur vos serveurs fermés (On-premise). Aucune fuite externe.</li>
+                    <li><strong>Intégration MCP (Model Context Protocol) :</strong> Connecteurs sécurisés vers vos sources internes.</li>
+                    <li><strong>Principe :</strong> Optionnel, activé uniquement si cela crée un gain réel de délai.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-section flex justify-between items-center text-[10px] font-mono text-brand-muted">
+            <p>InfraDev.Africa | Exécutif FIS-RDC</p>
+            <p>Page 3 / 11</p>
+        </div>
+    </div>
+
+    <!-- PAGE 4 : LES DÉFIS -->
+    <div class="a4-page watermark">
+        <div class="header-section flex justify-between items-end border-b-2 border-brand-line pb-3">
+            <div class="flex items-center gap-3">
+                <div class="badge-id h-10 w-10 text-xl">ID.</div>
+                <p class="font-display font-black text-brand-base uppercase tracking-wide text-lg">InfraDev.Africa</p>
+            </div>
+            <p class="text-[10px] font-mono text-brand-muted uppercase font-bold text-right">III. Diagnostic 90 Jours</p>
+        </div>
+
+        <div class="main-content layer-z1 text-[12.5px] leading-relaxed text-gray-800">
+            <h2 class="section-title">2. La Vulnérabilité Immédiate : Le Risque du Vide</h2>
+            <p class="mb-5">Sur la base des annonces du PLF 2026 et de notre expérience terrain, nous avons identifié les trois pièges majeurs qui peuvent ralentir votre action et exposer votre responsabilité dans cette phase de lancement.</p>
+
+            <div class="callout bad">
+                <h4>A. L'Avalanche de Dossiers Incomplets (Le Triage)</h4>
+                <p>L'existence du FIS attire des requêtes urgentes mais immatures. Les instruire sans filtre épuise vos équipes et risque de bloquer vos co-investisseurs internationaux (BEI/DFC) exigeants sur les normes ESG.</p>
+            </div>
+
+            <div class="callout warn">
+                <h4>B. Le Risque de Traçabilité (Le Vide Fiduciaire)</h4>
+                <p>Tant que les seuils de délégation DG/DGA ne sont pas formellement actés, vous portez la responsabilité personnelle de chaque signature. Sans un Registre consignant les preuves, l'IGF pourrait requalifier un arbitrage en faute de gestion.</p>
+            </div>
+
+            <div class="callout warn">
+                <h4>C. La Charge des Actifs Immobiliers (La Bande Passante)</h4>
+                <p>La gestion du Centre Financier est prestigieuse mais logistiquement lourde. S'en occuper en régie directe drainera la bande passante exécutive nécessaire aux infrastructures structurantes.</p>
+            </div>
+
+            <div class="callout good mt-6">
+                <h4>Ce que nous allons sécuriser pour vous :</h4>
+                <ul>
+                    <li><strong>Pré-instruction (Screening) :</strong> classer vite, réduire le bruit politique.</li>
+                    <li><strong>Traçabilité :</strong> registre des décisions (Decision Log) incontestable.</li>
+                    <li><strong>Discipline fiduciaire :</strong> paiement sur preuve (Proof-before-payment).</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-section flex justify-between items-center text-[10px] font-mono text-brand-muted">
+            <p>InfraDev.Africa | Exécutif FIS-RDC</p>
+            <p>Page 4 / 11</p>
+        </div>
+    </div>
+
+    <!-- PAGE 5 : ROADMAP -->
+    <div class="a4-page watermark">
+        <div class="header-section flex justify-between items-end border-b-2 border-brand-line pb-3">
+            <div class="flex items-center gap-3">
+                <div class="badge-id h-10 w-10 text-xl">ID.</div>
+                <p class="font-display font-black text-brand-base uppercase tracking-wide text-lg">InfraDev.Africa</p>
+            </div>
+            <p class="text-[10px] font-mono text-brand-muted uppercase font-bold text-right">IV. Plan de Déploiement</p>
+        </div>
+
+        <div class="main-content layer-z1 text-[12.5px] leading-relaxed text-gray-800">
+            <h2 class="section-title">3. Feuille de Route : 0 à 90 Jours</h2>
+            <p class="mb-6 text-gray-600">L'objectif n'est pas de tout paralyser, mais de construire la machine "Operating System" tout en commençant à exécuter sur des bases saines.</p>
+
+            <div class="timeline ml-2">
+                <div class="step pb-6">
+                    <span class="dot"></span>
+                    <h3 class="font-display font-bold text-brand-base text-[14px] uppercase">Phase 1 : Mise en route <span class="text-brand-accent text-[11px] font-black ml-2">(Jours 0 - 30)</span></h3>
+                    <p class="text-[11.5px] font-bold text-brand-muted mb-2 italic">Objectif : Verrouiller la signature exécutive.</p>
+                    <ul class="list-disc pl-5 space-y-1.5 text-[11.5px] text-gray-700 font-medium">
+                        <li>Déploiement du processus à portes (Stage-gates) et du Minimum Deal File.</li>
+                        <li>Activation immédiate du Registre de Décisions pour la DGA.</li>
+                        <li>Test Pilote de notre processus sur votre dossier le plus complexe (livraison d'une note de décision sous 48h).</li>
+                    </ul>
+                </div>
+
+                <div class="step pb-6">
+                    <span class="dot accent"></span>
+                    <h3 class="font-display font-bold text-brand-base text-[14px] uppercase">Phase 2 : Stabilisation <span class="text-brand-base text-[11px] font-black ml-2">(Jours 31 - 60)</span></h3>
+                    <p class="text-[11.5px] font-bold text-brand-muted mb-2 italic">Objectif : Cadrer les flux et libérer la bande passante.</p>
+                    <ul class="list-disc pl-5 space-y-1.5 text-[11.5px] text-gray-700 font-medium">
+                        <li>Cadrage financier du Compte d'Affectation Spéciale (CAS).</li>
+                        <li>Formalisation des grilles de "Paiement sur Preuve" (Jalons).</li>
+                        <li>Procédures Standard (SOPs) : modèles, checklists, notes.</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <span class="dot hollow"></span>
+                    <h3 class="font-display font-bold text-gray-400 text-[14px] uppercase">Phase 3 : Accélération <span class="text-gray-500 text-[11px] font-black ml-2">(Jours 61 - 90)</span></h3>
+                    <p class="text-[11.5px] font-bold text-brand-muted mb-2 italic">Objectif : Présenter les pilotes "Bankables" aux bailleurs.</p>
+                    <ul class="list-disc pl-5 space-y-1.5 text-[11.5px] text-gray-700 font-medium">
+                        <li>Pipeline priorisé : prêts à financer et feuille de route de maturation.</li>
+                        <li>Structuration finale de 1 à 2 projets pilotes prêts pour co-investissement.</li>
+                        <li>Transfert de méthodes (Coaching équipe) pour ancrer l'autonomie.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section flex justify-between items-center text-[10px] font-mono text-brand-muted">
+            <p>InfraDev.Africa | Exécutif FIS-RDC</p>
+            <p>Page 5 / 11</p>
+        </div>
+    </div>
+
+    <!-- PAGE 6 : METHODE & TRANSFERT -->
+    <div class="a4-page watermark">
+        <div class="header-section flex justify-between items-end border-b-2 border-brand-line pb-3">
+            <div class="flex items-center gap-3">
+                <div class="badge-id h-10 w-10 text-xl">ID.</div>
+                <p class="font-display font-black text-brand-base uppercase tracking-wide text-lg">InfraDev.Africa</p>
+            </div>
+            <p class="text-[10px] font-mono text-brand-muted uppercase font-bold text-right">V. Modalités d'Intervention</p>
+        </div>
+
+        <div class="main-content layer-z1 text-[12.5px] leading-relaxed">
+            <h2 class="section-title">4. Collaboration & Transfert de Compétences</h2>
+            <p class="mb-6 text-gray-800">Notre mandat n'est pas de nous substituer à vos cadres, mais de les évaluer, de les appuyer sur le terrain et de les rendre pleinement autonomes face aux nouveaux standards opérationnels.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="callout m-0">
+                    <h4>Shadowing & Binôme</h4>
+                    <p>Nos experts seniors travaillent en binôme avec vos cadres sur le traitement des dossiers réels. La méthode s'apprend par l'action immédiate et non par la théorie.</p>
+                </div>
+                <div class="callout m-0">
+                    <h4>Rythme de Gouvernance</h4>
+                    <p>Pour préserver votre agenda, nous imposons une synchronisation hebdomadaire stricte de <strong>30 minutes</strong> appuyée sur un tableau de bord "1-page" : Alertes, Flux, Décisions.</p>
+                </div>
+            </div>
+
+            <div class="bg-brand-surface border-2 border-brand-base p-6 rounded-lg text-center mt-auto shadow-md">
+                <h3 class="font-display font-black text-brand-base text-[16px] uppercase tracking-wide mb-3">La Prochaine Étape Stratégique</h3>
+                <p class="text-[12.5px] text-gray-800 max-w-xl mx-auto mb-4">Accordez-nous <strong>15 minutes d'échange</strong> pour identifier le bottleneck #1 actuel sur votre bureau.</p>
+                <div class="bg-white p-3 rounded border border-brand-line inline-block text-left">
+                    <ul class="text-[11.5px] text-gray-700 space-y-1.5 font-bold list-none pl-1">
+                        <li><span class="text-brand-good mr-2 font-black italic underline">✓</span> Confiez-nous votre dossier le plus complexe.</li>
+                        <li><span class="text-brand-good mr-2 font-black italic underline">✓</span> Laissez notre Task-Force l'instruire selon nos méthodes.</li>
+                        <li><span class="text-brand-good mr-2 font-black italic underline">✓</span> Jugez la qualité de notre "Pack Décisionnel" sous 48h.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section flex justify-between items-center text-[10px] font-mono text-brand-muted">
+            <p>InfraDev.Africa | Exécutif FIS-RDC</p>
+            <p>Page 6 / 11</p>
+        </div>
+    </div>
+
+    <!-- PAGE 7 : OUTILS OPERATIONNELS -->
+    <div class="a4-page watermark">
+        <div class="header-section flex justify-between items-end border-b-2 border-brand-line pb-3">
+            <div class="flex items-center gap-3">
+                <div class="badge-id h-10 w-10 text-xl">ID.</div>
+                <p class="font-display font-black text-brand-base uppercase tracking-wide text-lg">InfraDev.Africa</p>
+            </div>
+            <p class="text-[10px] font-mono text-brand-muted uppercase font-bold text-right">VI. Annexes : Outils</p>
+        </div>
+
+        <div class="main-content layer-z1 text-[12px]">
+            <h2 class="section-title">5. Annexes — Outils Opérationnels</h2>
+            <p class="mb-4 text-gray-800">Ces modèles matérialisent la Phase 1. Ils standardisent la recevabilité, réduisent le temps perdu, et protègent la décision. Ils sont conçus pour être directement intégrés dans vos workflows.</p>
+
+            <div class="mb-6">
+                <h4 class="font-display font-bold text-brand-base uppercase mb-2">1) Dossier Minimum (Minimum Deal File)</h4>
+                <p class="mb-2 italic text-gray-600">La règle est stricte : absence de preuves = pas d'instruction approfondie. Le filtre rejette le dossier, pas la Direction.</p>
+                <table>
+                    <thead>
+                        <tr><th class="w-1/3">Critère de Bancabilité</th><th>Preuves Minimales Exigées</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Maturité Technique</strong></td><td>Note technique / Préfaisabilité / Schéma d'implémentation.</td></tr>
+                        <tr><td><strong>Viabilité Financière</strong></td><td>Modèle revenus + hypothèses / Contrat d'achat (<em>Offtake</em>).</td></tr>
+                        <tr><td><strong>Sauvegardes (ESG)</strong></td><td>Note d'impact / Mesures de mitigation (Standards BEI/BM).</td></tr>
+                        <tr><td><strong>Capacité du Promoteur</strong></td><td>Preuve d'equity / LOI co-financeurs / Capacité du <em>Sponsor</em>.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4">
+                <h4 class="font-display font-bold text-brand-base uppercase mb-2">2) Registre des Décisions (Decision Log)</h4>
+                <p class="mb-2 italic text-gray-600">Le bouclier anti-IGF. Toute décision est justifiée, tracée et, surtout, conditionnée.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-[15%]">ID Log</th>
+                            <th class="w-[10%]">Date</th>
+                            <th class="w-[20%]">Projet</th>
+                            <th class="w-[15%]">Décision</th>
+                            <th class="w-[40%]">Conditions Préalables (CPs)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-mono font-bold text-brand-base">FIS-DL-001</td>
+                            <td>__/__/26</td>
+                            <td>Projet [Alpha]</td>
+                            <td class="text-brand-good font-bold">APPROVE</td>
+                            <td>Apport de 30% d'Equity par le Sponsor validé par l'avocat.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-mono font-bold text-brand-base">FIS-DL-002</td>
+                            <td>__/__/26</td>
+                            <td>Projet [Beta]</td>
+                            <td class="text-brand-warn font-bold">DEFER</td>
+                            <td>Exigence d'une étude d'impact environnemental (EIES).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer-section flex justify-between items-center text-[10px] font-mono text-brand-muted">
+            <p>InfraDev.Africa | Exécutif FIS-RDC</p>
+            <p>Page 7 / 11</p>
+        </div>
+    </div>
+
+    <!-- PAGE 8 : GLOSSAIRE -->
+    <div class="a4-page watermark">
+        <div class="header-section flex justify-between items-end border-b-2 border-brand-line pb-3">
+            <div class="flex items-center gap-3">
+                <div class="badge-id h-10 w-10 text-xl">ID.</div>
+                <p class="font-display font-black text-brand-base uppercase tracking-wide text-lg">InfraDev.Africa</p>
+            </div>
+            <p class="text-[10px] font-mono text-brand-muted uppercase font-bold text-right">VII. Glossaire Technique</p>
+        </div>
+
+        <div class="main-content layer-z1 text-[12px]">
+            <h2 class="section-title">6. Glossaire des Termes (FR + EN)</h2>
+            <p class="mb-4 text-gray-800">L'investissement d'infrastructure international possède son propre langage. Ce glossaire vise à standardiser la communication interne du FIS-RDC et à faciliter les échanges avec les bailleurs.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="w-[20%]">Terme (FR)</th>
+                        <th class="w-[25%]">Terme (EN)</th>
+                        <th class="w-[55%]">Définition Opérationnelle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-bold">Système d’exécution</td>
+                        <td class="italic text-gray-600">Operating System</td>
+                        <td>Mécanisme de règles et d'outils rendant l’instruction et la décision répétables.</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Processus à portes</td>
+                        <td class="italic text-gray-600">Stage-gates</td>
+                        <td>Pipeline divisé en étapes ; chaque "porte" exige un niveau de preuve documentaire minimal.</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Pré-instruction</td>
+                        <td class="italic text-gray-600">Screening</td>
+                        <td>Revue rapide de premier niveau pour classer un dossier : Prêt / À compléter / Non recevable.</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Dossier minimum</td>
+                        <td class="italic text-gray-600">Minimum Deal File</td>
+                        <td>Paquet documentaire standard exigé pour ouvrir l’instruction formelle.</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Paiement sur preuve</td>
+                        <td class="italic text-gray-600">Proof-before-payment</td>
+                        <td>Décaissement conditionné à une preuve physique et indépendante (jalon atteint).</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Matrice responsabilités</td>
+                        <td class="italic text-gray-600">RACI Matrix</td>
+                        <td>Définition stricte de qui est Responsable, Approbateur, Consulté et Informé.</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Conditions préalables</td>
+                        <td class="italic text-gray-600">Conditions precedent (CPs)</td>
+                        <td>Éléments suspensifs à satisfaire avant une signature finale ou un décaissement.</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Contrat d'achat</td>
+                        <td class="italic text-gray-600">Offtake Agreement</td>
+                        <td>Contrat de vente garantissant un débouché (crucial pour la bancabilité d'un projet).</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold">Connecteurs sécurisés</td>
+                        <td class="italic text-gray-600">MCP (Model Context Protocol)</td>
+                        <td>Standard informatique permettant de relier des outils d'IA à des sources internes avec un contrôle strict des accès, garantissant la souveraineté de la donnée.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer-section flex justify-between items-center text-[10px] font-mono text-brand-muted">
+            <p>InfraDev.Africa | Exécutif FIS-RDC</p>
+            <p>Page 8 / 11</p>
+        </div>
+    </div>
+
+    <!-- PAGE 9 : ANNEXE VISUELLE 1 & 2 -->
+    <div class="a4-page watermark">
+        <div class="header-section flex justify-between items-end border-b-2 border-brand-line pb-3">
+            <div class="flex items-center gap-3">
+                <div class="badge-id h-10 w-10 text-xl">ID.</div>
+                <p class="font-display font-black text-brand-base uppercase tracking-wide text-lg">InfraDev.Africa</p>
+            </div>
+            <p class="text-[10px] font-mono text-brand-muted uppercase font-bold text-right">VIII. Annexes Visuelles</p>
+        </div>
+
+        <div class="main-content layer-z1">
+            <div class="diagram-container mb-4">
+                <h4 class="font-display font-bold text-brand-base text-[13px] uppercase mb-1">Pressions Institutionnelles (Les 90 Jours)</h4>
+                <div class="diagram-brief">
+                    <strong>Lecture rapide :</strong>
+                    <ul>
+                        <li><strong>Montre :</strong> Quatre forces convergent sur la Direction (Urgence, IGF, Bailleurs, Provinces).</li>
+                        <li><strong>Aide à arbitrer :</strong> Justifie la mise en place de règles de protection non négociables dès J0.</li>
+                    </ul>
+                </div>
+
+                <svg class="id-svg" viewBox="0 0 960 400" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <marker id="arrowRisk" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#B91C1C"/></marker>
+                    <marker id="arrowWarn" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#B45309"/></marker>
+                    <marker id="arrowGood" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#0F766E"/></marker>
+                  </defs>
+                  <g transform="translate(0, -20)">
+                      <g><rect x="18" y="18" width="46" height="46" rx="10" ry="10" fill="#0A1F44"/><text x="41.0" y="47.0" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="900" font-size="18" fill="#F9C70C">ID.</text></g>
+
+                      <rect x="355" y="170" width="250" height="110" rx="14" ry="14" fill="#F7F8FA" stroke="#0A1F44" stroke-width="2"/>
+                      <text x="480" y="210" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#0A1F44">FIS-RDC (Direction Générale)</text>
+                      <text x="480" y="236" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">Décider • Filtrer • Protéger</text>
+                      <text x="480" y="258" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">Tracer • Payer sur preuve</text>
+
+                      <rect x="60" y="80" width="270" height="90" rx="14" ry="14" fill="#fff" stroke="#B91C1C" stroke-width="2"/>
+                      <text x="195" y="114" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#0A1F44">Organes de Contrôle (IGF/FMI)</text>
+                      <text x="195" y="138" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">Transparence • Audits rigoureux</text>
+
+                      <rect x="630" y="80" width="270" height="90" rx="14" ry="14" fill="#fff" stroke="#B45309" stroke-width="2"/>
+                      <text x="765" y="114" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#0A1F44">Pression Projets Hérités</text>
+                      <text x="765" y="138" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">Urgences • Dossiers incomplets</text>
+
+                      <rect x="60" y="310" width="270" height="90" rx="14" ry="14" fill="#fff" stroke="#B45309" stroke-width="2"/>
+                      <text x="195" y="344" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#0A1F44">Impératif Territorial</text>
+                      <text x="195" y="368" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">Provinces • Redistribution • Attentes</text>
+
+                      <rect x="630" y="310" width="270" height="90" rx="14" ry="14" fill="#fff" stroke="#0F766E" stroke-width="2"/>
+                      <text x="765" y="344" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#0A1F44">Bailleurs &amp; Co-investisseurs</text>
+                      <text x="765" y="368" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">Bankability • ESG • Rigueur</text>
+
+                      <path d="M330 125 L355 200" stroke="#B91C1C" stroke-width="2" fill="none" marker-end="url(#arrowRisk)"/>
+                      <path d="M630 125 L605 200" stroke="#B45309" stroke-width="2" fill="none" marker-end="url(#arrowWarn)"/>
+                      <path d="M330 355 L355 255" stroke="#B45309" stroke-width="2" fill="none" marker-end="url(#arrowWarn)"/>
+                      <path d="M630 355 L605 255" stroke="#0F766E" stroke-width="2" fill="none" marker-end="url(#arrowGood)"/>
+                  </g>
+                </svg>
+                <div class="diagram-note"><strong>À retenir :</strong> La pression devient gérable dès qu'elle est convertie en règles simples via l'Operating System.</div>
+            </div>
+
+            <div class="diagram-container m-0">
+                <h4 class="font-display font-bold text-brand-base text-[13px] uppercase mb-1">Le Processus à Portes (Stage-Gates)</h4>
+                <div class="diagram-brief">
+                    <strong>Lecture rapide :</strong>
+                    <ul>
+                        <li><strong>Montre :</strong> Le parcours linéaire d'un dossier (Prêt / À compléter / Non recevable).</li>
+                        <li><strong>Aide à décider :</strong> Permet de classer rapidement un projet sans arbitraire politique.</li>
+                    </ul>
+                </div>
+
+                <svg class="id-svg" viewBox="0 0 960 250" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <marker id="arr2" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#0A1F44"/></marker>
+                  </defs>
+                  <g transform="translate(0, 10)">
+                      <g><rect x="18" y="18" width="46" height="46" rx="10" ry="10" fill="#0A1F44"/><text x="41.0" y="47.0" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="900" font-size="18" fill="#F9C70C">ID.</text></g>
+
+                      <rect x="30" y="100" width="145" height="90" rx="14" ry="14" fill="#F7F8FA" stroke="#0A1F44" stroke-width="2"/>
+                      <text x="102" y="132" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12.5" fill="#0A1F44">0. Intake</text>
+                      <text x="102" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11.5" fill="#4B5563">Note de Concept</text>
+
+                      <rect x="195" y="100" width="145" height="90" rx="14" ry="14" fill="#fff" stroke="#0A1F44" stroke-width="2"/>
+                      <text x="267" y="132" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12.5" fill="#0A1F44">1. Screening</text>
+                      <text x="267" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11.5" fill="#4B5563">Go / No-Go</text>
+
+                      <rect x="360" y="100" width="145" height="90" rx="14" ry="14" fill="#fff" stroke="#0A1F44" stroke-width="2"/>
+                      <text x="432" y="132" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12.5" fill="#0A1F44">2. Appraisal</text>
+                      <text x="432" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11.5" fill="#4B5563">Tech • Finance • ESG</text>
+
+                      <rect x="525" y="100" width="145" height="90" rx="14" ry="14" fill="#fff" stroke="#0A1F44" stroke-width="2"/>
+                      <text x="597" y="132" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12.5" fill="#0A1F44">3. Decision</text>
+                      <text x="597" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11.5" fill="#4B5563">Conditions (CPs)</text>
+
+                      <rect x="690" y="100" width="145" height="90" rx="14" ry="14" fill="#fff" stroke="#0A1F44" stroke-width="2"/>
+                      <text x="762" y="132" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12.5" fill="#0A1F44">4. Contract</text>
+                      <text x="762" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11.5" fill="#4B5563">Jalons &amp; Signatures</text>
+
+                      <rect x="855" y="100" width="75" height="90" rx="14" ry="14" fill="#fff" stroke="#0A1F44" stroke-width="2"/>
+                      <text x="892" y="132" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12.5" fill="#0A1F44">5.</text>
+                      <text x="892" y="154" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11.5" fill="#4B5563">Monitor</text>
+
+                      <path d="M175 145 L195 145" stroke="#0A1F44" stroke-width="2" fill="none" marker-end="url(#arr2)"/>
+                      <path d="M340 145 L360 145" stroke="#0A1F44" stroke-width="2" fill="none" marker-end="url(#arr2)"/>
+                      <path d="M505 145 L525 145" stroke="#0A1F44" stroke-width="2" fill="none" marker-end="url(#arr2)"/>
+                      <path d="M670 145 L690 145" stroke="#0A1F44" stroke-width="2" fill="none" marker-end="url(#arr2)"/>
+                      <path d="M835 145 L855 145" stroke="#0A1F44" stroke-width="2" fill="none" marker-end="url(#arr2)"/>
+                  </g>
+                </svg>
+                <div class="diagram-note"><strong>À retenir :</strong> Ce n'est pas "vous" qui refusez un projet, c'est la méthode de conformité.</div>
+            </div>
+
+        </div>
+
+        <div class="footer-section flex justify-between items-center text-[10px] font-mono text-brand-muted">
+            <p>InfraDev.Africa | Exécutif FIS-RDC</p>
+            <p>Page 9 / 11</p>
+        </div>
+    </div>
+
+    <!-- PAGE 10 : ANNEXE VISUELLE 3 -->
+    <div class="a4-page watermark">
+        <div class="header-section flex justify-between items-end border-b-2 border-brand-line pb-3">
+            <div class="flex items-center gap-3">
+                <div class="badge-id h-10 w-10 text-xl">ID.</div>
+                <p class="font-display font-black text-brand-base uppercase tracking-wide text-lg">InfraDev.Africa</p>
+            </div>
+            <p class="text-[10px] font-mono text-brand-muted uppercase font-bold text-right">VII. Annexes Visuelles</p>
+        </div>
+
+        <div class="main-content layer-z1">
+            <div class="diagram-container w-full">
+                <h4 class="font-display font-bold text-brand-base text-[13px] uppercase mb-1">Architecture du "Paiement sur Preuve" (Jalons)</h4>
+
+                <div class="diagram-brief">
+                    <strong>Lecture rapide :</strong>
+                    <ul>
+                        <li><strong>Montre :</strong> Le cheminement strict : Demande → Preuve Physique → Vérification → Paiement ou Suspension.</li>
+                        <li><strong>Aide à décider :</strong> Garantit qu'aucun dollar public n'est décaissé sans preuve tangible, protégeant la DGA face à l'IGF.</li>
+                    </ul>
+                </div>
+
+                <svg class="id-svg" viewBox="0 0 960 360" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <marker id="arrSOk" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#0A1F44"/></marker>
+                    <marker id="arrOk" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#0F766E"/></marker>
+                    <marker id="arrNo" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#B91C1C"/></marker>
+                  </defs>
+
+                  <g transform="translate(0, 30)">
+                    <rect x="60" y="30" width="240" height="90" rx="14" ry="14" fill="#F7F8FA" stroke="#0A1F44" stroke-width="2"/>
+                    <text x="180" y="65" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#0A1F44">Demande de décaissement</text>
+                    <text x="180" y="85" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">Initié par le promoteur</text>
+
+                    <rect x="380" y="30" width="240" height="90" rx="14" ry="14" fill="#F7F8FA" stroke="#0A1F44" stroke-width="2"/>
+                    <text x="500" y="65" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#0A1F44">Fourniture de la Preuve</text>
+                    <text x="500" y="85" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">PV certifié • Expert Indépendant</text>
+
+                    <polygon points="780,25 880,75 780,125 680,75" fill="#fff" stroke="#0A1F44" stroke-width="2"/>
+                    <text x="780" y="70" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#0A1F44">Vérification</text>
+                    <text x="780" y="88" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">Conforme ?</text>
+
+                    <rect x="630" y="210" width="300" height="90" rx="14" ry="14" fill="#fff" stroke="#0F766E" stroke-width="2"/>
+                    <text x="780" y="245" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#0A1F44">Autoriser le transfert (FIS)</text>
+                    <text x="780" y="265" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">Acté dans le Registre</text>
+
+                    <rect x="60" y="210" width="300" height="90" rx="14" ry="14" fill="#fff" stroke="#B91C1C" stroke-width="2"/>
+                    <text x="210" y="245" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#0A1F44">Rejet Temporaire (DEFER)</text>
+                    <text x="210" y="265" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="12" fill="#4B5563">Demander correctifs / CPs</text>
+
+                    <path d="M300 75 L380 75" stroke="#0A1F44" stroke-width="2" fill="none" marker-end="url(#arrSOk)"/>
+                    <path d="M620 75 L680 75" stroke="#0A1F44" stroke-width="2" fill="none" marker-end="url(#arrSOk)"/>
+                    <path d="M780 125 L780 210" stroke="#0F766E" stroke-width="2" fill="none" marker-end="url(#arrOk)"/>
+                    <path d="M880 75 L920 75 L920 170 L210 170 L210 210" stroke="#B91C1C" stroke-width="2" fill="none" marker-end="url(#arrNo)"/>
+                  </g>
+                </svg>
+
+                <div class="diagram-note">
+                    <strong class="text-brand-base">DOGME INSTITUTIONNEL :</strong> L'absence de certificat physique bloque le système de paiement, protégeant l'institution contre le "trou noir" financier.
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section flex justify-between items-center text-[10px] font-mono text-brand-muted">
+            <p>InfraDev.Africa | Exécutif FIS-RDC</p>
+            <p>Page 10 / 11</p>
+        </div>
+    </div>
+
+    <!-- PAGE 11 : ANNEXE VISUELLE 4 -->
+    <div class="a4-page watermark">
+        <div class="header-section flex justify-between items-end border-b-2 border-brand-line pb-3">
+            <div class="flex items-center gap-3">
+                <div class="badge-id h-10 w-10 text-xl">ID.</div>
+                <p class="font-display font-black text-brand-base uppercase tracking-wide text-lg">InfraDev.Africa</p>
+            </div>
+            <p class="text-[10px] font-mono text-brand-muted uppercase font-bold text-right">VII. Annexes Visuelles</p>
+        </div>
+
+        <div class="main-content layer-z1">
+            <div class="diagram-container w-full">
+                <h4 class="font-display font-bold text-brand-base text-[12px] uppercase mb-1">Architecture Technologique (Levier Optionnel)</h4>
+
+                <div class="diagram-brief">
+                    <strong>Lecture rapide :</strong>
+                    <ul>
+                        <li><strong>Montre :</strong> Comment l'automatisation accélère le passage de l'héritage physique au Pack Décisionnel.</li>
+                        <li><strong>Aide à décider :</strong> Prouve que vos données restent souveraines (On-Premise) si vous choisissez d'activer cette option face à un volume massif de dossiers.</li>
+                    </ul>
+                </div>
+
+                <svg class="id-svg" viewBox="0 0 960 380" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <marker id="arrSOk2" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,3 L0,6 Z" fill="#0A1F44"/></marker>
+                  </defs>
+
+                  <g transform="translate(0, 30)">
+                      <rect x="40" y="140" width="180" height="90" rx="10" ry="10" fill="#fff" stroke="#B45309" stroke-width="2" stroke-dasharray="4"/>
+                      <text x="130" y="180" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#0A1F44">Archives Papier</text>
+
+                      <path d="M220 185 L280 185" stroke="#0A1F44" stroke-width="2" fill="none" marker-end="url(#arrSOk2)"/>
+
+                      <rect x="280" y="140" width="180" height="90" rx="10" ry="10" fill="#fff" stroke="#0F766E" stroke-width="2"/>
+                      <text x="370" y="180" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#0A1F44">Digitalisation Express</text>
+
+                      <path d="M460 185 L520 185" stroke="#0A1F44" stroke-width="2" fill="none" marker-end="url(#arrSOk2)"/>
+
+                      <rect x="520" y="110" width="200" height="140" rx="10" ry="10" fill="#0A1F44" stroke="#F9C70C" stroke-width="2"/>
+                      <text x="620" y="150" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#fff">Agents d'Analyse (IA)</text>
+                      <text x="620" y="180" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="#cbd5e1">On-Premise (Serveur FIS)</text>
+                      <text x="620" y="215" text-anchor="middle" font-family="Montserrat, sans-serif" font-size="10" fill="#F9C70C" font-weight="800" text-transform="uppercase">Zéro fuite externe</text>
+
+                      <path d="M720 185 L780 185" stroke="#0A1F44" stroke-width="2" fill="none" marker-end="url(#arrSOk2)"/>
+
+                      <rect x="780" y="140" width="140" height="90" rx="10" ry="10" fill="#fff" stroke="#0F766E" stroke-width="2"/>
+                      <text x="850" y="180" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#0A1F44">Decision Pack 48h</text>
+                  </g>
+                </svg>
+            </div>
+        </div>
+
+        <div class="footer-section flex justify-between items-center text-[10px] font-mono text-brand-muted">
+            <p>InfraDev.Africa | Exécutif FIS-RDC</p>
+            <p>Page 11 / 11</p>
+        </div>
+    </div>
+
+</body>
+</html>

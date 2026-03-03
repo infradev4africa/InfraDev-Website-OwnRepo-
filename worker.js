@@ -1,7 +1,16 @@
 const PROTECTED_PREFIX = "/portals/sokimo";
 const UNLOCK_PATH = "/_sokimo-unlock";
 const COOKIE_NAME = "sokimo_gate";
+const FIS_PROTECTED_PREFIX = "/portals/fis-rdc";
+const FIS_UNLOCK_PATH = "/_fis-rdc-unlock";
+const FIS_COOKIE_NAME = "fis_rdc_gate";
 const SESSION_TTL_SECONDS = 60 * 60 * 12; // 12 hours
+const FIS_RDC_REPO_API_PATH = "/api/fis-rdc/repo";
+const GITHUB_API_BASE = "https://api.github.com";
+const README_MAX_CHARS = 35000;
+const FIS_RDC_DEFAULT_REPO_OWNER = "tise05";
+const FIS_RDC_DEFAULT_REPO_NAME = "FIS-RDC";
+const FIS_RDC_FALLBACK_ACCESS_CODE = "FSI.DGA.NM.01!";
 
 export default {
   async fetch(request, env) {
@@ -11,11 +20,27 @@ export default {
       return handleUnlock(request, env, url);
     }
 
+    if (url.pathname === FIS_UNLOCK_PATH) {
+      return handleFisUnlock(request, env, url);
+    }
+
+    if (url.pathname === FIS_RDC_REPO_API_PATH) {
+      return handleFisRdcRepoApi(request, env);
+    }
+
     if (isProtectedPath(url.pathname)) {
       const isAuthorized = await hasValidSession(request, env);
       if (!isAuthorized) {
         const next = encodeURIComponent(`${url.pathname}${url.search}`);
         return Response.redirect(`${url.origin}${UNLOCK_PATH}?next=${next}`, 302);
+      }
+    }
+
+    if (isFisProtectedPath(url.pathname)) {
+      const isAuthorized = await hasValidFisSession(request, env);
+      if (!isAuthorized) {
+        const next = encodeURIComponent(`${url.pathname}${url.search}`);
+        return Response.redirect(`${url.origin}${FIS_UNLOCK_PATH}?next=${next}`, 302);
       }
     }
 
@@ -27,8 +52,15 @@ function isProtectedPath(pathname) {
   return pathname === PROTECTED_PREFIX || pathname.startsWith(`${PROTECTED_PREFIX}/`);
 }
 
+function isFisProtectedPath(pathname) {
+  return pathname === FIS_PROTECTED_PREFIX || pathname.startsWith(`${FIS_PROTECTED_PREFIX}/`);
+}
+
 async function handleUnlock(request, env, url) {
-  const nextPath = sanitizeNextPath(url.searchParams.get("next"));
+  const nextPath = sanitizeNextPathForPortal(
+    url.searchParams.get("next"),
+    `${PROTECTED_PREFIX}/strategic-brief-pack.html`
+  );
 
   if (!env.SOKIMO_ACCESS_CODE || !env.SOKIMO_ACCESS_CODE.trim()) {
     return htmlResponse(
@@ -62,9 +94,50 @@ async function handleUnlock(request, env, url) {
     );
   }
 
-  const sessionSecret = getSessionSecret(env);
+  const sessionSecret = getSokimoSessionSecret(env);
   const sessionToken = await buildSessionToken(sessionSecret);
-  const cookieHeader = buildSessionCookie(sessionToken);
+  const cookieHeader = buildSessionCookie(COOKIE_NAME, sessionToken);
+
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: nextPath,
+      "Set-Cookie": cookieHeader,
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
+async function handleFisUnlock(request, env, url) {
+  const nextPath = sanitizeNextPathForPortal(url.searchParams.get("next"), `${FIS_PROTECTED_PREFIX}/index.html`);
+
+  if (request.method === "GET") {
+    return htmlResponse(200, renderFisUnlockPage({ nextPath }));
+  }
+
+  if (request.method !== "POST") {
+    return htmlResponse(
+      405,
+      renderFisUnlockPage({ nextPath, errorMessage: "Method not allowed." })
+    );
+  }
+
+  const submittedCode = await readSubmittedCode(request);
+  const expectedCode = getFisAccessCode(env);
+
+  if (!constantTimeEqual(submittedCode, expectedCode)) {
+    return htmlResponse(
+      401,
+      renderFisUnlockPage({
+        nextPath,
+        errorMessage: "Invalid access code. Please try again.",
+      })
+    );
+  }
+
+  const sessionSecret = getFisSessionSecret(env);
+  const sessionToken = await buildSessionToken(sessionSecret);
+  const cookieHeader = buildSessionCookie(FIS_COOKIE_NAME, sessionToken);
 
   return new Response(null, {
     status: 302,
@@ -113,10 +186,169 @@ async function serveAsset(request, env) {
   return env.ASSETS.fetch(request);
 }
 
-function sanitizeNextPath(candidate) {
-  if (!candidate) return `${PROTECTED_PREFIX}/strategic-brief-pack.html`;
-  if (!candidate.startsWith("/")) return `${PROTECTED_PREFIX}/strategic-brief-pack.html`;
-  if (candidate.startsWith("//")) return `${PROTECTED_PREFIX}/strategic-brief-pack.html`;
+async function handleFisRdcRepoApi(request, env) {
+  if (request.method !== "GET") {
+    return jsonResponse(405, { error: "Method not allowed. Use GET." });
+  }
+
+  const owner = sanitizeRepoPart(env.FIS_RDC_REPO_OWNER) || FIS_RDC_DEFAULT_REPO_OWNER;
+  const repo = sanitizeRepoPart(env.FIS_RDC_REPO_NAME) || FIS_RDC_DEFAULT_REPO_NAME;
+  const configuredBranch = sanitizeRepoPart(env.FIS_RDC_REPO_BRANCH);
+  const token = String(env.FIS_RDC_GITHUB_TOKEN || "").trim();
+
+  const repoApiUrl = `${GITHUB_API_BASE}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`;
+  const headers = buildGitHubHeaders(token);
+
+  const repoResponse = await fetch(repoApiUrl, { headers });
+  if (!repoResponse.ok) {
+    return githubErrorResponse(repoResponse, "Unable to load repository metadata from GitHub.");
+  }
+
+  const repoPayload = await readJson(repoResponse, {});
+  const branch = configuredBranch || sanitizeRepoPart(repoPayload.default_branch) || "main";
+  const warnings = [];
+
+  const [commitsResponse, readmeResponse] = await Promise.all([
+    fetch(`${repoApiUrl}/commits?sha=${encodeURIComponent(branch)}&per_page=5`, { headers }),
+    fetch(`${repoApiUrl}/readme?ref=${encodeURIComponent(branch)}`, { headers }),
+  ]);
+
+  let commits = [];
+  if (commitsResponse.ok) {
+    const commitsPayload = await readJson(commitsResponse, []);
+    commits = normalizeCommits(commitsPayload);
+  } else {
+    warnings.push(`Commits unavailable (HTTP ${commitsResponse.status}).`);
+  }
+
+  let readme = {
+    path: "README.md",
+    htmlUrl: "",
+    content: "",
+    truncated: false,
+  };
+
+  if (readmeResponse.ok) {
+    const readmePayload = await readJson(readmeResponse, {});
+    const decoded = decodeGitHubReadme(readmePayload?.content, readmePayload?.encoding);
+    readme = {
+      path: sanitizeRepoPart(readmePayload?.path) || "README.md",
+      htmlUrl: sanitizeUrl(readmePayload?.html_url),
+      content: decoded.slice(0, README_MAX_CHARS),
+      truncated: decoded.length > README_MAX_CHARS,
+    };
+  } else if (readmeResponse.status !== 404) {
+    warnings.push(`README unavailable (HTTP ${readmeResponse.status}).`);
+  }
+
+  return jsonResponse(200, {
+    fetchedAt: new Date().toISOString(),
+    repository: {
+      owner,
+      name: repo,
+      fullName: sanitizeRepoPart(repoPayload.full_name) || `${owner}/${repo}`,
+      description: sanitizeText(repoPayload.description),
+      htmlUrl: sanitizeUrl(repoPayload.html_url),
+      visibility: sanitizeRepoPart(repoPayload.visibility) || (repoPayload.private ? "private" : "public"),
+      defaultBranch: sanitizeRepoPart(repoPayload.default_branch) || "",
+      branch,
+      pushedAt: sanitizeText(repoPayload.pushed_at),
+      updatedAt: sanitizeText(repoPayload.updated_at),
+      private: Boolean(repoPayload.private),
+    },
+    commits,
+    readme,
+    warnings,
+  });
+}
+
+function buildGitHubHeaders(token) {
+  const headers = {
+    Accept: "application/vnd.github+json",
+    "User-Agent": "infradev-fis-rdc-portal",
+  };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  return headers;
+}
+
+async function githubErrorResponse(response, fallbackMessage) {
+  const errorPayload = await readJson(response, {});
+  const upstreamMessage =
+    typeof errorPayload?.message === "string" ? errorPayload.message.trim() : "";
+  const error = upstreamMessage ? `${fallbackMessage} ${upstreamMessage}` : fallbackMessage;
+  return jsonResponse(response.status, {
+    error,
+    upstreamStatus: response.status,
+    upstreamMessage,
+  });
+}
+
+async function readJson(response, fallbackValue) {
+  try {
+    return await response.json();
+  } catch {
+    return fallbackValue;
+  }
+}
+
+function normalizeCommits(payload) {
+  if (!Array.isArray(payload)) return [];
+
+  return payload.slice(0, 5).map((item) => {
+    const sha = sanitizeRepoPart(item?.sha);
+    return {
+      sha,
+      shortSha: sha ? sha.slice(0, 7) : "",
+      message: sanitizeText(item?.commit?.message).split("\n")[0] || "No commit message",
+      authorName:
+        sanitizeText(item?.commit?.author?.name) ||
+        sanitizeText(item?.author?.login) ||
+        "Unknown",
+      authoredAt: sanitizeText(item?.commit?.author?.date),
+      htmlUrl: sanitizeUrl(item?.html_url),
+    };
+  });
+}
+
+function decodeGitHubReadme(content, encoding) {
+  if (typeof content !== "string") return "";
+  if (encoding !== "base64") return content;
+
+  const normalized = content.replaceAll("\n", "");
+  try {
+    const binary = atob(normalized);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i += 1) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return new TextDecoder().decode(bytes);
+  } catch {
+    return "";
+  }
+}
+
+function sanitizeRepoPart(value) {
+  return String(value || "")
+    .trim()
+    .replaceAll("\r", "")
+    .replaceAll("\n", "");
+}
+
+function sanitizeText(value) {
+  return String(value || "").replaceAll("\r", "");
+}
+
+function sanitizeUrl(value) {
+  const candidate = String(value || "").trim();
+  if (!candidate) return "";
+  if (!candidate.startsWith("https://")) return "";
+  return candidate;
+}
+
+function sanitizeNextPathForPortal(candidate, fallbackPath) {
+  if (!candidate) return fallbackPath;
+  if (!candidate.startsWith("/")) return fallbackPath;
+  if (candidate.startsWith("//")) return fallbackPath;
   return candidate;
 }
 
@@ -144,12 +376,24 @@ function sanitizeCode(value) {
   return value.trim().slice(0, 256);
 }
 
-function getSessionSecret(env) {
+function getSokimoSessionSecret(env) {
   // Optional dedicated secret for signing session cookies.
   // Falls back to access code so setup remains one-variable simple.
   const explicitSecret = String(env.SOKIMO_SESSION_SECRET || "").trim();
   if (explicitSecret) return explicitSecret;
   return `sokimo-session::${String(env.SOKIMO_ACCESS_CODE || "").trim()}`;
+}
+
+function getFisAccessCode(env) {
+  const configuredCode = String(env.FIS_RDC_ACCESS_CODE || "").trim();
+  if (configuredCode) return configuredCode;
+  return FIS_RDC_FALLBACK_ACCESS_CODE;
+}
+
+function getFisSessionSecret(env) {
+  const explicitSecret = String(env.FIS_RDC_SESSION_SECRET || "").trim();
+  if (explicitSecret) return explicitSecret;
+  return `fis-rdc-session::${getFisAccessCode(env)}`;
 }
 
 async function buildSessionToken(secret) {
@@ -160,8 +404,16 @@ async function buildSessionToken(secret) {
 }
 
 async function hasValidSession(request, env) {
+  return hasValidSignedSession(request, COOKIE_NAME, getSokimoSessionSecret(env));
+}
+
+async function hasValidFisSession(request, env) {
+  return hasValidSignedSession(request, FIS_COOKIE_NAME, getFisSessionSecret(env));
+}
+
+async function hasValidSignedSession(request, cookieName, sessionSecret) {
   const cookieHeader = request.headers.get("cookie") || "";
-  const token = readCookie(cookieHeader, COOKIE_NAME);
+  const token = readCookie(cookieHeader, cookieName);
   if (!token) return false;
 
   const [expiresAtRaw, signature] = token.split(".");
@@ -169,13 +421,13 @@ async function hasValidSession(request, env) {
   if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) return false;
   if (!signature) return false;
 
-  const expectedSignature = await hmacSha256Hex(getSessionSecret(env), `${expiresAt}`);
+  const expectedSignature = await hmacSha256Hex(sessionSecret, `${expiresAt}`);
   return constantTimeEqual(signature, expectedSignature);
 }
 
-function buildSessionCookie(token) {
+function buildSessionCookie(cookieName, token) {
   return [
-    `${COOKIE_NAME}=${token}`,
+    `${cookieName}=${token}`,
     "Path=/",
     `Max-Age=${SESSION_TTL_SECONDS}`,
     "HttpOnly",
@@ -234,16 +486,64 @@ function htmlResponse(status, html) {
   });
 }
 
+function jsonResponse(status, payload) {
+  return new Response(JSON.stringify(payload, null, 2), {
+    status,
+    headers: {
+      "Content-Type": "application/json; charset=UTF-8",
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
 function renderUnlockPage({ nextPath, errorMessage = "" }) {
-  const safeNextPath = escapeHtml(nextPath || `${PROTECTED_PREFIX}/strategic-brief-pack.html`);
+  return renderAccessPage({
+    pageTitle: "SOKIMO Secure Access | InfraDev.Africa",
+    heading: "SOKIMO Secure Access",
+    description: "Enter the shared access code to open the private strategic brief.",
+    submitLabel: "Open Brief",
+    unlockPath: UNLOCK_PATH,
+    nextPath,
+    errorMessage,
+  });
+}
+
+function renderFisUnlockPage({ nextPath, errorMessage = "" }) {
+  return renderAccessPage({
+    pageTitle: "FIS RDC Secure Access | InfraDev.Africa",
+    heading: "FIS RDC Secure Access",
+    description: "Enter the access code to open the private FIS RDC note.",
+    submitLabel: "Open FIS Page",
+    unlockPath: FIS_UNLOCK_PATH,
+    nextPath,
+    errorMessage,
+  });
+}
+
+function renderAccessPage({
+  pageTitle,
+  heading,
+  description,
+  submitLabel,
+  unlockPath,
+  nextPath,
+  errorMessage = "",
+}) {
+  const normalizedNextPath = String(nextPath || "/");
   const safeError = escapeHtml(errorMessage);
+  const safeTitle = escapeHtml(pageTitle);
+  const safeHeading = escapeHtml(heading);
+  const safeDescription = escapeHtml(description);
+  const safeSubmitLabel = escapeHtml(submitLabel);
+  const safeUnlockPath = escapeHtml(unlockPath);
+
   return `
     <!doctype html>
     <html lang="en">
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>SOKIMO Secure Access | InfraDev.Africa</title>
+        <title>${safeTitle}</title>
         <meta name="robots" content="noindex, nofollow, noarchive" />
         <style>
           :root {
@@ -376,10 +676,10 @@ function renderUnlockPage({ nextPath, errorMessage = "" }) {
       <body>
         <main class="card">
           <div class="badge">ID.</div>
-          <h1>SOKIMO Secure Access</h1>
-          <p>Enter the shared access code to open the private strategic brief.</p>
+          <h1>${safeHeading}</h1>
+          <p>${safeDescription}</p>
           ${safeError ? `<div class="error">${safeError}</div>` : ""}
-          <form method="POST" action="${UNLOCK_PATH}?next=${encodeURIComponent(safeNextPath)}">
+          <form method="POST" action="${safeUnlockPath}?next=${encodeURIComponent(normalizedNextPath)}">
             <label for="code">Access Code</label>
             <div class="input-row">
               <input id="code" name="code" type="password" autocomplete="one-time-code" required />
@@ -387,7 +687,7 @@ function renderUnlockPage({ nextPath, errorMessage = "" }) {
                 Show
               </button>
             </div>
-            <button type="submit">Open Brief</button>
+            <button type="submit">${safeSubmitLabel}</button>
           </form>
           <small>This session stays active for 12 hours on this browser.</small>
         </main>
